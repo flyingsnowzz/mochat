@@ -102,6 +102,7 @@ class McInitCommand extends HyperfCommand
 
         $this->userService = $this->container->get(UserContract::class);
         $this->adminRegister();
+        $this->tenant();
 
         $this->line('项目初始化完成，请登陆后，在', 'info');
     }
@@ -240,7 +241,7 @@ class McInitCommand extends HyperfCommand
         }
 
         ## 密码
-        $password = $this->ask('输入管理员密码', '');
+        $password = $this->secret('输入管理员密码', false);
         $encrypted = $this->authManager->guard('jwt')->getJwtManager()->getEncrypter()->signature($password);
         return Db::table('user')->insert([
             'phone' => $phone,
@@ -318,6 +319,20 @@ class McInitCommand extends HyperfCommand
         }
     }
 
+    protected function tenant(): void
+    {
+        ## 租户-服务器实例IP
+        $curlIp = System::exec('curl cip.cc');
+        $ipInfo = empty($curlIp['output']) ? '' : "当前IP:\n" . $curlIp['output'];
+        $this->line($ipInfo, 'info');
+
+        $ips = $this->ask('输入各个开发、生产阶段的服务器IP(用来设置微信白名单:以英文逗号隔开)', '');
+        $ips = json_encode(explode(',', $ips));
+
+        Db::table('tenant')->insert([
+            'server_ips' => $ips,
+        ]);
+    }
 
     private function mysqlDataInit(): void
     {
