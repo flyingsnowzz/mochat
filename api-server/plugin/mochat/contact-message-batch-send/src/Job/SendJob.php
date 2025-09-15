@@ -113,7 +113,7 @@ class SendJob extends Job
         $contactTotal = 0;
         foreach ($employees as $employee) {
             // 获取成员客户
-            $contacts = $workContactEmployeeService->getWorkContactsByEmployeeIdFilterParams($employee['id'], $filterParams);
+            $contacts = $workContactEmployeeService->getWorkContactsByEmployeeIdFilterParams($employee['id'],$corpId, $filterParams);
             $employeeContactTotal = count($contacts);
             $contactTotal += $employeeContactTotal;
 

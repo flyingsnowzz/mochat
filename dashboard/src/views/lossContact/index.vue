@@ -1,20 +1,19 @@
 <template>
   <div class="loss-customers">
     <a-card>
-      <a-button v-permission="'/lossContact/index@choose'" @click="selectMemberShow">选择部门成员</a-button>
-      <a-modal
-        title="选择企业成员"
-        :maskClosable="false"
-        :width="700"
-        :visible="choosePeopleShow"
-        @cancel="() => {this.choosePeopleShow = false; this.employees = []; this.employeeIdList = ''}"
-      >
-        <!-- <Department v-if="choosePeopleShow" :isChecked="employees" :memberKey="employees" @change="peopleChange"></Department> -->
-        <template slot="footer">
-          <a-button @click="cancelChange">取消</a-button>
-          <a-button type="primary" @click="confirmChange">确定</a-button>
-        </template>
-      </a-modal>
+      <div class="filter-form">
+        <!--            所属客服-->
+        <div class="item">
+          <label>归属成员：</label>
+          <div class="input belongTo" @click="selectMemberShow">
+            <span class="tips" v-if="employees.length==0">请选择成员</span>
+            <a-tag v-for="(item,index) in employees" :key="index">{{ item.name }}</a-tag>
+          </div>
+        </div>
+        <div class="item">
+          <a-button @click="resetBtn">重置</a-button>
+        </div>
+      </div>
       <div class="table-wrapper">
         <a-table
           :columns="columns"
@@ -30,7 +29,7 @@
             </div>
           </div>
           <div slot="tag" slot-scope="text, record">
-            <span v-if="record.tag.length !== 0">{{ record.tag.join(',') }}</span>
+            <span v-if="record.tag.length !== 0">{{ tagJoin(record.tag) }}</span>
             <span v-else>--</span>
           </div>
         </a-table>
@@ -42,11 +41,9 @@
 
 <script>
 import { getLossContactList } from '@/api/lossContact'
-import Department from '@/components/department'
 import selectMember from '@/components/Select/member'
 export default {
   components: {
-    Department,
     selectMember
   },
   data () {
@@ -83,7 +80,6 @@ export default {
         }
       ],
       tableData: [],
-      choosePeopleShow: false,
       employeeIdList: '',
       pagination: {
         total: 0,
@@ -98,16 +94,8 @@ export default {
     this.getTableData()
   },
   methods: {
-    cancelChange () {
-      this.choosePeopleShow = false
-      this.employees = []
-      this.employeeIdList = ''
-    },
     confirmChange () {
-      this.choosePeopleShow = false
       this.getTableData()
-      this.employeeIdList = ''
-      this.employees = []
     },
     selectMemberShow () {
       this.$refs.selectMember.setSelect(this.employees)
@@ -129,13 +117,6 @@ export default {
       this.getTableData()
     },
     // 成员选择
-    // peopleChange (data) {
-    //   const arr = []
-    //   data.map(item => {
-    //     arr.push(item.employeeId)
-    //   })
-    //   this.employeeIdList = arr.join(',')
-    // }
     peopleChange (e) {
       this.employees = e
       const arr = []
@@ -143,12 +124,56 @@ export default {
         arr.push(i.employeeId)
       })
       this.employeeIdList = arr.join(',')
+    },
+    tagJoin (value) {
+      if (Array.isArray(value)) {
+        return value.join(',')
+      }
+      return Object.values(value).join(',')
+    },
+    resetBtn () {
+      this.employees = []
+      this.employeeIdList = ''
+      this.pagination.current = 1
+      this.getTableData()
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
+.filter-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  .item {
+    min-width: 266px;
+    margin-top: 16px;
+    padding-right: 33px;
+    box-sizing: content-box;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    .input {
+      width: 208px;
+      padding-left: 12px;
+    }
+    .belongTo{
+      padding-left: 7px;
+      border: 1px solid #D9D9D9;
+      height: 32px;
+      line-height: 32px;
+      cursor: pointer;
+      .tips{
+        color: #BFBFBF;
+      }
+    }
+    .ant-select {
+      width: 100%;
+    }
+  }
+}
 .loss-customers {
   .table-wrapper {
     margin-top: 20px;

@@ -313,5 +313,5 @@ interface WorkContactEmployeeContract
     /**
      * 查询多条
      */
-    public function getWorkContactsByEmployeeIdFilterParams(int $employeeId, array $filterParams): array;
+    public function getWorkContactsByEmployeeIdFilterParams(int $employeeId,int $corpId,array $filterParams): array;
 }

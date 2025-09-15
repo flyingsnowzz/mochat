@@ -791,7 +791,7 @@ class WorkContactEmployeeService extends AbstractService implements WorkContactE
     /**
      * 查询多条
      */
-    public function getWorkContactsByEmployeeIdFilterParams(int $employeeId, array $filterParams): array
+    public function getWorkContactsByEmployeeIdFilterParams(int $employeeId,int $corpId, array $filterParams): array
     {
         $gender = $filterParams['gender'] ?? null;
         $rooms = $filterParams['rooms'] ?? [];
@@ -807,6 +807,7 @@ class WorkContactEmployeeService extends AbstractService implements WorkContactE
         }
 
         $res = $query->where('work_contact_employee.employee_id', $employeeId)
+            ->where('work_contact_employee.corp_id', $corpId)
             ->when(is_numeric($gender) && $gender < 3, function (Builder $query) use ($gender) {
                 return $query->where('work_contact.gender', '=', $gender);
             })

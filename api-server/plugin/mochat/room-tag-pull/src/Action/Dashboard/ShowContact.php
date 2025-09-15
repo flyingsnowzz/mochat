@@ -233,7 +233,7 @@ class ShowContact
         foreach ($data as $k => $v) {
             $employee = $this->workEmployeeService->getWorkEmployeeByCorpIdWxUserId((string) $user['corpIds'][0], $v['wxUserId'], ['name', 'avatar']);
             $data[$k]['task_num'] = $userArr[$v['wxUserId']];
-            $data[$k]['name'] = $employee[0]['name'];
+            $data[$k]['name'] = $employee[0]['name'] ?? '';
             $data[$k]['avatar'] = file_full_url($employee[0]['avatar']);
             $data[$k]['contact_num'] = $this->roomTagPullContactService->countRoomTagPullContactByRoomTagPullIdUserid((int) $params['id'], $v['wxUserId']);
             $data[$k]['invite_num'] = $this->roomTagPullContactService->countRoomTagPullContactByRoomTagPullIdUseridSendStatus((int) $params['id'], $v['wxUserId'], [1]);
@@ -271,7 +271,7 @@ class ShowContact
             $list[$key] = [
                 'avatar' => file_full_url($contact['avatar']),
                 'contact_name' => $val['contactName'],
-                'employee_name' => $employees['name'],
+                'employee_name' => $employees['name'] ?? '',
                 'send_status' => $val['sendStatus'],
                 'room_name' => $room['name'],
                 'is_join_room' => $val['isJoinRoom'],
