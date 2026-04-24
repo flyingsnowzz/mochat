@@ -1,0 +1,86 @@
+app:
+  name: mochat
+  env: production
+
+db:
+  driver: mysql
+  host: 127.0.0.1
+  port: 8889
+  database: mochat
+  username: root
+  password: "root"
+  charset: utf8mb4
+  collation: utf8mb4_unicode_ci
+  prefix: mc_
+  max_idle_time: 60
+  min_conns: 1
+  max_conns: 10
+  conn_timeout: 10
+  wait_timeout: 3
+
+redis:
+  host: 127.0.0.1
+  auth: ""
+  port: 6379
+  db: 0
+  min_conns: 1
+  max_conns: 10
+  conn_timeout: 10
+  wait_timeout: 3
+  max_idle_time: 60
+
+jwt:
+  dashboard_secret: "3S6ybWbSy&23fFeq8"
+  dashboard_prefix: "mc_jwt_"
+  sidebar_secret: "Br3LXhp&Ysha1zRDh"
+
+file:
+  driver: local
+  oss:
+    access_id: ""
+    access_secret: ""
+    bucket: ""
+    endpoint: ""
+  cos:
+    app_id: ""
+    secret_id: ""
+    secret_key: ""
+    bucket: ""
+    region: ""
+  s3:
+    access_key: ""
+    secret_key: ""
+    bucket: ""
+    region: ""
+    endpoint: ""
+  qiniu:
+    access_key: ""
+    secret_key: ""
+    bucket: ""
+    domain: ""
+
+wechat:
+  api_base_url: ""
+  dashboard_base_url: ""
+  sidebar_base_url: ""
+  operation_base_url: ""
+  open_platform:
+    app_id: ""
+    secret: ""
+    token: ""
+    aes_key: ""
+
+proxy:
+  http: ""
+  https: ""
+
+server:
+  port: 9501
+  mode: release
+  read_timeout: 30
+  write_timeout: 30
+  max_coroutine: 100000
+
+log:
+  level: info
+  output: stdout

@@ -2,7 +2,7 @@
 /**
  * @api {get} /wxJsSdk/config JSSDK-企业、企业应用配置参数
  * @apiName GetWxJsSdkConfig
- * @apiDescription
+ * @apiDescription JSSDK 企业和企业应用配置参数接口
  * @apiGroup 侧边栏-JSSDK
  *
  * @apiParam {Number} corpId 企业ID(以下所有在地址URL获取)

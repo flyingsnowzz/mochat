@@ -3,7 +3,7 @@
 /**
  * @api {get} /chatTool/config 配置详情
  * @apiName GetChatToolConfig
- * @apiDescription
+ * @apiDescription 侧边栏 JSSDK 配置详情接口
  * @apiGroup 侧边栏-JSSDK
  *
  * @apiSuccess {String[]} agents 应用

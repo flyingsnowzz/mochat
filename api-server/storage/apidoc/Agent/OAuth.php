@@ -2,7 +2,7 @@
 /**
  * @api {get} /agent/oauth 应用验证
  * @apiName GetAgentOauth
- * @apiDescription
+ * @apiDescription 企业应用授权验证接口
  * @apiGroup 企业应用
  *
  * @apiParam {String} agentId 应用ID(以下所有在地址URL获取)
@@ -22,7 +22,7 @@
 /**
  * @api {get} -侧边栏域名+/codeAuth 应用验证-js回调
  * @apiName GetCodeAuth1
- * @apiDescription
+ * @apiDescription 企业应用授权验证的 JS 回调接口
  * @apiGroup 企业应用
  *
  * @apiSuccess {String} callValues 回调参数.base64(json(val))
