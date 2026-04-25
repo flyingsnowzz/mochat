@@ -11,10 +11,10 @@ type ChannelCode struct {
 	QrcodeURL        string     `gorm:"column:qrcode_url;size:500;default:''" json:"qrcodeUrl"`
 	WxConfigID       string     `gorm:"column:wx_config_id;size:100;default:''" json:"wxConfigId"`
 	AutoAddFriend    int        `gorm:"column:auto_add_friend;default:0" json:"autoAddFriend"`
-	Tags             string     `gorm:"size:2000;default:''" json:"tags"`
+	Tags             string     `gorm:"column:tags;type:json" json:"tags"`
 	Type             int        `gorm:"default:0" json:"type"`
-	DrainageEmployee string     `gorm:"column:drainage_employee;size:2000;default:''" json:"drainageEmployee"`
-	WelcomeMessage   string     `gorm:"column:welcome_message;size:2000;default:''" json:"welcomeMessage"`
+	DrainageEmployee string     `gorm:"column:drainage_employee;type:json" json:"drainageEmployee"`
+	WelcomeMessage   string     `gorm:"column:welcome_message;type:json" json:"welcomeMessage"`
 	CreatedAt        time.Time  `gorm:"column:created_at" json:"createdAt"`
 	UpdatedAt        time.Time  `gorm:"column:updated_at" json:"updatedAt"`
 	DeletedAt        *time.Time `gorm:"column:deleted_at;index" json:"deletedAt"`
@@ -280,9 +280,9 @@ type WorkFission struct {
 	EndTime               *time.Time `gorm:"column:end_time" json:"endTime"`
 	QrCodeInvalid         int        `gorm:"column:qr_code_invalid;default:0" json:"qrCodeInvalid"`
 	Tasks                 string     `gorm:"size:2000;default:''" json:"tasks"`
-	NewFriend             string     `gorm:"column:new_friend;size:2000;default:''" json:"newFriend"`
+	NewFriend             int        `gorm:"column:new_friend;default:0" json:"newFriend"`
 	DeleteInvalid         int        `gorm:"column:delete_invalid;default:0" json:"deleteInvalid"`
-	ReceivePrize          string     `gorm:"column:receive_prize;size:2000;default:''" json:"receivePrize"`
+	ReceivePrize          int        `gorm:"column:receive_prize;default:0" json:"receivePrize"`
 	ReceivePrizeEmployees string     `gorm:"column:receive_prize_employees;size:2000;default:''" json:"receivePrizeEmployees"`
 	ReceiveLinks          string     `gorm:"column:receive_links;size:2000;default:''" json:"receiveLinks"`
 	ReceiveQrcode         string     `gorm:"column:receive_qrcode;size:500;default:''" json:"receiveQrcode"`
@@ -360,8 +360,8 @@ func (WorkFissionPoster) TableName() string { return "mc_work_fission_poster" }
 type WorkFissionPush struct {
 	ID             uint      `gorm:"primaryKey" json:"id"`
 	FissionID      uint      `gorm:"column:fission_id;default:0;index" json:"fissionId"`
-	PushEmployee   string    `gorm:"column:push_employee;size:2000;default:''" json:"pushEmployee"`
-	PushContact    string    `gorm:"column:push_contact;size:2000;default:''" json:"pushContact"`
+	PushEmployee   int       `gorm:"column:push_employee;default:0" json:"pushEmployee"`
+	PushContact    int       `gorm:"column:push_contact;default:0" json:"pushContact"`
 	MsgText        string    `gorm:"column:msg_text;size:500;default:''" json:"msgText"`
 	MsgComplex     string    `gorm:"column:msg_complex;size:2000;default:''" json:"msgComplex"`
 	MsgComplexType int       `gorm:"column:msg_complex_type;default:0" json:"msgComplexType"`

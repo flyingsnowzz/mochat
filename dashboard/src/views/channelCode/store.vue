@@ -71,7 +71,7 @@
           <span style="color:red">(一旦创建,不可修改)</span>
         </a-form-model-item>
         <a-form-model-item label="企业成员">
-          <a-button v-if="drainageEmployee.employees.length !== 7" @click="() => {this.memberModal = true}">+ 添加成员</a-button>
+          <a-button v-if="drainageEmployee.employees.length !== 7" @click="openDrainageMemberModal">+ 添加成员</a-button>
         </a-form-model-item>
         <a-form-model-item>
           <div class="table">
@@ -2563,9 +2563,10 @@ export default {
     },
     // 编辑
     editEmployess (data, pIndex, index) {
+      this.resetDrainageState()
       this.isEditEmp = true
       const week = data.week
-      this.checkedWeek.push(week)
+      this.checkedWeek = [week]
       this.weekTagList.map(item => {
         if (item.id == week) {
           item.isChecked = 1
@@ -2915,6 +2916,16 @@ export default {
     // 引流 取消
     resetDrainage () {
       this.memberModal = false
+      this.resetDrainageState()
+    },
+    openDrainageMemberModal () {
+      this.resetDrainageState()
+      this.memberModal = true
+    },
+    resetDrainageState () {
+      this.isEditEmp = false
+      this.dataList = []
+      this.manyTimeIndex = null
       this.singleTimeList = [
         {
           employeeId: [],

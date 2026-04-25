@@ -83,11 +83,12 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 		pluginService.NewContactMessageBatchSendService(db),
 	)
 	channelCodeHandler := dashboardPlugin.NewChannelCodeHandler(
+		db,
 		pluginService.NewChannelCodeService(db),
 		pluginService.NewChannelCodeGroupService(db),
 	)
 	statisticHandler := dashboardPlugin.NewStatisticHandler()
-	workFissionHandler := dashboardPlugin.NewWorkFissionHandler(pluginService.NewWorkFissionService(db))
+	workFissionHandler := dashboardPlugin.NewWorkFissionHandler(db, pluginService.NewWorkFissionService(db))
 
 	commonHandler := dashboard.NewCommonHandler()
 
@@ -169,9 +170,13 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 		contactGroup := dashboardGroup.Group("/workContact")
 		{
 			contactGroup.GET("/index", contactHandler.Index)
+			contactGroup.GET("/show", contactHandler.Show)
 			contactGroup.GET("/show/:id", contactHandler.Show)
+			contactGroup.PUT("/update", contactHandler.Update)
 			contactGroup.PUT("/update/:id", contactHandler.Update)
+			contactGroup.PUT("/synContact", contactHandler.SynContact)
 			contactGroup.POST("/synContact", contactHandler.SynContact)
+			contactGroup.GET("/track", contactHandler.Track)
 			contactGroup.GET("/track/:id", contactHandler.Track)
 			contactGroup.GET("/lossContact", contactHandler.LossContact)
 			contactGroup.GET("/source", contactHandler.Source)
@@ -182,10 +187,14 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 		{
 			contactFieldGroup.GET("/index", contactFieldHandler.Index)
 			contactFieldGroup.GET("/show/:id", contactFieldHandler.Show)
+			contactFieldGroup.GET("/portrait", contactFieldHandler.Portrait)
 			contactFieldGroup.POST("/store", contactFieldHandler.Store)
+			contactFieldGroup.PUT("/update", contactFieldHandler.Update)
 			contactFieldGroup.PUT("/update/:id", contactFieldHandler.Update)
 			contactFieldGroup.PUT("/batchUpdate", contactFieldHandler.BatchUpdate)
+			contactFieldGroup.PUT("/statusUpdate", contactFieldHandler.StatusUpdate)
 			contactFieldGroup.PUT("/statusUpdate/:id", contactFieldHandler.StatusUpdate)
+			contactFieldGroup.DELETE("/destroy", contactFieldHandler.Destroy)
 			contactFieldGroup.DELETE("/destroy/:id", contactFieldHandler.Destroy)
 			contactFieldGroup.GET("/portrait/:id", contactFieldHandler.Portrait)
 		}
@@ -228,6 +237,7 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 			deptGroup.GET("/index", deptHandler.Index)
 			deptGroup.GET("/pageIndex", deptHandler.PageIndex)
 			deptGroup.GET("/selectByPhone", deptHandler.SelectByPhone)
+			deptGroup.GET("/showEmployee", deptHandler.ShowEmployee)
 			deptGroup.GET("/showEmployee/:id", deptHandler.ShowEmployee)
 		}
 
@@ -343,8 +353,13 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 		channelCodeGroup := dashboardGroup.Group("/channelCode")
 		{
 			channelCodeGroup.GET("/index", channelCodeHandler.Index)
+			channelCodeGroup.GET("/contact", channelCodeHandler.Contact)
+			channelCodeGroup.GET("/statistics", channelCodeHandler.Statistics)
+			channelCodeGroup.GET("/statisticsIndex", channelCodeHandler.StatisticsIndex)
+			channelCodeGroup.GET("/show", channelCodeHandler.Show)
 			channelCodeGroup.GET("/show/:id", channelCodeHandler.Show)
 			channelCodeGroup.POST("/store", channelCodeHandler.Store)
+			channelCodeGroup.PUT("/update", channelCodeHandler.Update)
 			channelCodeGroup.PUT("/update/:id", channelCodeHandler.Update)
 		}
 
@@ -366,10 +381,17 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 		fissionGroup := dashboardGroup.Group("/workFission")
 		{
 			fissionGroup.GET("/index", workFissionHandler.Index)
+			fissionGroup.GET("/statistics", workFissionHandler.Statistics)
+			fissionGroup.GET("/inviteData", workFissionHandler.InviteData)
+			fissionGroup.GET("/inviteDetail", workFissionHandler.InviteDetail)
+			fissionGroup.GET("/chooseContact", workFissionHandler.ChooseContact)
+			fissionGroup.POST("/invite", workFissionHandler.Invite)
+			fissionGroup.GET("/show", workFissionHandler.Show)
 			fissionGroup.GET("/show/:id", workFissionHandler.Show)
+			fissionGroup.GET("/info", workFissionHandler.Info)
 			fissionGroup.GET("/info/:id", workFissionHandler.Info)
-			fissionGroup.GET("/invite/:id", workFissionHandler.Invite)
 			fissionGroup.POST("/store", workFissionHandler.Store)
+			fissionGroup.PUT("/update", workFissionHandler.Update)
 			fissionGroup.PUT("/update/:id", workFissionHandler.Update)
 		}
 	}

@@ -182,19 +182,22 @@
             <span v-else>--</span>
           </div>
           <div slot="roomName" slot-scope="text, record">
-            <span v-if="record.roomName.length !== 0">{{ record.roomName.join(',') }}</span>
+            <span v-if="displayList(record.roomName).length !== 0">{{ displayList(record.roomName).join(',') }}</span>
             <span v-else>--</span>
           </div>
           <div slot="tag" slot-scope="text, record">
-            <span v-if="record.tag.length !== 0">{{ record.tag.join(',') }}</span>
+            <span v-if="displayList(record.tag).length !== 0">{{ displayList(record.tag).join(',') }}</span>
             <span v-else>--</span>
           </div>
           <div slot="action" slot-scope="text, record">
-            <template>
-              <router-link v-permission="'/workContact/contactFieldPivot'" :to="{path:`/workContact/contactFieldPivot?contactId=${record.contactId}&employeeId=${record.employeeId}&isContact=${record.isContact}`}">
+            <template v-if="record.contactId">
+              <router-link
+                v-permission="'/workContact/contactFieldPivot'"
+                :to="{ path: '/workContact/contactFieldPivot', query: { contactId: String(record.contactId), employeeId: String(record.employeeId || 0), isContact: String(record.isContact) } }">
                 <a-button type="link">查看详情</a-button>
               </router-link>
             </template>
+            <span v-else>--</span>
           </div>
         </a-table>
       </div>
@@ -396,7 +399,7 @@ export default {
         // this.roomIdList = []
         // this.employeeIdList = ''
         // this.employees = []
-        this.tableData = res.data.list
+        this.tableData = this.normalizeTableData(res.data.list || [])
         this.pagination.total = res.data.page.total
       })
     },
@@ -461,7 +464,7 @@ export default {
       this.screenData.startTime = dateString[0]
       this.screenData.endTime = dateString[1]
     },
-    onOk (value) {
+    onOk () {
     },
     // 成员选择
     peopleChange (data) {
@@ -476,7 +479,7 @@ export default {
     },
     // 同步客户
     getSynContact () {
-      synContact().then(res => {
+      synContact().then(() => {
         this.getTableData()
         this.$message.info('后台同步中,请稍等')
       })
@@ -504,6 +507,43 @@ export default {
       } else {
         this.employeeIdList = data[0].id
       }
+    },
+    normalizeTableData (list) {
+      return list.map(item => {
+        const contactId = item.contactId || item.id || ''
+        return {
+          ...item,
+          id: item.id || contactId,
+          name: item.name || item.nickName || '--',
+          avatar: item.avatar || '',
+          employeeName: item.employeeName || item.employee || item.employeeNickName || '--',
+          roomName: this.normalizeStringArray(item.roomName || item.rooms || item.roomNames),
+          addWayText: item.addWayText || '--',
+          tag: this.normalizeStringArray(item.tag || item.tags || item.tagNames),
+          createTime: item.createTime || this.formatDateTime(item.createdAt),
+          contactId,
+          employeeId: item.employeeId || 0,
+          isContact: item.isContact !== undefined ? item.isContact : 2
+        }
+      })
+    },
+    normalizeStringArray (value) {
+      if (Array.isArray(value)) {
+        return value.filter(item => item !== undefined && item !== null && item !== '')
+      }
+      if (typeof value === 'string' && value !== '') {
+        return value.split(',').map(item => item.trim()).filter(Boolean)
+      }
+      return []
+    },
+    displayList (value) {
+      return this.normalizeStringArray(value)
+    },
+    formatDateTime (value) {
+      if (!value) {
+        return '--'
+      }
+      return String(value).replace('T', ' ').replace(/\+\d\d:\d\d$/, '')
     }
   }
 }
