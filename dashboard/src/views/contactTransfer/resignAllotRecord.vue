@@ -74,6 +74,25 @@
 </template>
 
 <script>
+/**
+ * 离职分配记录页面
+ * 功能说明：查看离职员工的客户和群聊分配记录
+ * 主要功能：
+ * 1. 切换查看"已分配客户"和"已分配群聊"两个Tab
+ * 2. 按客户昵称/群名称搜索
+ * 3. 按接替员工筛选
+ * 4. 按分配时间范围筛选
+ * 5. 重置筛选条件
+ *
+ * 业务场景：
+ * - 员工离职后，其客户和群聊会被分配给其他员工
+ * - 该页面用于追溯离职分配的历史记录
+ *
+ * 技术实现：
+ * - 使用 a-tabs 实现 Tab 切换
+ * - 使用 a-table 展示数据
+ * - 使用 a-select 的 showSearch 属性实现员工搜索筛选
+ */
 import { logApi, department } from '@/api/contactTransfer'
 export default {
   data () {

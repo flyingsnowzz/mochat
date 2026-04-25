@@ -2,6 +2,7 @@ package dashboard
 
 import (
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
@@ -11,12 +12,14 @@ import (
 )
 
 type RoomHandler struct {
+	db       *gorm.DB
 	svc      *service.WorkRoomService
 	groupSvc *service.WorkRoomGroupService
 }
 
 func NewRoomHandler(db *gorm.DB) *RoomHandler {
 	return &RoomHandler{
+		db:       db,
 		svc:      service.NewWorkRoomService(db),
 		groupSvc: service.NewWorkRoomGroupService(db),
 	}
@@ -35,7 +38,77 @@ func (h *RoomHandler) Index(c *gin.Context) {
 		response.Fail(c, response.ErrDB, "获取客户群列表失败")
 		return
 	}
-	response.PageResult(c, rooms, total, page, pageSize)
+
+	// 转换为前端期望的格式
+	type RoomResponse struct {
+		WorkRoomID   uint   `json:"workRoomId"`
+		RoomName     string `json:"roomName"`
+		MemberNum    int64  `json:"memberNum"`
+		OwnerName    string `json:"ownerName"`
+		RoomGroup    string `json:"roomGroup"`
+		StatusText   string `json:"statusText"`
+		InRoomNum    int64  `json:"inRoomNum"`
+		OutRoomNum   int64  `json:"outRoomNum"`
+		Notice       string `json:"notice"`
+		CreateTime   string `json:"createTime"`
+	}
+
+	var roomResponses []RoomResponse
+	for _, room := range rooms {
+		// 查询群成员数
+		var memberNum int64
+		h.db.Model(&model.WorkContactRoom{}).Where("room_id = ? AND status = 1", room.ID).Count(&memberNum)
+
+		// 查询群主名称
+		ownerName := ""
+		var employee model.WorkEmployee
+		h.db.Where("id = ?", room.OwnerID).First(&employee)
+		if employee.ID > 0 {
+			ownerName = employee.Name
+		}
+
+		// 查询分组名称
+		roomGroup := "未分组"
+		if room.RoomGroupID > 0 {
+			var group model.WorkRoomGroup
+			h.db.Where("id = ?", room.RoomGroupID).First(&group)
+			if group.ID > 0 {
+				roomGroup = group.Name
+			}
+		}
+
+		// 状态文本
+		statusText := "正常"
+		switch room.Status {
+		case 1:
+			statusText = "跟进人离职"
+		case 2:
+			statusText = "离职继承中"
+		case 3:
+			statusText = "离职继承完成"
+		}
+
+		// 今日入群/退群数
+		today := time.Now().Format("2006-01-02")
+		var inRoomNum, outRoomNum int64
+		h.db.Model(&model.WorkContactRoom{}).Where("room_id = ? AND DATE(join_time) = ?", room.ID, today).Count(&inRoomNum)
+		h.db.Model(&model.WorkContactRoom{}).Where("room_id = ? AND DATE(out_time) = ?", room.ID, today).Count(&outRoomNum)
+
+		roomResponses = append(roomResponses, RoomResponse{
+			WorkRoomID: room.ID,
+			RoomName:   room.Name,
+			MemberNum:  memberNum,
+			OwnerName:  ownerName,
+			RoomGroup:  roomGroup,
+			StatusText: statusText,
+			InRoomNum:  inRoomNum,
+			OutRoomNum: outRoomNum,
+			Notice:     room.Notice,
+			CreateTime: room.CreateTime.Format("2006-01-02 15:04:05"),
+		})
+	}
+
+	response.PageResult(c, roomResponses, total, page, pageSize)
 }
 
 func (h *RoomHandler) RoomIndex(c *gin.Context) { h.Index(c) }
@@ -77,16 +150,40 @@ func NewRoomGroupHandler(db *gorm.DB) *RoomGroupHandler {
 }
 
 func (h *RoomGroupHandler) Index(c *gin.Context) {
-	corpID, _ := c.Get("corpId")
-	if corpID == nil {
-		corpID = uint(0)
+	corpIDStr := c.Query("corpId")
+	var corpID uint
+	if corpIDStr != "" {
+		parsedID, err := strconv.ParseUint(corpIDStr, 10, 32)
+		if err == nil {
+			corpID = uint(parsedID)
+		}
 	}
-	groups, err := h.svc.List(corpID.(uint))
+	if corpID == 0 {
+		if cid, ok := c.Get("corpId"); ok {
+			corpID = cid.(uint)
+		}
+	}
+	groups, err := h.svc.List(corpID)
 	if err != nil {
 		response.Fail(c, response.ErrDB, "获取群分组列表失败")
 		return
 	}
-	response.Success(c, groups)
+
+	// 转换为前端期望的格式
+	type GroupResponse struct {
+		WorkRoomGroupId   uint   `json:"workRoomGroupId"`
+		WorkRoomGroupName string `json:"workRoomGroupName"`
+	}
+
+	var groupResponses []GroupResponse
+	for _, group := range groups {
+		groupResponses = append(groupResponses, GroupResponse{
+			WorkRoomGroupId:   group.ID,
+			WorkRoomGroupName: group.Name,
+		})
+	}
+
+	response.Success(c, groupResponses)
 }
 
 func (h *RoomGroupHandler) Store(c *gin.Context) {

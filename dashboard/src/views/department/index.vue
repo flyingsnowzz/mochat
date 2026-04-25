@@ -67,6 +67,27 @@
 </template>
 
 <script>
+/**
+ * 组织架构管理页面
+ * 功能说明：查看和管理企业微信的组织架构
+ * 主要功能：
+ * 1. 同步企业微信通讯录
+ * 2. 查看最后一次同步时间
+ * 3. 按组织名称搜索
+ * 4. 按上级组织名称搜索
+ * 5. 树形展示组织架构
+ * 6. 查看部门成员
+ *
+ * 业务场景：
+ * - 展示企业的部门树形结构
+ * - 可查看每个部门的成员列表
+ * - 支持从企业微信同步最新的组织架构数据
+ *
+ * 技术实现：
+ * - 使用 a-table 的 indentSize 实现树形展示
+ * - 使用 a-modal 弹窗查看部门成员
+ * - 使用权限指令 v-permission 控制按钮权限
+ */
 import { syncEmployee, syncTime } from '@/api/workEmployee'
 import { departmentList, showEmployee } from '@/api/department'
 const columns = [

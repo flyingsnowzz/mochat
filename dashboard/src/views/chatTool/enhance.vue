@@ -69,6 +69,26 @@
 </template>
 
 <script>
+/**
+ * 聊天增强/高级快捷回复页面
+ * 功能说明：配置企业微信聊天侧边栏的高级快捷回复功能
+ * 主要功能：
+ * 1. 检查聊天侧边栏开通状态
+ * 2. 添加应用（输入应用ID和secret）
+ * 3. 配置侧边栏功能
+ * 4. 查看使用说明和注意事项
+ *
+ * 业务场景：
+ * - 开通后，在企业微信与客户聊天时，可使用高级快捷回复
+ * - 支持多种消息类型：文字、图片、外链、图文链接、第三方链接等
+ * - 支持消息分类管理和一键发送
+ * - 帮助员工提高与客户沟通的效率
+ *
+ * 技术实现：
+ * - 使用 a-modal 弹窗配置应用
+ * - 使用 settingSteps 子组件展示配置步骤
+ * - 集成企业微信应用授权
+ */
 import settingSteps from './components/settingSteps'
 import { createValidate, createFunc } from '@/utils/util'
 import { addChatTool, chatTool } from '@/api/chatTool'

@@ -359,6 +359,26 @@
 </template>
 
 <script>
+/**
+ * 欢迎语创建/编辑页面
+ * 功能说明：创建或编辑客户欢迎语
+ * 主要功能：
+ * 1. 选择适用对象（通用欢迎语/指定成员欢迎语）
+ * 2. 选择企业微信成员
+ * 3. 编辑欢迎语内容
+ * 4. 支持多种消息类型：文本、图片、图文链接、小程序
+ * 5. 实时预览欢迎语效果
+ *
+ * 业务场景：
+ * - 创建新客户添加员工时发送的欢迎语
+ * - 支持为不同员工设置不同的欢迎语
+ *
+ * 技术实现：
+ * - 左侧实时预览欢迎语效果
+ * - 使用 upload/vpload 组件上传素材
+ * - 使用 department 组件选择部门成员
+ * - 使用 selectMember 组件选择企业成员
+ */
 import storage from 'store'
 import upload from './components/upload'
 import vpload from './components/vpload'

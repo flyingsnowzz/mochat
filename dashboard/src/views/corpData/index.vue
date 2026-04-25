@@ -6,61 +6,53 @@
           <p>总数据，本月数据，今日数据 每10分钟更新</p>
           <div class="data">
             <div>
-              <img :src="require('@/assets/systemHomePage/customer-icon.png')" alt="">
+              <img :src="require('@/assets/systemHomePage/customer-icon.png')" alt="" />
               <div class="content">
                 <span>{{ weChatContactNum }}</span>
                 <div>
                   <a-tooltip>
-                    <template slot="title">
-                      企业客户总数
-                    </template>
+                    <template slot="title"> 企业客户总数 </template>
                     <span>总微信客户数</span>
-                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="">
+                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="" />
                   </a-tooltip>
                 </div>
               </div>
             </div>
             <div>
-              <img :src="require('@/assets/systemHomePage/WechatGroup-icon.png')" alt="">
+              <img :src="require('@/assets/systemHomePage/WechatGroup-icon.png')" alt="" />
               <div class="content">
                 <span>{{ weChatRoomNum }}</span>
                 <div>
                   <a-tooltip>
-                    <template slot="title">
-                      企业群聊总数
-                    </template>
+                    <template slot="title"> 企业群聊总数 </template>
                     <span>总微信群数</span>
-                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="">
+                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="" />
                   </a-tooltip>
                 </div>
               </div>
             </div>
             <div>
-              <img :src="require('@/assets/systemHomePage/memberGroup-icon.png')" alt="">
+              <img :src="require('@/assets/systemHomePage/memberGroup-icon.png')" alt="" />
               <div class="content">
                 <span>{{ roomMemberNum }}</span>
                 <div>
                   <a-tooltip>
-                    <template slot="title">
-                      企业群聊内客户总数
-                    </template>
+                    <template slot="title"> 企业群聊内客户总数 </template>
                     <span>总群成员数</span>
-                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="">
+                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="" />
                   </a-tooltip>
                 </div>
               </div>
             </div>
             <div>
-              <img :src="require('@/assets/systemHomePage/enterpriseMembers-icon.png')" alt="">
+              <img :src="require('@/assets/systemHomePage/enterpriseMembers-icon.png')" alt="" />
               <div class="content">
                 <span>{{ corpMemberNum }}</span>
                 <div>
                   <a-tooltip>
-                    <template slot="title">
-                      企业员工总数
-                    </template>
+                    <template slot="title"> 企业员工总数 </template>
                     <span>总企业成员数</span>
-                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="">
+                    <img :src="require('@/assets/systemHomePage/search-icon.png')" alt="" />
                   </a-tooltip>
                 </div>
               </div>
@@ -68,7 +60,9 @@
           </div>
         </div>
         <div class="chart-box">
-          <p>实时概况<span>更新时间：{{ updateTime }}</span></p>
+          <p>
+            实时概况<span>更新时间：{{ updateTime }}</span>
+          </p>
           <div class="chart-data">
             <div>
               <span class="title">新增客户数</span>
@@ -92,14 +86,24 @@
             </div>
           </div>
           <div class="chart-content" v-if="statisticsShow">
-            <v-chart style="width: 100%;" :options="options" ref="chars"></v-chart>
+            <v-chart style="width: 100%" :options="options" ref="chars"></v-chart>
           </div>
           <div class="card-box">
             <div class="card-one card-all">
               <div class="card-left">
-                <span class="card-title">本月新增好友数<img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-title"
+                >本月新增好友数<img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="card-num">{{ addFriendsNum }}</span>
-                <span class="card-add">上月累计新增<img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-add"
+                >上月累计新增<img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="add-num">{{ lastAddFriendsNum }}</span>
               </div>
               <div class="card-right">
@@ -108,9 +112,19 @@
             </div>
             <div class="card-two card-all">
               <div class="card-left">
-                <span class="card-title">本月新增社群数<img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-title"
+                >本月新增社群数<img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="card-num">{{ monthAddRoomNum }}</span>
-                <span class="card-add">上月累计新增<img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-add"
+                >上月累计新增<img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="add-num">{{ lastMonthAddRoomNum }}</span>
               </div>
               <div class="card-right">
@@ -119,9 +133,19 @@
             </div>
             <div class="card-three card-all">
               <div class="card-left">
-                <span class="card-title">本月新增群成员<img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-title"
+                >本月新增群成员<img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="card-num">{{ monthAddRoomMemberNum }}</span>
-                <span class="card-add">上月累计新增<img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-add"
+                >上月累计新增<img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="add-num">{{ lastMonthAddRoomMemberNum }}</span>
               </div>
               <div class="card-right">
@@ -130,9 +154,19 @@
             </div>
             <div class="card-four card-all">
               <div class="card-left">
-                <span class="card-title">本月流失客户数 <img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-title"
+                >本月流失客户数 <img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="card-num">{{ monthLossContactNum }}</span>
-                <span class="card-add">上月累计新增 <img :src="require('@/assets/systemHomePage/searchTwo-icon.png')" alt=""></span>
+                <span
+                  class="card-add"
+                >上月累计新增 <img
+                  :src="require('@/assets/systemHomePage/searchTwo-icon.png')"
+                  alt=""
+                /></span>
                 <span class="add-num">{{ lastMonthLossContactNum }}</span>
               </div>
               <div class="card-right">
@@ -142,24 +176,24 @@
           </div>
         </div>
       </a-card>
-      <a-card title="常用功能" style="marginTop: 12px;">
+      <a-card title="常用功能" style="margintop: 12px">
         <div class="opt-box">
           <div class="opt-content" @click="routerPush('one')">
-            <img :src="require('@/assets/systemHomePage/optBtn-one.png')" alt="">
+            <img :src="require('@/assets/systemHomePage/optBtn-one.png')" alt="" />
             <div>
               <p>客户群发</p>
               <span>了解和客户群发相关的限制</span>
             </div>
           </div>
           <div class="opt-content" @click="routerPush('two')">
-            <img :src="require('@/assets/systemHomePage/optBtn-two.png')" alt="">
+            <img :src="require('@/assets/systemHomePage/optBtn-two.png')" alt="" />
             <div>
               <p>渠道活码</p>
               <span>了解渠道活码的功能和使用</span>
             </div>
           </div>
           <div class="opt-content" @click="routerPush('three')">
-            <img :src="require('@/assets/systemHomePage/optBtn-three.png')" alt="">
+            <img :src="require('@/assets/systemHomePage/optBtn-three.png')" alt="" />
             <div>
               <p>群管理</p>
               <span>统一管理企业客户群</span>
@@ -168,47 +202,30 @@
         </div>
       </a-card>
     </div>
-    <div class="right">
-      <a-card>
-        <div class="QR-code">
-          <p class="title">MoChat企业微信开源框架</p>
-          <div class="edition-box"><span class="msg">版本信息：</span><span class="edition">{{ license.licenseType }}版</span></div>
-          <span class="red">{{ license.licenseNote }}</span>
-          <div class="code-img">
-            <img :src="licenseContactLink" alt="">
-          </div>
-          <span class="code-detail">—扫描上方二维码可购买终身商业授权—</span>
-        </div>
-      </a-card>
-      <a-card title="入门指引" style="marginTop: 13px;">
-        <div class="btn-box">
-          <div>
-            <a :href="guide.docLink" target="_blank">
-              <img :src="require('@/assets/systemHomePage/file-icon.png')" alt="">
-              <span>开发文档</span>
-            </a>
-          </div>
-          <div>
-            <a :href="guide.faqLink" target="_blank">
-              <img :src="require('@/assets/systemHomePage/help-icon.png')" alt="">
-              <span>帮助中心</span>
-            </a>
-          </div>
-        </div>
-      </a-card>
-      <a-card title="更新日志" style="marginTop: 13px">
-        <div class="list" v-for="item in newsList" :key="item.id">
-          <div>
-            <span>{{ item.title }}</span>
-            <span>{{ item.createdAt }}</span>
-          </div>
-        </div>
-      </a-card>
-    </div>
   </div>
 </template>
 
 <script>
+/**
+ * 企业数据统计页面
+ * 功能说明：展示企业的整体数据统计看板
+ * 主要功能：
+ * 1. 查看企业客户总数
+ * 2. 查看企业群聊总数
+ * 3. 查看群成员总数
+ * 4. 查看企业成员总数
+ * 5. 实时概况：新增客户数、新增入群数、流失客户数、退群人数
+ * 6. 与昨日数据对比
+ * 7. 数据趋势图表展示
+ * 8. 本月数据统计
+ *
+ * 数据更新：每10分钟自动更新
+ *
+ * 技术实现：
+ * - 使用 v-chart 绘制统计图表
+ * - 使用 a-tooltip 显示数据说明
+ * - 响应式布局展示多种统计数据
+ */
 import { corpData, lineChat, tenantIndex } from '@/api/corpData'
 export default {
   data () {
@@ -338,11 +355,30 @@ export default {
   },
   methods: {
     getData () {
-      corpData().then(res => {
-        const { addContactNum, addFriendsNum, addIntoRoomNum, corpMemberNum, lastAddContactNum, lastAddFriendsNum,
-          lastAddIntoRoomNum, lastLossContactNum, lastMonthAddRoomMemberNum, lastMonthAddRoomNum,
-          lastMonthLossContactNum, lastQuitRoomNum, lossContactNum, monthAddRoomMemberNum, monthAddRoomNum, monthLossContactNum,
-          quitRoomNum, roomMemberNum, weChatContactNum, weChatRoomNum, updateTime } = res.data
+      corpData().then((res) => {
+        const {
+          addContactNum,
+          addFriendsNum,
+          addIntoRoomNum,
+          corpMemberNum,
+          lastAddContactNum,
+          lastAddFriendsNum,
+          lastAddIntoRoomNum,
+          lastLossContactNum,
+          lastMonthAddRoomMemberNum,
+          lastMonthAddRoomNum,
+          lastMonthLossContactNum,
+          lastQuitRoomNum,
+          lossContactNum,
+          monthAddRoomMemberNum,
+          monthAddRoomNum,
+          monthLossContactNum,
+          quitRoomNum,
+          roomMemberNum,
+          weChatContactNum,
+          weChatRoomNum,
+          updateTime
+        } = res.data
         this.addContactNum = addContactNum || 0
         this.addFriendsNum = addFriendsNum || 0
         this.addIntoRoomNum = addIntoRoomNum || 0
@@ -377,14 +413,14 @@ export default {
     },
     getLineChat () {
       let line = []
-      lineChat().then(res => {
+      lineChat().then((res) => {
         line = res.data
         const addContactNum = []
         const addIntoRoomNum = []
         const lossContactNum = []
         const quitRoomNum = []
         const time = []
-        line.map(item => {
+        line.map((item) => {
           time.push(item.date.substr(5, 5))
           addContactNum.push(item.addContactNum)
           addIntoRoomNum.push(item.addIntoRoomNum)
@@ -392,7 +428,7 @@ export default {
           quitRoomNum.push(item.quitRoomNum)
         })
         this.options.xAxis.data = time
-        this.options.series = this.options.series.map(item => {
+        this.options.series = this.options.series.map((item) => {
           if (item.name == '新增客户数') {
             item.data = addContactNum
           } else if (item.name == '新增入群数') {
@@ -408,7 +444,7 @@ export default {
       })
     },
     getRightData () {
-      tenantIndex({ domain: 'mo.chat' }).then(res => {
+      tenantIndex({ domain: 'mo.chat' }).then((res) => {
         const { license, licenseContactLink, news, guide } = res.data
         this.newsList = news
         this.license = license
@@ -481,7 +517,7 @@ export default {
       display: flex;
       flex-direction: column;
       padding: 10px;
-      p{
+      p {
         width: 100%;
         color: #333333;
         font-size: 12px;
@@ -505,7 +541,7 @@ export default {
           display: flex;
           flex-direction: column;
           border-radius: 5px;
-          box-shadow: 0px 4px 10px 2px rgba(153,153,153,0.20);
+          box-shadow: 0px 4px 10px 2px rgba(153, 153, 153, 0.2);
           .title {
             font-size: 10px;
             color: #999999;
@@ -544,7 +580,7 @@ export default {
             width: 65%;
             display: flex;
             flex-direction: column;
-            .card-title{
+            .card-title {
               font-size: 10px;
               opacity: 0.8;
               img {
@@ -559,7 +595,7 @@ export default {
             .card-add {
               font-size: 10px;
               opacity: 0.8;
-               img {
+              img {
                 width: 10px;
                 height: 10px;
                 margin-left: 3px;
@@ -588,19 +624,19 @@ export default {
         }
         .card-one {
           background: url('../../assets/systemHomePage/card-one.png');
-          background-size:100% 100%;
+          background-size: 100% 100%;
         }
         .card-two {
           background: url('../../assets/systemHomePage/card-two.png');
-          background-size:100% 100%;
+          background-size: 100% 100%;
         }
         .card-three {
           background: url('../../assets/systemHomePage/card-three.png');
-          background-size:100% 100%;
+          background-size: 100% 100%;
         }
         .card-four {
           background: url('../../assets/systemHomePage/card-four.png');
-          background-size:100% 100%;
+          background-size: 100% 100%;
         }
       }
     }
@@ -615,7 +651,7 @@ export default {
         align-items: center;
         padding: 10px;
         border-radius: 5px;
-        box-shadow: 0px 4px 10px 2px rgba(153,153,153,0.20);
+        box-shadow: 0px 4px 10px 2px rgba(153, 153, 153, 0.2);
         cursor: pointer;
         img {
           width: 50px;
@@ -663,7 +699,7 @@ export default {
         }
         .edition {
           padding: 3px 3px;
-          background: rgba(0,97,255,0.10);
+          background: rgba(0, 97, 255, 0.1);
           border: 1px solid #0061ff;
           border-radius: 10px;
           font-size: 10px;
@@ -697,7 +733,7 @@ export default {
         padding: 8px;
         display: flex;
         align-items: center;
-        background: rgba(0,97,255,0.10);
+        background: rgba(0, 97, 255, 0.1);
         border: 1px solid #0061ff;
         border-radius: 5px;
         img {

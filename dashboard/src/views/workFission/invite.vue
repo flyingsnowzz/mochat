@@ -112,7 +112,29 @@
 </template>
 
 <script>
+/**
+ * 邀请客户参与活动页面
+ * 功能说明：邀请客户参与企微任务宝活动
+ * 主要功能：
+ * 1. 选择客户（按员工、客服、性别、添加时间筛选）
+ * 2. 设置邀请文案
+ * 3. 设置邀请链接（标题、描述、封面）
+ * 4. 发送邀请消息
+ * 5. 获取发送数量
+ *
+ * 业务场景：
+ * - 向符合条件的客户发送活动邀请
+ * - 客户收到邀请后可以参与任务宝活动
+ *
+ * 技术实现：
+ * - 使用 selectMember 组件选择员工
+ * - 使用 a-radio-group 进行选项选择
+ * - 使用 a-range-picker 选择时间范围
+ * - 使用 m-enter-text 编辑邀请文案
+ * - 调用 chooseContact 和 inviteMsg API
+ */
 import selectMember from '@/components/Select/member'
+// eslint-disable-next-line no-unused-vars
 import { chooseContact, inviteMsg } from '@/api/workFission'
 
 export default {

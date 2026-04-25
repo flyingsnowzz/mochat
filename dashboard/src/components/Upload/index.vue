@@ -77,6 +77,7 @@ export default {
     setUrl (url) {
       this.getBase64(url).then(res => {
         this.url = res
+        this.$emit('change', res)
       })
     },
     getBase64 (img, time = '3412431') {

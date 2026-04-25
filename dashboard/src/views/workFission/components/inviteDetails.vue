@@ -64,6 +64,22 @@
 </template>
 
 <script>
+/**
+ * 邀请详情组件
+ * 功能说明：展示企微任务宝活动的邀请详情
+ * 主要功能：
+ * 1. 查看邀请人信息
+ * 2. 查看邀请进度
+ * 3. 查看被邀请人列表
+ *
+ * 业务场景：
+ * - 查看具体邀请人的邀请情况
+ * - 追踪邀请进度
+ *
+ * 技术实现：
+ * - 使用 a-table 展示被邀请人列表
+ * - 调用 getInviteInfo API
+ */
 import { getInviteInfo } from '@/api/workFission'
 
 export default {

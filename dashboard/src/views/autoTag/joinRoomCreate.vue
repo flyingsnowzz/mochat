@@ -75,6 +75,28 @@
 </template>
 
 <script>
+/**
+ * 入群打标签规则创建页面
+ * 功能说明：创建入群自动打标签规则，客户加入指定群聊时自动打标签
+ * 主要功能：
+ * 1. 设置规则名称
+ * 2. 设置入群打标签规则：
+ *    - 选择群聊：客户加入指定群聊时触发
+ *    - 执行动作：自动打上指定标签
+ *    - 评分设置：可选是否添加评分
+ * 3. 支持多条规则同时生效
+ *
+ * 业务场景：
+ * - 客户加入特定群聊后自动被打上标签
+ * - 实现客户群分类管理
+ * - 帮助企业识别客户兴趣和需求
+ *
+ * 技术实现：
+ * - 使用 selectGroup 组件选择群聊
+ * - 使用 addlableIndex 组件选择标签
+ * - 使用 a-switch 设置评分开关
+ * - 调用 storeApi 创建规则
+ */
 import { storeApi } from '@/api/autoTag'
 import addlableIndex from '@/components/addlabel/index'
 import selectGroup from '@/components/Select/group'

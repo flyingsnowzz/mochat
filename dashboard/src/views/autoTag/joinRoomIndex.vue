@@ -55,6 +55,29 @@
 </template>
 
 <script>
+/**
+ * 入群打标签规则列表页面
+ * 功能说明：管理客户入群后自动打标签的规则
+ * 主要功能：
+ * 1. 查看入群打标签规则列表
+ * 2. 创建新的入群打标签规则
+ * 3. 按客户标签筛选规则
+ * 4. 按规则名称搜索规则
+ * 5. 开启/关闭规则
+ * 6. 查看规则详情
+ * 7. 删除规则
+ *
+ * 业务场景：
+ * - 客户加入群聊后自动打标签
+ * - 实现客户群分类管理
+ * - 帮助企业识别客户兴趣和需求
+ *
+ * 技术实现：
+ * - 使用 a-table 展示规则列表
+ * - 使用 selectTags 组件选择客户标签
+ * - 使用 a-switch 控制规则开关
+ * - 调用 indexApi、destroyApi、onOffApi 接口
+ */
 import { indexApi, destroyApi, onOffApi } from '@/api/autoTag'
 import selectTags from '@/components/addlabel/selectTags'
 export default {

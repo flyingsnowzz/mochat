@@ -68,6 +68,27 @@
 </template>
 
 <script>
+/**
+ * 在职转接客户分配页面
+ * 功能说明：管理在职员工之间的客户转接分配
+ * 主要功能：
+ * 1. 按客户昵称搜索
+ * 2. 按所属客服筛选
+ * 3. 按添加时间筛选
+ * 4. 批量选择客户进行转接分配
+ * 5. 分配客户给指定员工
+ * 6. 查看分配记录
+ *
+ * 业务场景：
+ * - 在职员工之间的客户转移
+ * - 当员工工作调整时，将客户分配给其他员工跟进
+ * - 支持批量分配
+ *
+ * 技术实现：
+ * - 使用 selectMember 组件选择原客服
+ * - 使用 selectStaff 组件选择接替员工
+ * - 支持多选批量操作
+ */
 import { infoApi, indexApi } from '@/api/contactTransfer'
 import selectMember from '@/components/Select/member'
 import selectStaff from '@/components/addlabel/selectStaff'

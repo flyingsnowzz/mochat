@@ -191,8 +191,23 @@
   </div>
 </template>
 <script>
-// import msgModel from '@/components/MsgModel'
-// eslint-disable-next-line no-unused-vars
+/**
+ * 客户群发消息详情页面
+ * 功能说明：查看单条群发消息的详细信息和发送状态
+ * 主要功能：
+ * 1. 查看群发消息的基本信息（创建者、创建时间、群发类型）
+ * 2. 查看群发消息内容（支持文本、图片、链接、小程序）
+ * 3. 查看群发对象（全部客户或筛选条件）
+ * 4. 查看客户收到消息的统计（已发送/已接收/未接收）
+ * 5. 查看每位员工的发送情况
+ * 6. 查看每个客户的接收情况
+ * 7. 提醒未接收消息的客户
+ *
+ * 业务场景：
+ * - 查看具体某次群发消息的完整信息
+ * - 追踪群发消息的发送状态
+ * - 对未收到消息的客户进行提醒
+ */
 import { showApi, employeeSendIndexApi, contactReceiveIndexApi, remindApi } from '@/api/contactMessageBatchSend'
 export default {
   components: {

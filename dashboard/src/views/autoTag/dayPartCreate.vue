@@ -116,6 +116,28 @@
 </template>
 
 <script>
+/**
+ * 定时打标签规则创建页面
+ * 功能说明：创建定时自动打标签规则，在特定时间（如客户生日）自动为客户打标签
+ * 主要功能：
+ * 1. 设置规则名称
+ * 2. 设置生效员工
+ * 3. 设置触发条件：
+ *    - 定时类型：生日、每年指定日期、每月指定日期
+ *    - 执行动作：自动打上指定标签
+ * 4. 支持多条规则同时生效
+ *
+ * 业务场景：
+ * - 客户生日自动打标签并发送祝福
+ * - 重要日期提醒打标签
+ * - 节假日自动打标签
+ *
+ * 技术实现：
+ * - 使用 a-date-picker 选择日期
+ * - 使用 addlableIndex 组件选择标签
+ * - 使用 a-switch 设置开关
+ * - 调用 storeApi 创建规则
+ */
 import { storeApi } from '@/api/autoTag'
 import moment from 'moment'
 import addlableIndex from '@/components/addlabel/index'

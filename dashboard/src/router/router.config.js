@@ -5,12 +5,12 @@ import { routeList } from './asyncRouter'
 export function dealPermissionData (data) {
   const topMenus = []
   const secondMenus = []
-  const whiteList = ['/passwordUpdate/index']
+  const whiteList = ['/passwordUpdate/index', '/roomWelcome/index', '/roomWelcome/create']
   if (data instanceof Array && data.length > 0) {
     data.forEach(item => {
       const { name } = item
       const firstMenuItem = {
-        path: '',
+        path: `/${name}`,
         title: name,
         routes: [],
         children: []
@@ -20,8 +20,8 @@ export function dealPermissionData (data) {
         item.children.forEach(second => {
           const { name, icon } = second
           const secondMenuItem = {
-            path: '',
-            name: '',
+            path: `/${name}`,
+            name: name,
             component: BasicLayout,
             meta: { title: name, icon: icon || 'menu' },
             redirect: '',
@@ -109,16 +109,16 @@ export function dealPermissionData (data) {
           secondMenus.push(secondMenuItem)
         })
       }
-      firstMenuItem.path = (firstMenuItem.children && firstMenuItem.children[0] && firstMenuItem.children[0].path) || ''
+      firstMenuItem.path = (firstMenuItem.children && firstMenuItem.children[0] && firstMenuItem.children[0].path) || `/${firstMenuItem.title}`
       topMenus.push(firstMenuItem)
     })
   }
   const path = topMenus[0].children[0].redirect
   secondMenus.unshift({
     path: '/',
-    name: '/',
+    name: 'root',
     component: BasicLayout,
-    meta: { title: '/' },
+    meta: { title: '首页' },
     redirect: path
   })
   return { topMenus, secondMenus, path }

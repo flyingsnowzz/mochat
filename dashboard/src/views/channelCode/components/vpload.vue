@@ -13,6 +13,21 @@
   </a-upload>
 </template>
 <script>
+/**
+ * 视频上传组件
+ * 功能说明：用于渠道码场景的视频上传
+ * 主要功能：
+ * 1. 支持视频文件上传
+ * 2. 视频预览
+ * 3. 上传进度显示
+ *
+ * 业务场景：
+ * - 在渠道码中上传视频素材
+ *
+ * 技术实现：
+ * - 使用 HTML5 Video API
+ * - 使用 storage 进行本地存储
+ */
 import storage from 'store'
 
 export default {

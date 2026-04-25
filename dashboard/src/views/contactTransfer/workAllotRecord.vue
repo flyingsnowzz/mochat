@@ -44,6 +44,24 @@
 </template>
 
 <script>
+/**
+ * 在职转接分配记录页面
+ * 功能说明：查看在职员工客户转接的分配记录
+ * 主要功能：
+ * 1. 按接替员工筛选
+ * 2. 按分配时间范围筛选
+ * 3. 重置筛选条件
+ * 4. 查看已分配客户列表
+ *
+ * 业务场景：
+ * - 在职员工之间的客户转移记录
+ * - 用于追溯客户转接的历史
+ *
+ * 技术实现：
+ * - 使用 a-table 展示数据
+ * - 使用 a-select 的 showSearch 实现员工搜索
+ * - 使用 a-range-picker 选择时间范围
+ */
 import { logApi, department } from '@/api/contactTransfer'
 export default {
   data () {

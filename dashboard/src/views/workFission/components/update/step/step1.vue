@@ -154,6 +154,25 @@
 </template>
 
 <script>
+/**
+ * 企微任务宝活动编辑向导 - 步骤1：活动基本信息设置
+ * 功能说明：编辑企微任务宝活动的基本信息
+ * 主要功能：
+ * 1. 选择公众号
+ * 2. 设置活动名称
+ * 3. 设置活动结束时间
+ * 4. 设置活动目标人数
+ * 5. 高级设置
+ *
+ * 业务场景：
+ * - 编辑已创建的任务宝活动
+ * - 修改活动参数和设置
+ *
+ * 技术实现：
+ * - 使用 selectMember 组件选择客服
+ * - 使用 a-date-picker 选择时间
+ * - 使用 a-input-number 设置目标人数
+ */
 import selectMember from '@/components/Select/member'
 import selectPublic from '@/components/Select/Public'
 import moment from 'moment'

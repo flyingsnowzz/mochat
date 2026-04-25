@@ -99,6 +99,25 @@
 </template>
 
 <script>
+/**
+ * 企微任务宝活动编辑向导 - 步骤3：推送设置
+ * 功能说明：编辑企微任务宝活动的推送消息设置
+ * 主要功能：
+ * 1. 设置给员工推送：任务完成时通知员工
+ * 2. 设置给客户推送：任务完成时通知客户
+ * 3. 编辑推送消息内容：文本、图片、链接、小程序
+ * 4. 选择消息类型
+ *
+ * 业务场景：
+ * - 编辑任务宝活动的推送通知设置
+ * - 自定义推送消息内容
+ *
+ * 技术实现：
+ * - 使用 a-switch 设置推送开关
+ * - 使用 a-radio-group 选择消息类型
+ * - 使用 m-enter-text 编辑文本消息
+ * - 使用 selectApplets 组件选择小程序
+ */
 import selectApplets from '@/components/Select/applets'
 
 export default {

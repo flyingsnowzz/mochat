@@ -22,6 +22,21 @@
   </a-upload>
 </template>
 <script>
+/**
+ * 文件上传组件
+ * 功能说明：用于渠道码等场景的文件上传
+ * 支持的文件类型：
+ * - type=1: 图片（jpg、png、jpeg）
+ * - type=2: 音频（mp3、amr）
+ * - type=3: 视频（mp4）
+ * - type=4: 文档（doc、docx、xls、xlsx、csv、ppt、pptx、txt、pdf、Xmind）
+ *
+ * 技术实现：
+ * - 使用 Ant Design Upload 组件
+ * - 文件大小限制：图片/音频/视频最大2M（视频10M）
+ * - 支持自定义请求头（携带JWT token）
+ * - 上传成功后通过 $emit('success', data) 回调
+ */
 import storage from 'store'
 
 export default {

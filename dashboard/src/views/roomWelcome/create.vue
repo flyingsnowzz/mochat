@@ -107,6 +107,30 @@
 </template>
 
 <script>
+/**
+ * 入群欢迎语创建/编辑页面
+ * 功能说明：创建或修改企业微信群聊的入群欢迎语
+ * 主要功能：
+ * 1. 创建新的入群欢迎语
+ * 2. 编辑现有的入群欢迎语
+ * 3. 支持多种消息类型：文字、图片、链接、小程序
+ * 4. 实时预览消息效果
+ * 5. 支持插入客户昵称
+ * 6. 消息提醒设置
+ *
+ * 业务场景：
+ * - 企业可以为不同的群聊设置不同的欢迎语
+ * - 欢迎语可以包含文字、图片、链接或小程序
+ * - 支持组合使用多种消息类型
+ * - 可以通过消息提醒通知员工新创建的欢迎语
+ *
+ * 技术实现：
+ * - 使用 a-form 表单收集欢迎语内容
+ * - 使用 m-upload 组件上传图片
+ * - 使用 AddApplets 组件选择小程序
+ * - 使用 m-preview 组件预览消息效果
+ * - 支持表单验证和字数限制
+ */
 import AddApplets from '../../components/Select/applets'
 // eslint-disable-next-line no-unused-vars
 import { add, update, getDetail } from '@/api/roomWelcome'

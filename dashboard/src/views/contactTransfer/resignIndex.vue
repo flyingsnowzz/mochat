@@ -110,8 +110,31 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { unassignedListApi, roomApi, saveUnassignedListApi, indexApi, postRoomApi } from '@/api/contactTransfer'
+/**
+ * 离职客户分配页面
+ * 功能说明：管理离职员工的客户和群聊，将它们分配给其他员工
+ * 主要功能：
+ * 1. 切换"待分配客户"和"待分配群聊"两个Tab
+ * 2. 按客户昵称/群名称搜索
+ * 3. 按所属客服筛选（仅客户Tab）
+ * 4. 按添加时间筛选（仅客户Tab）
+ * 5. 批量选择客户/群聊进行分配
+ * 6. 分配客户/群聊给指定员工
+ * 7. 同步企业微信数据
+ * 8. 查看分配记录
+ *
+ * 业务场景：
+ * - 员工离职后，其客户和群聊需要分配给在职员工继续跟进
+ * - 支持批量分配和单独分配
+ * - 分配后可查看分配历史记录
+ *
+ * 技术实现：
+ * - 使用 a-tabs 实现 Tab 切换
+ * - 使用 selectMember 组件选择客服
+ * - 使用 selectStaff 组件选择接替员工
+ * - 支持多选批量操作
+ */
+import { unassignedListApi, roomApi, indexApi, postRoomApi } from '@/api/contactTransfer'
 import selectMember from '@/components/Select/member'
 import selectStaff from '@/components/addlabel/selectStaff'
 export default {

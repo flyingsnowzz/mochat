@@ -55,7 +55,26 @@
   </div>
 </template>
 <script>
-// eslint-disable-next-line no-unused-vars
+/**
+ * 客户群发消息列表页面
+ * 功能说明：查看和管理所有客户群发消息
+ * 主要功能：
+ * 1. 查看所有群发消息列表（内容、类型、发送时间、状态）
+ * 2. 支持多种消息类型：文本、图片、链接、小程序
+ * 3. 区分立即发送和定时发送
+ * 4. 提醒未收到消息的客户发送
+ * 5. 查看群发详情
+ * 6. 删除群发消息
+ *
+ * 业务场景：
+ * - 企业可向选定的客户群体发送群发消息
+ * - 支持定时发送和立即发送
+ * - 可追踪消息发送状态并提醒未收到消息的客户
+ *
+ * 技术实现：
+ * - 使用 a-table 展示群发消息列表
+ * - 支持文本、图片、链接、小程序等多种消息格式展示
+ */
 import { indexApi, destroyApi, remindApi } from '@/api/contactMessageBatchSend'
 export default {
   data () {

@@ -13,6 +13,21 @@
   </a-upload>
 </template>
 <script>
+/**
+ * 欢迎语音视频上传组件
+ * 功能说明：用于欢迎语场景的音视频上传
+ * 主要功能：
+ * 1. 支持音视频文件上传
+ * 2. 文件预览
+ * 3. 上传进度显示
+ *
+ * 业务场景：
+ * - 在欢迎语中上传音频或视频素材
+ *
+ * 技术实现：
+ * - 使用 HTML5 Media API
+ * - 使用 storage 进行本地存储
+ */
 import storage from 'store'
 
 export default {

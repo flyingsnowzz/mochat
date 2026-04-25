@@ -187,6 +187,41 @@
 </template>
 
 <script>
+/**
+ * 客户标签管理页面
+ * 功能说明：管理企业微信客户的标签和标签分组
+ * 主要功能：
+ * 1. 标签分组管理：
+ *    - 新增分组
+ *    - 修改分组名称
+ *    - 查看分组列表
+ * 2. 标签管理：
+ *    - 新建标签（支持批量创建，用空格分隔）
+ *    - 编辑标签名称
+ *    - 删除标签
+ *    - 移动标签到其他分组
+ *    - 批量删除标签
+ * 3. 同步企业微信标签
+ * 4. 查看标签列表和客户数量
+ *
+ * 业务规则：
+ * - 标签分组名称不能重复
+ * - 标签总数量不限制，但每个客户最多可打20个标签
+ * - 标签分组删除后，归属于该分组的标签均将被删除
+ * - 【未分组】为固定存在，不可修改名称，亦不可删除
+ *
+ * 业务场景：
+ * - 企业管理员创建和管理客户标签
+ * - 通过标签对客户进行分类和筛选
+ * - 与企业微信标签同步，保持数据一致性
+ *
+ * 技术实现：
+ * - 使用 a-table 展示标签列表
+ * - 使用 a-modal 弹窗进行分组和标签的添加/编辑/删除操作
+ * - 使用 a-select 选择分组
+ * - 使用 a-popconfirm 确认删除操作
+ * - 使用权限指令 v-permission 控制按钮权限
+ */
 import { contactTagList, getContactTagGroup, addContactTag, delContactTag, contactTagDetail, editContactTag, addContactTagGroup, delContactTagGroup, moveContactTag, syncTag, editContactTagGroup } from '@/api/workContactTag'
 export default {
   data () {

@@ -209,6 +209,29 @@
   </div>
 </template>
 <script>
+/**
+ * 群聊群发消息详情页面
+ * 功能说明：查看群聊群发消息的详细信息和数据统计
+ * 主要功能：
+ * 1. 查看群发消息基本信息：创建者、创建时间、群发对象
+ * 2. 查看消息内容：文本、图片、链接、小程序
+ * 3. 数据统计：已发送/未发送群主、已送达/未送达群聊
+ * 4. 客户群接受详情表格：群聊名称、群主、成员数量、送达状态
+ * 5. 群主发送详情表格：群主、客户数、发送状态
+ * 6. 筛选功能：按群聊名称、群主、送达状态筛选
+ * 7. 提醒发送功能
+ *
+ * 业务场景：
+ * - 查看群发消息的发送效果
+ * - 追踪群聊的送达情况
+ * - 提醒未发送的群主发送消息
+ *
+ * 技术实现：
+ * - 使用 a-tabs 切换不同表格视图
+ * - 使用 a-table 展示数据
+ * - 使用 a-modal 展示群发详情
+ * - 调用 show、roomOwnerSendIndex、roomReceiveIndex API
+ */
 import { Empty } from 'ant-design-vue'
 // eslint-disable-next-line no-unused-vars
 import { show, roomOwnerSendIndex, roomReceiveIndex, department, remind } from '@/api/roomMessageBatchSend'

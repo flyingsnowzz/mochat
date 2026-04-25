@@ -114,6 +114,27 @@
   </div>
 </template>
 <script>
+/**
+ * 群日历设置组件
+ * 功能说明：设置群日历的事件和提醒
+ * 主要功能：
+ * 1. 设置日历名称
+ * 2. 选择群聊
+ * 3. 选择发送成员
+ * 4. 设置标签
+ * 5. 设置提醒时间
+ * 6. 设置入群引导语
+ *
+ * 业务场景：
+ * - 创建群日历事件来提醒员工发送群发消息
+ * - 定时发送群邀请
+ *
+ * 技术实现：
+ * - 使用 LabelGroup 组件选择标签
+ * - 使用 upload 组件上传图片
+ * - 使用 a-date-picker 选择时间
+ * - 使用 a-switch 设置开关
+ */
 import LabelGroup from '@/components/addlabel'
 import upload from '@/components/MaUpload'
 import moment from 'moment'

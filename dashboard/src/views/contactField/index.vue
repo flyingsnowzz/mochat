@@ -178,6 +178,28 @@
 </template>
 
 <script>
+/**
+ * 客户字段管理页面
+ * 功能说明：管理客户的自定义字段（高级属性）
+ * 主要功能：
+ * 1. 查看系统预设字段（手机号、姓名、公司、年龄、性别、行业、爱好、生日、所在区域等15个通用属性）
+ * 2. 新增自定义字段（支持文本、单选、多选、日期等类型）
+ * 3. 编辑字段名称、排序、状态
+ * 4. 批量修改字段状态
+ * 5. 开启/关闭字段
+ * 6. 删除自定义字段（系统字段不可删除）
+ *
+ * 业务场景：
+ * - 企业可以根据业务需求，定义客户的其他属性字段
+ * - 字段类型包括：文本、单选、多选、日期等
+ * - 可控制字段的显示顺序和启用状态
+ *
+ * 技术实现：
+ * - 使用 a-tabs 实现 Tab 切换
+ * - 使用 a-table 展示字段列表
+ * - 使用 a-modal 弹窗新增/编辑字段
+ * - 使用权限指令 v-permission 控制按钮权限
+ */
 import { contactFieldList, delContactField, statusUpdate, addContactField, batchUpdate, editContactField } from '@/api/contactField'
 export default {
   data () {

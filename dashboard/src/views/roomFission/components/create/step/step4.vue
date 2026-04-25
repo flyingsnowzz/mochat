@@ -119,7 +119,25 @@
   </div>
 </template>
 <script>
-// eslint-disable-next-line no-unused-vars
+/**
+ * 群裂变创建向导 - 步骤4：邀请参与设置
+ * 功能说明：选择参与活动的员工和客户
+ * 主要功能：
+ * 1. 选择参与员工的方式（指定员工或全部员工）
+ * 2. 选择参与客户（全部客户或筛选客户）
+ * 3. 客户筛选条件：性别、添加时间、客户等级/标签
+ * 4. 发送邀请消息给选定的客户
+ *
+ * 业务场景：
+ * - 企业主动邀请客户参与群裂变活动
+ * - 可以按条件筛选目标客户群体
+ * - 员工选择后，企业微信会给客户发送活动邀请消息
+ *
+ * 技术实现：
+ * - 使用 selectMember 组件选择员工
+ * - 使用 a-range-picker 选择时间范围
+ * - 使用 a-radio-group 选择客户筛选条件
+ */
 import { contactTagListApi } from '@/api/roomFission'
 import selectMember from '@/components/Select/member'
 

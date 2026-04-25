@@ -34,5 +34,10 @@ func (s *RoomWelcomeService) Create(item *model.RoomWelcomeTemplate) error {
 }
 
 func (s *RoomWelcomeService) Update(id uint, updates map[string]interface{}) error {
-	return s.db.Model(&model.RoomWelcomeTemplate{}).Where("id = ?", id).Updates(updates).Error
+	// 使用 Select 方法强制更新所有字段，包括零值字段
+	return s.db.Model(&model.RoomWelcomeTemplate{}).Where("id = ?", id).Select("msg_text", "msg_complex", "complex_type").Updates(updates).Error
+}
+
+func (s *RoomWelcomeService) Delete(id uint) error {
+	return s.db.Delete(&model.RoomWelcomeTemplate{}, id).Error
 }

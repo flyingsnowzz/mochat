@@ -110,6 +110,28 @@
   </div>
 </template>
 <script>
+/**
+ * 企业微信账号管理页面
+ * 功能说明：管理已接入 MoChat 的企业微信账号
+ * 主要功能：
+ * 1. 查看已添加的企业微信列表
+ * 2. 搜索企业微信
+ * 3. 添加新的企业微信账号
+ * 4. 查看企业微信详情
+ * 5. 修改企业微信配置
+ *
+ * 配置内容：
+ * - 企业名称
+ * - 企业ID（wxCorpId）
+ * - 自建应用secret
+ * - 外部联系人管理secret
+ * - 回调事件服务器URL、Token、EncodingAESKey
+ *
+ * 技术实现：
+ * - 使用 a-table 展示企业列表
+ * - 使用 a-modal 弹窗进行添加/编辑/查看操作
+ * - 使用权限指令 v-permission 控制按钮权限
+ */
 import { wechatAuthList, addEnterpriseWeChat, lookEnterpriseWeChat, editEnterpriseWeChat } from '@/api/corp'
 export default {
   name: 'WechatAuthorization',

@@ -27,6 +27,26 @@
   </div>
 </template>
 <script>
+/**
+ * 密码修改页面
+ * 功能说明：用于用户修改自己的登录密码
+ * 主要功能：
+ * 1. 显示当前用户的手机号码
+ * 2. 输入旧密码
+ * 3. 输入新密码
+ * 4. 确认新密码
+ * 5. 保存密码修改
+ *
+ * 业务场景：
+ * - 用户登录后可以修改自己的登录密码
+ * - 修改成功后会自动退出登录，需要重新登录
+ *
+ * 技术实现：
+ * - 使用 a-form-model 表单组件
+ * - 从 vuex 中获取用户信息（手机号码）
+ * - 调用 passWordUpdate API 修改密码
+ * - 修改成功后调用 Logout 退出登录
+ */
 import { passWordUpdate } from '@/api/passWordUpdate'
 import { mapGetters } from 'vuex'
 export default {

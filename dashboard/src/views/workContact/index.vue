@@ -206,6 +206,37 @@
 </template>
 
 <script>
+/**
+ * 客户管理页面
+ * 功能说明：管理企业微信客户，包括筛选、查看详情等操作
+ * 主要功能：
+ * 1. 多维度筛选客户：
+ *    - 关键词（客户姓名/昵称）
+ *    - 备注
+ *    - 用户画像（自定义字段）
+ *    - 客户性别
+ *    - 客户来源
+ *    - 选择群聊
+ *    - 客户持群数
+ *    - 选择群主
+ *    - 客户编码
+ *    - 添加时间
+ * 2. 同步客户数据
+ * 3. 查看客户列表（客户信息、所属客服、所在群、来源、标签、添加时间）
+ * 4. 查看客户详情
+ *
+ * 业务场景：
+ * - 企业管理员和客服查看客户信息
+ * - 按各种条件筛选目标客户
+ * - 管理客户数据
+ *
+ * 技术实现：
+ * - 使用 a-table 展示客户列表
+ * - 使用 a-form 构建筛选表单
+ * - 使用 a-modal 弹窗选择群聊
+ * - 使用 department 组件选择企业成员
+ * - 使用权限指令 v-permission 控制按钮权限
+ */
 import { workContactList, groupChatList, customersSource, UserPortraitList, synContact } from '@/api/workContact'
 import { departmentList } from '@/api/workRoom'
 import department from './components/department'

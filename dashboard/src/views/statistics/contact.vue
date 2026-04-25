@@ -85,6 +85,29 @@
 </template>
 
 <script>
+/**
+ * 客户统计页面
+ * 功能说明：展示客户数据统计和趋势分析
+ * 主要功能：
+ * 1. 显示今日增长数据：客户总数、今日新增、今日流失、今日净增数
+ * 2. 趋势图分析：
+ *    - 支持按客户总数、新增客户数、流失客户数、净增客户数查看
+ *    - 支持日期范围筛选
+ *    - 支持按员工筛选
+ * 3. 按日期查看详细数据表格
+ *
+ * 业务场景：
+ * - 企业管理员查看客户增长趋势
+ * - 分析员工的客户获取和流失情况
+ * - 评估客户增长策略的效果
+ *
+ * 技术实现：
+ * - 使用 echarts 绘制趋势图表
+ * - 使用 a-card 展示数据面板
+ * - 使用 a-table 展示详细数据
+ * - 使用 selectMember 组件选择员工
+ * - 使用 a-range-picker 选择日期范围
+ */
 import echarts from 'echarts'
 import { contactInfo } from '@/api/statistic'
 import moment from 'moment'

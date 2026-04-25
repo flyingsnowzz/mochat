@@ -182,6 +182,31 @@
   </div>
 </template>
 <script>
+/**
+ * 群聊群发消息创建页面
+ * 功能说明：创建新的群聊群发消息
+ * 主要功能：
+ * 1. 填写群发名称（仅内部可见）
+ * 2. 选择群主（消息发送者）
+ * 3. 编辑群发消息内容
+ * 4. 支持多种消息类型：
+ *    - 消息1：文本（必填，最多400字）
+ *    - 消息2：图片、链接、小程序（可选）
+ * 5. 设置发送时间（立即发送或定时发送）
+ * 6. 实时预览消息效果
+ *
+ * 业务场景：
+ * - 企业向多个群聊发送通知、活动、推广等消息
+ * - 每个群聊每个月最多接受4条群发消息
+ * - 消息会发送给选择的群主，群主在企业微信中选择群聊发送
+ *
+ * 技术实现：
+ * - 使用 a-form-model 表单组件
+ * - 使用 selectMember 组件选择群主
+ * - 使用 upload 组件上传图片
+ * - 使用 m-preview 组件实时预览消息效果
+ * - 支持从素材库导入小程序素材
+ */
 import department from '@/components/department'
 import upload from '@/components/MaUpload'
 // eslint-disable-next-line no-unused-vars

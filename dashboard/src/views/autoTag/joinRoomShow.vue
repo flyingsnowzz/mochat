@@ -153,6 +153,25 @@
 </template>
 
 <script>
+/**
+ * 入群打标签规则详情页面
+ * 功能说明：查看入群打标签规则的详细信息和数据统计
+ * 主要功能：
+ * 1. 查看规则基本信息：创建人、生效成员、创建时间、自动添加标签
+ * 2. 查看规则设置：入群条件、打标签设置
+ * 3. 数据统计：打标签总数、今日打标签数
+ * 4. 查看入群客户列表：客户名称、所属员工、入群时间、标签
+ * 5. 搜索和筛选功能
+ *
+ * 业务场景：
+ * - 查看入群打标签规则的执行效果
+ * - 追踪入群客户的标签情况
+ *
+ * 技术实现：
+ * - 使用 a-table 展示客户列表
+ * - 使用 a-range-picker 选择时间范围
+ * - 调用 showApi、showContactRoomApi API
+ */
 import { showApi, showContactRoomApi } from '@/api/autoTag'
 export default {
   data () {

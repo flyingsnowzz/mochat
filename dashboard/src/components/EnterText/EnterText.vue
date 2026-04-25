@@ -19,7 +19,16 @@ export default {
     prop: 'modelVal',
     event: 'change'
   },
-  props: ['modelVal', 'defText'],
+  props: {
+    modelVal: {
+      type: String,
+      default: ''
+    },
+    defText: {
+      type: [Boolean, String],
+      default: ''
+    }
+  },
   data () {
     return {
       text: '@用户昵称 ，欢迎加入xxx活动的福利群哟～仅需完成以下三步即可领取奖品哦\n' +
@@ -49,6 +58,7 @@ export default {
       const restoreTop = textarea.scrollTop
       // this.text = this.text.substring(0, startPos) + value + this.text.substring(endPos, this.text.length)
       this.text = value
+      this.$emit('change', value)
       if (restoreTop > 0) {
         textarea.scrollTop = restoreTop
       }

@@ -294,6 +294,25 @@
 </template>
 
 <script>
+/**
+ * 企微任务宝数据统计页面
+ * 功能说明：展示企微任务宝活动的数据统计和分析
+ * 主要功能：
+ * 1. 查看活动数据统计：参与人数、完成任务人数、裂变排行榜
+ * 2. 查看活动详情列表
+ * 3. 查看邀请详情
+ * 4. 数据可视化展示
+ *
+ * 业务场景：
+ * - 分析任务宝活动的效果
+ * - 追踪裂变活动的参与情况
+ * - 识别优秀邀请人
+ *
+ * 技术实现：
+ * - 使用 echarts 绘制数据图表
+ * - 使用 a-table 展示活动列表
+ * - 调用 getList、getStatistics、getUserList API
+ */
 import echarts from 'echarts'
 import { getList, getStatistics, getUserList } from '@/api/workFission'
 import inviteDetails from '@/views/workFission/components/inviteDetails'

@@ -106,6 +106,31 @@
 </template>
 
 <script>
+/**
+ * 角色管理页面
+ * 功能说明：管理系统角色和权限
+ * 主要功能：
+ * 1. 查看角色列表（名称、人员数量、描述、状态）
+ * 2. 按角色名称搜索
+ * 3. 添加新角色
+ * 4. 编辑角色信息
+ * 5. 复制角色权限
+ * 6. 删除角色（只有无人员的角色可删除）
+ * 7. 启用/禁用角色
+ * 8. 查看角色成员列表
+ * 9. 设置角色权限
+ *
+ * 业务场景：
+ * - 企业管理员创建不同的角色，分配不同的权限
+ * - 控制员工对系统功能的访问权限
+ * - 支持部门数据全览权限设置
+ *
+ * 技术实现：
+ * - 使用 a-table 展示角色列表
+ * - 使用 a-modal 弹窗进行添加/编辑操作
+ * - 使用 a-checkbox 控制角色启用状态
+ * - 使用权限指令 v-permission 控制按钮权限
+ */
 import { roleList, roleShowEmployee, roleStore, statusUpdate, roleUpdate, roleDelete, roleDetail } from '@/api/role'
 const columns = [
   {

@@ -758,6 +758,29 @@
 </template>
 
 <script>
+/**
+ * 内容引擎/素材库管理页面
+ * 功能说明：管理企业的各类素材（图片、音频、视频、文件等）
+ * 主要功能：
+ * 1. 查看素材列表（所有、图片、音频、视频、文件）
+ * 2. 按分组筛选素材
+ * 3. 新增分组
+ * 4. 修改分组名称
+ * 5. 上传素材
+ * 6. 删除素材
+ * 7. 移动素材到其他分组
+ * 8. 搜索素材
+ *
+ * 业务场景：
+ * - 统一管理企业的营销素材
+ * - 支持多种素材类型
+ * - 素材可被欢迎语、群发消息等功能引用
+ *
+ * 技术实现：
+ * - 使用 a-tabs 切换素材类型
+ * - 使用 a-table 展示素材列表
+ * - 使用 upload/vpload 组件上传不同类型素材
+ */
 import storage from 'store'
 import { materialLibraryList, mediumGroup, addMediumGroup, editMediumGroup, delMediumGroup, delMaterialLibrary, addMaterialLibrary, moveGroup, getMaterialLibrary, editMaterialLibrary } from '@/api/mediumGroup'
 import upload from './components/upload'

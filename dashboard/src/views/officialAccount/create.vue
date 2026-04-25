@@ -26,7 +26,19 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
+/**
+ * 公众号授权页面
+ * 功能说明：通过微信开放平台授权公众号
+ * 主要功能：
+ * 1. 获取授权跳转链接
+ * 2. 跳转微信授权页面
+ * 3. 授权说明提示
+ *
+ * 业务场景：
+ * - 引导用户完成公众号授权流程
+ * - 需要公众号管理员扫码授权
+ * - 部分功能（群打卡、门店活码、互动雷达、裂变、抽奖）需认证服务号
+ */
 import { componentloginpageApi } from '@/api/officialAccount'
 export default {
   data () {

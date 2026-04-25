@@ -16,16 +16,11 @@
       </div>
       <div class="right-wrapper">
         <div class="right">
-          <a-form class="form-one" :label-col="{ span: 3 }" :wrapper-col="{ span: 7}">
+          <a-form class="form-one" :label-col="{ span: 3 }" :wrapper-col="{ span: 7 }">
             <a-form-item label="选择分组" class="form-group">
               <a-select v-model="workRoomGroupId">
-                <a-select-option :value="0">
-                  未分组
-                </a-select-option>
-                <a-select-option
-                  :value="item.workRoomGroupId"
-                  v-for="(item, index) in group"
-                  :key="index">
+                <a-select-option :value="0"> 未分组 </a-select-option>
+                <a-select-option :value="item.workRoomGroupId" v-for="(item, index) in group" :key="index">
                   {{ item.workRoomGroupName }}
                 </a-select-option>
               </a-select>
@@ -36,15 +31,9 @@
               <a-input v-model="qrcodeName" :disabled="edit" :maxLength="30" placeholder="请输入扫码名称"></a-input>
             </a-form-item>
             <a-form-item label="添加验证" class="form-item">
-              <a-radio-group
-                v-model="isVerified"
-              >
-                <a-radio :value="1">
-                  需验证
-                </a-radio>
-                <a-radio :value="2">
-                  直接通过
-                </a-radio>
+              <a-radio-group v-model="isVerified">
+                <a-radio :value="1"> 需验证 </a-radio>
+                <a-radio :value="2"> 直接通过 </a-radio>
               </a-radio-group>
             </a-form-item>
             <a-form-item label="使用成员" class="form-item">
@@ -60,12 +49,21 @@
                     <li class="tag-item" v-if="index < tagShowNum">
                       <a-button class="group-name" @click="chooseTagGroup(item.groupId)">{{ item.groupName }}</a-button>
                       <div class="tag-content">
-                        <a-tag class="tag" :color="inner.isSelected == 1 ? '#1890ff' : ''" v-for="(inner, i) in item.list" @click="chooseTag(item, inner.tagId)" :key="i">{{ inner.tagName }}</a-tag>
+                        <a-tag
+                          class="tag"
+                          :color="inner.isSelected == 1 ? '#1890ff' : ''"
+                          v-for="(inner, i) in item.list"
+                          @click="chooseTag(item, inner.tagId)"
+                          :key="i"
+                        >{{ inner.tagName }}</a-tag
+                        >
                         <a-button class="add-new" @click="addNewTag(item.groupId, item.groupName)">+新建标签</a-button>
                       </div>
                     </li>
                   </div>
-                  <a-button v-if="tags.length > 5" @click="showMore" type="link">{{ tagShowMore ? '收起' : '展开' }}</a-button>
+                  <a-button v-if="tags.length > 5" @click="showMore" type="link">{{
+                    tagShowMore ? '收起' : '展开'
+                  }}</a-button>
                 </ul>
               </div>
             </a-form-item>
@@ -74,11 +72,13 @@
                 <a-row>
                   <a-textarea id="textarea" :disabled="edit" v-model="leadingWords" :maxLength="1000" :rows="4" />
                 </a-row>
+                <a-row> 点击插入<a-button type="primary" :disabled="edit" @click="insert">客户名称</a-button> </a-row>
                 <a-row>
-                  点击插入<a-button type="primary" :disabled="edit" @click="insert">客户名称</a-button>
-                </a-row>
-                <a-row>
-                  <a-alert :show-icon="false" message="提示：火狐浏览器可能出现无法正确插入客户名称，请使用谷歌、360浏览器" banner />
+                  <a-alert
+                    :show-icon="false"
+                    message="提示：火狐浏览器可能出现无法正确插入客户名称，请使用谷歌、360浏览器"
+                    banner
+                  />
                 </a-row>
               </div>
             </a-form-item>
@@ -89,11 +89,7 @@
                 </p>
               </a-row>
               <a-row>
-                <a-table
-                  bordered
-                  rowKey="roomId"
-                  :columns="columns"
-                  :data-source="rooms">
+                <a-table bordered rowKey="roomId" :columns="columns" :data-source="rooms">
                   <div slot="maxNum" slot-scope="text, record">
                     <div>
                       群人数达到
@@ -103,12 +99,8 @@
                   </div>
                   <div slot="longRoomQrcodeUrl" slot-scope="text, record, index">
                     <div @click="upload(record, index)">
-                      <upload
-                        :imageUrl="record.longRoomQrcodeUrl"
-                        @success="uploadSuccess"
-                        :file-type="1"></upload>
+                      <upload :imageUrl="record.longRoomQrcodeUrl" @success="uploadSuccess" :file-type="1"></upload>
                     </div>
-
                   </div>
                   <div slot="action" slot-scope="text, record, index">
                     <a-button type="link" @click="deleteGroup(record, index)">删除</a-button>
@@ -163,7 +155,12 @@
       @cancel="groupChatShow = false"
     >
       <div>
-        <a-input-search class="search" v-model="searchGroupWord" @search="getRoomList" placeholder="请输入群名称"></a-input-search>
+        <a-input-search
+          class="search"
+          v-model="searchGroupWord"
+          @search="getRoomList"
+          placeholder="请输入群名称"
+        ></a-input-search>
         <div class="total">全部群聊({{ total }})</div>
       </div>
       <ul class="group-wrapper">
@@ -176,8 +173,7 @@
               <div>{{ item.roomName }}</div>
               <div>{{ `(${item.currentNum}/${item.roomMax})` }}</div>
             </div>
-            <a-checkbox :checked="judgeChecked(item.roomId)" @change="checkChange($event, item)">
-            </a-checkbox>
+            <a-checkbox :checked="judgeChecked(item.roomId)" @change="checkChange($event, item)"> </a-checkbox>
           </div>
         </li>
       </ul>
@@ -189,7 +185,38 @@
 </template>
 
 <script>
-import { workRoomGroupList, autoPullShow, workContactTagGroup, addWorkContactTag, roomList, autoPullUpdate, autoPullCreate, tagList } from '@/api/workRoom'
+/**
+ * 自动拉群创建/编辑页面
+ * 功能说明：创建或编辑自动拉群规则
+ * 主要功能：
+ * 1. 选择分组
+ * 2. 设置扫码名称
+ * 3. 设置添加验证方式
+ * 4. 选择使用成员
+ * 5. 设置入群打标签
+ * 6. 设置入群引导语
+ * 7. 添加群聊（支持多个群聊，自动切换）
+ *
+ * 业务场景：
+ * - 创建自动拉群规则，实现客户自动进群
+ * - 突破企业微信5个群聊限制
+ *
+ * 技术实现：
+ * - 使用 a-form 构建表单
+ * - 使用 a-table 展示群聊列表
+ * - 使用 a-tag 展示标签
+ * - 调用相关 API
+ */
+import {
+  workRoomGroupList,
+  autoPullShow,
+  workContactTagGroup,
+  addWorkContactTag,
+  roomList,
+  autoPullUpdate,
+  autoPullCreate,
+  tagList
+} from '@/api/workRoom'
 import upload from './components/upload'
 import Department from '@/components/department'
 import { mapGetters } from 'vuex'
@@ -310,7 +337,9 @@ export default {
         perPage: 100
       }
       try {
-        const { data: { list } } = await workRoomGroupList(params)
+        const {
+          data: { list }
+        } = await workRoomGroupList(params)
         this.group = list
       } catch (e) {
         console.log(e)
@@ -319,7 +348,9 @@ export default {
     // 详情
     async getDetail (id) {
       try {
-        const { data: { qrcodeName, isVerified, leadingWords, employees, tags, rooms, selectedTags } } = await autoPullShow({ workRoomAutoPullId: id })
+        const {
+          data: { qrcodeName, isVerified, leadingWords, employees, tags, rooms, selectedTags }
+        } = await autoPullShow({ workRoomAutoPullId: id })
         this.qrcodeName = qrcodeName
         this.isVerified = isVerified
         this.employees = employees
@@ -336,7 +367,7 @@ export default {
       try {
         const { data } = await workContactTagGroup()
         this.tagsGroup = data
-        this.tags = data.map(item => {
+        this.tags = data.map((item) => {
           return {
             ...item,
             list: []
@@ -367,7 +398,7 @@ export default {
       if (this.edit) {
         return
       }
-      const tags = this.tags.filter(item => {
+      const tags = this.tags.filter((item) => {
         return item.groupId == groupId
       })[0]
       const param = {
@@ -375,7 +406,7 @@ export default {
       }
       try {
         const { data } = await tagList(param)
-        tags.list = data.map(item => {
+        tags.list = data.map((item) => {
           return {
             tagId: item.id,
             tagName: item.name,
@@ -394,7 +425,7 @@ export default {
       } else {
         this.checkedTags.push(tagId)
       }
-      item.list.filter(inner => {
+      item.list.filter((inner) => {
         if (inner.tagId == tagId) {
           inner.isSelected = index > -1 ? 2 : 1
           return true
@@ -414,7 +445,7 @@ export default {
         return
       }
       const nameAry = this.tagName.split(' ')
-      const name = nameAry.filter(item => {
+      const name = nameAry.filter((item) => {
         return item
       })
       const param = {
@@ -427,12 +458,12 @@ export default {
         console.log(e)
       }
       this.addNewTagShow = false
-      const newTag = name.map(item => {
+      const newTag = name.map((item) => {
         return {
           tagName: item
         }
       })
-      this.tags.map(item => {
+      this.tags.map((item) => {
         if (item.groupId == this.tagGroupid) {
           item.list = item.list.concat(newTag)
         }
@@ -446,7 +477,9 @@ export default {
         name: this.searchGroupWord
       }
       try {
-        const { data: { total, list } } = await roomList(param)
+        const {
+          data: { total, list }
+        } = await roomList(param)
         this.groupChatList = list
         this.total = total
       } catch (e) {
@@ -456,7 +489,7 @@ export default {
     // 插入客户名称
     insert () {
       const textarea = document.getElementById('textarea')
-      const start = textarea.selectionStart// input 第0个字符到选中的字符
+      const start = textarea.selectionStart // input 第0个字符到选中的字符
       this.leadingWords = this.leadingWords.slice(0, start) + '##客户名称##' + this.leadingWords.slice(start)
     },
     // 选择群聊
@@ -470,7 +503,7 @@ export default {
         this.$message.warn('请选择群聊')
         return
       }
-      const ary = this.groupChatTable.map(item => {
+      const ary = this.groupChatTable.map((item) => {
         return {
           roomId: item.roomId,
           roomName: item.roomName,
@@ -486,7 +519,7 @@ export default {
     },
     // 群聊是否选中
     judgeChecked (roomId) {
-      const ary = this.groupChatTable.filter(item => {
+      const ary = this.groupChatTable.filter((item) => {
         return item.roomId == roomId
       })
       return ary.length > 0
@@ -494,7 +527,7 @@ export default {
     // 群聊选中 取消
     checkChange (e, data) {
       if (e.target.checked) {
-        const ary = this.groupChatTable.filter(item => {
+        const ary = this.groupChatTable.filter((item) => {
           return item.roomId == data.roomId
         })
         if (ary.length > 0) {
@@ -503,7 +536,7 @@ export default {
         }
         this.groupChatTable.push(data)
       } else {
-        this.groupChatTable = this.groupChatTable.filter(item => {
+        this.groupChatTable = this.groupChatTable.filter((item) => {
           return item.roomId != data.roomId
         })
       }
@@ -523,10 +556,10 @@ export default {
       item.roomQrcodeUrl = data.path
     },
     async submit () {
-      const employees = this.employees.map(item => {
+      const employees = this.employees.map((item) => {
         return item.employeeId
       })
-      const rooms = this.rooms.map(item => {
+      const rooms = this.rooms.map((item) => {
         return {
           roomId: item.roomId,
           maxNum: item.maxNum,
@@ -584,10 +617,10 @@ export default {
     display: flex;
     .left-wrapper {
       flex: 0 0 350px;
-      background:  #fff;
+      background: #fff;
     }
     .right-wrapper {
-      flex: 1
+      flex: 1;
     }
   }
   .service {
@@ -595,11 +628,11 @@ export default {
     padding-bottom: 10px;
   }
   .chat-num {
-    max-width: 100px
+    max-width: 100px;
   }
   .right {
     height: auto;
-    background:  #fff;
+    background: #fff;
     margin: 0 15px;
     .form-item {
       margin-bottom: 15px;
@@ -610,7 +643,7 @@ export default {
     .form-one {
       padding: 15px 0 0 15px;
     }
-    .form-two{
+    .form-two {
       padding: 15px;
       .label {
         background: #fafafa;
@@ -631,7 +664,7 @@ export default {
       background: #fafafa;
       min-height: 100px;
       .tag {
-        margin: 0 5px 10px 0
+        margin: 0 5px 10px 0;
       }
     }
   }
@@ -653,7 +686,7 @@ export default {
         flex: 0 0 100px;
       }
       .tag-content {
-        flex: 1
+        flex: 1;
       }
       .tag {
         margin-bottom: 10px;
@@ -674,7 +707,8 @@ export default {
   }
   .containt {
     flex: 1;
-    .select,.input {
+    .select,
+    .input {
       width: 100%;
       max-width: 400px;
     }
@@ -694,12 +728,12 @@ export default {
     border-radius: 10px;
     padding: 10px;
     word-break: break-word;
-    background: rgba(0,0,0,.1);
+    background: rgba(0, 0, 0, 0.1);
     flex: 1;
   }
 }
 .total {
-  margin-top:10px
+  margin-top: 10px;
 }
 .search {
   max-width: 400px;
@@ -726,8 +760,7 @@ export default {
     }
   }
   .group-item:not(:last-child) {
-    border-bottom: 1px solid rgba(0,0,0,.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   }
 }
-
 </style>

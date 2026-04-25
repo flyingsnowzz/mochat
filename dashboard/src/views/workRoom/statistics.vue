@@ -55,6 +55,26 @@
 </template>
 
 <script>
+/**
+ * 群聊数据统计页面
+ * 功能说明：展示群聊的数据统计和分析
+ * 主要功能：
+ * 1. 查看群聊数据概览：今日新增成员数、今日退群成员数、当前群成员数、累计退群成员数
+ * 2. 按时间维度查看统计数据：按日/按周/按月
+ * 3. 时间范围筛选
+ * 4. 查看详细数据表格
+ * 5. 群操作：查看群成员、群统计、移动分组
+ *
+ * 业务场景：
+ * - 分析群聊的成员变化情况
+ * - 追踪群的活跃度和留存情况
+ *
+ * 技术实现：
+ * - 使用 v-chart 绘制数据图表
+ * - 使用 a-table 展示详细数据
+ * - 使用 a-range-picker 选择时间范围
+ * - 调用 statistics、statisticsIndex API
+ */
 import moment from 'moment'
 import { statistics, statisticsIndex } from '@/api/workRoom'
 const columns = [

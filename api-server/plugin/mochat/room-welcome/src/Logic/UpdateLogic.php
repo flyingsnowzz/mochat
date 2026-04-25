@@ -137,15 +137,20 @@ class UpdateLogic
                 $msgComplex = $complex['miniprogram'];
                 break;
         }
+        
+        // 确保msgComplex不为空
+        if (empty($msgComplex)) {
+            $msgComplex = new stdClass();
+        }
         ##EasyWeChat添加入群欢迎语素材
         $template = $this->wxApp($user['corpIds'][0], 'contact')->external_contact_message_template->update($info['complexTemplateId'], $easyWeChatParams);
         if ($template['errcode'] !== 0) {
             throw new CommonException(ErrorCode::INVALID_PARAMS, '修改入群欢迎语素材失败' . $template['errmsg']);
         }
         return [
-            'corp_id' => $params['corp_id'],
+            'corp_id' => $info['corpId'],
             'msg_text' => $params['msg_text'],
-            'complex_type' => $complex['type'],
+            'complex_type' => empty($msgComplex) ? '' : $complex['type'],
             'msg_complex' => json_encode($msgComplex, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE),
         ];
     }

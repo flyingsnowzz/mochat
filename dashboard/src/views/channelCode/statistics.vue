@@ -1,6 +1,10 @@
 <template>
+  <!-- 渠道码统计页面 -->
+  <!-- 功能说明：展示渠道码的客户增长统计数据，包括今日数据、趋势图表和详细表格 -->
+  <!-- 业务场景：用于分析渠道码的转化效果，评估不同渠道的客户获取能力 -->
   <div class="group-statistics">
     <a-card>
+      <!-- 今日数据概览卡片 -->
       <div class="number-box">
         <div class="number one">
           <p>今日新增客户数</p>
@@ -19,19 +23,23 @@
           <h1>{{ netNum }}</h1>
         </div>
       </div>
+      <!-- 统计类型和时间范围选择 -->
       <div class="type-wrapper">
         <a-button class="type" :type="type == 1 ? 'primary' : ''" @click="changeType(1)">按日</a-button>
         <a-range-picker class="type" v-model="time" @change="dateChange" />
         <a-button class="type" :type="type == 2 ? 'primary' : ''" @click="changeType(2)">按周</a-button>
         <a-button :type="type == 3 ? 'primary' : ''" @click="changeType(3)">按月</a-button>
       </div>
+      <!-- 时间段总统计数据 -->
       <div>
         这段时间里，共新增客户数 {{ addNumLong }} 人，被客户删除/拉黑 {{ defriendNumLong }} 人，员工删除客户{{ deleteNumLong }}人，净增人数{{ netNumLong }}人
       </div>
+      <!-- 统计趋势图表 -->
       <div class="chart-wrapper" v-if="statisticsShow">
         <v-chart :options="options">
         </v-chart>
       </div>
+      <!-- 详细数据表格 -->
       <div class="table-title">
         详细数据
       </div>
@@ -48,6 +56,21 @@
 </template>
 
 <script>
+/**
+ * 渠道码统计页面脚本
+ * 主要功能：
+ * 1. 展示渠道码的客户增长统计数据
+ * 2. 支持按日/周/月查看统计数据
+ * 3. 支持时间范围选择
+ * 4. 通过折线图展示数据趋势
+ * 5. 显示详细的统计数据表格
+ *
+ * 技术实现：
+ * - 使用 moment 处理时间
+ * - 使用 v-chart 绘制统计图表
+ * - 调用 channelCode API 获取统计数据
+ * - 响应式布局设计
+ */
 import moment from 'moment'
 import { statisticsIndex, statistics } from '@/api/channelCode'
 export default {

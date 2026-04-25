@@ -179,6 +179,30 @@
 </template>
 
 <script>
+/**
+ * 群邀请任务创建页面
+ * 功能说明：创建群邀请任务，向客户发送入群邀请
+ * 主要功能：
+ * 1. 设置任务名称
+ * 2. 选择群发账号（企业成员）
+ * 3. 筛选客户（按性别、添加时间、标签）
+ * 4. 设置入群引导语
+ * 5. 添加群聊（二维码）
+ * 6. 过滤客户设置
+ * 7. 预估送达人数
+ *
+ * 业务场景：
+ * - 企业向客户发送群邀请，让客户加入指定群聊
+ * - 支持按条件筛选目标客户
+ * - 支持多群聊设置，突破200人限制
+ *
+ * 技术实现：
+ * - 使用 a-form 构建表单
+ * - 使用 selectMember 组件选择成员
+ * - 使用 selectGroup 组件选择群聊
+ * - 使用 labelGroup 组件选择标签
+ * - 使用 m-upload 组件上传群二维码
+ */
 import Department from '@/components/department'
 import { mapGetters } from 'vuex'
 import selectGroup from '@/components/Select/group'

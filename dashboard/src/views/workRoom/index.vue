@@ -3,14 +3,18 @@
     <a-row>
       <a-col :span="24" class="right-wrapper">
         <div :split="false" class="lists">
-          <a-alert style="height: 60px" :show-icon="false" message="客户群，是由具有客户群使用权限的成员创建的外部群。成员在手机端创建群后，自动显示在后台列表中，群聊上限人数200人，包含成员+外部联系人。" banner />
+          <a-alert
+            style="height: 60px"
+            :show-icon="false"
+            message="客户群，是由具有客户群使用权限的成员创建的外部群。成员在手机端创建群后，自动显示在后台列表中，群聊上限人数200人，包含成员+外部联系人。"
+            banner
+          />
         </div>
         <a-card class="up-card">
           <a-form class="form" :label-col="{ span: 7 }" :wrapper-col="{ span: 14 }">
             <a-row>
               <a-col :span="12">
-                <a-form-item
-                  label="选择分组">
+                <a-form-item label="选择分组">
                   <a-select v-model="active" @change="groupChange">
                     <a-select-option v-for="(d, index) in group" :value="d.workRoomGroupId" :key="index">
                       {{ d.workRoomGroupName }}
@@ -19,8 +23,7 @@
                 </a-form-item>
               </a-col>
               <a-col :span="12">
-                <a-form-item
-                  label="群名称：">
+                <a-form-item label="群名称：">
                   <a-input placeholder="搜索群名称" v-model="workRoomName"></a-input>
                 </a-form-item>
               </a-col>
@@ -32,16 +35,20 @@
                   <a-button icon="down" class="choose-btn" @click="choosePeople"></a-button>
                 </a-form-item> -->
                 <a-form-item label="选择群主：">
-                  <a-select v-model="workRoomOwnerId" mode="multiple" placeholder="选择群主" :filter-option="filterOption">
-                    <a-select-option v-for="(item,index) in employeeData" :key="index" :value="item.employeeId">
+                  <a-select
+                    v-model="workRoomOwnerId"
+                    mode="multiple"
+                    placeholder="选择群主"
+                    :filter-option="filterOption"
+                  >
+                    <a-select-option v-for="(item, index) in employeeData" :key="index" :value="item.employeeId">
                       {{ item.name }}
                     </a-select-option>
                   </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="12">
-                <a-form-item
-                  label="群状态：">
+                <a-form-item label="群状态：">
                   <a-select v-model="workRoomStatus">
                     <a-select-option v-for="(d, index) in status" :value="d.value" :key="index">
                       {{ d.name }}
@@ -52,13 +59,18 @@
             </a-row>
             <a-row>
               <a-col :span="12">
-                <a-form-item
-                  label="创建时间">
+                <a-form-item label="创建时间">
                   <a-range-picker class="picker" v-model="searchTime" @change="dateChange" />
                 </a-form-item>
               </a-col>
               <a-col :span="8" :offset="3">
-                <a-button v-permission="'/workRoom/index@search'" type="primary" class="search" @click="search">查找</a-button>
+                <a-button
+                  v-permission="'/workRoom/index@search'"
+                  type="primary"
+                  class="search"
+                  @click="search"
+                >查找</a-button
+                >
                 <a-button @click="reset">重置</a-button>
               </a-col>
             </a-row>
@@ -67,9 +79,27 @@
 
         <a-card>
           <div class="top-btn">
-            <a-button v-permission="'/workRoom/index@batch'" class="btn" type="primary" @click="betchAlter">批量修改分组</a-button>
-            <a-button v-permission="'/workRoom/index@sync'" class="btn" type="primary" @click="syncGroup">同步群</a-button>
-            <a-button v-permission="'/workRoom/index@add'" class="btn" type="primary" @click="addGroupShow = true">增加分组</a-button>
+            <a-button
+              v-permission="'/workRoom/index@batch'"
+              class="btn"
+              type="primary"
+              @click="betchAlter"
+            >批量修改分组</a-button
+            >
+            <a-button
+              v-permission="'/workRoom/index@sync'"
+              class="btn"
+              type="primary"
+              @click="syncGroup"
+            >同步群</a-button
+            >
+            <a-button
+              v-permission="'/workRoom/index@add'"
+              class="btn"
+              type="primary"
+              @click="addGroupShow = true"
+            >增加分组</a-button
+            >
             <a-button v-permission="'/workRoom/index@edit'" type="primary" @click="alterGroup">编辑分组</a-button>
           </div>
           <a-table
@@ -79,12 +109,23 @@
             @change="handleTableChange"
             :row-selection="{ selectedRowKeys, onChange: onSelectChange }"
             :columns="columns"
-            :data-source="tableData">
+            :data-source="tableData"
+          >
             <div slot="action" slot-scope="text, record">
               <template>
                 <a-button v-permission="'/workRoom/index@member'" type="link" @click="member(record)">群成员</a-button>
-                <a-button v-permission="'/workRoom/statistics'" type="link" @click="statistics(record.workRoomId)">群统计</a-button>
-                <a-button v-permission="'/workRoom/index@move'" type="link" @click="move(record.workRoomId)">移动分组</a-button>
+                <a-button
+                  v-permission="'/workRoom/statistics'"
+                  type="link"
+                  @click="statistics(record.workRoomId)"
+                >群统计</a-button
+                >
+                <a-button
+                  v-permission="'/workRoom/index@move'"
+                  type="link"
+                  @click="move(record.workRoomId)"
+                >移动分组</a-button
+                >
               </template>
             </div>
           </a-table>
@@ -102,7 +143,12 @@
       @ok="addGroup"
       @cancel="addGroupShow = false"
     >
-      <a-input class="add-input" v-model.trim="addGroupName" :maxLength="15" placeholder="请输入分组名（不得超过15个字符）"></a-input>
+      <a-input
+        class="add-input"
+        v-model.trim="addGroupName"
+        :maxLength="15"
+        placeholder="请输入分组名（不得超过15个字符）"
+      ></a-input>
     </a-modal>
 
     <a-modal
@@ -116,17 +162,10 @@
     >
       <a-input class="add-input" v-model.trim="alterName" :maxLength="15"></a-input>
       <template slot="footer">
-        <a-button @click="alterGroupName">
-          确认
-        </a-button>
-        <a-button type="danger" @click="deleteGroup">
-          删除
-        </a-button>
-        <a-button type="primary" @click="alterGroupShow = false">
-          取消
-        </a-button>
+        <a-button @click="alterGroupName"> 确认 </a-button>
+        <a-button type="danger" @click="deleteGroup"> 删除 </a-button>
+        <a-button type="primary" @click="alterGroupShow = false"> 取消 </a-button>
       </template>
-
     </a-modal>
 
     <a-modal
@@ -140,7 +179,6 @@
       @cancel="choosePeopleShow = false"
     >
       <Department :memberKey="employees" @change="peopleChange"></Department>
-
     </a-modal>
 
     <a-modal
@@ -153,34 +191,29 @@
     >
       <div class="member-wrapper">
         <a-select v-model="memberSearch.status" class="member" placeholder="成员状态">
-          <a-select-option value="1">
-            正常
-          </a-select-option>
-          <a-select-option value="2">
-            退群
-          </a-select-option>
+          <a-select-option value="1"> 正常 </a-select-option>
+          <a-select-option value="2"> 退群 </a-select-option>
         </a-select>
         <a-input class="search" v-model="memberSearch.name" placeholder="搜索群成员"></a-input>
         <a-range-picker v-model="memberSearchTime" class="date" @change="memberDateChange" />
         <a-button class="find" type="primary" @click="peopleSearch">查找</a-button>
         <a-button @click="memberReset">重置</a-button>
       </div>
-      <div>
-        当前群成员：{{ memberNum }}人；累计退群成员：{{ outRoomNum }}人
-      </div>
+      <div>当前群成员：{{ memberNum }}人；累计退群成员：{{ outRoomNum }}人</div>
       <a-table
         bordered
         rowKey="workContactRoomId"
         :columns="memberClumns"
         :data-source="memberData"
         :pagination="memberPagination"
-        @change="handleMemberChange">
+        @change="handleMemberChange"
+      >
         <div slot="name" slot-scope="text, record">
           <template>
             <div class="name-wrapper">
               <div class="img-wrapper">
-                <img v-if="record.avatar" class="img" :src="record.avatar" alt="">
-                <a-icon v-else type="user" class="icon"/>
+                <img v-if="record.avatar" class="img" :src="record.avatar" alt="" />
+                <a-icon v-else type="user" class="icon" />
               </div>
               <div class="detail">
                 <div class="name">
@@ -216,10 +249,11 @@
       <div class="group-wrapper">
         <div
           class="group-item"
-          :class="{'group-active': moveGroupId == item.workRoomGroupId}"
+          :class="{ 'group-active': moveGroupId == item.workRoomGroupId }"
           @click="checkGroup(item.workRoomGroupId)"
           v-for="(item, index) in group"
-          :key="index">
+          :key="index"
+        >
           {{ item.workRoomGroupName }}
         </div>
       </div>
@@ -230,7 +264,17 @@
 <script>
 import moment from 'moment'
 import { mapGetters } from 'vuex'
-import { workRoomGroupList, createGroup, deleteGroup, updateGroup, workRoomList, synList, batchUpdate, workContactRoom, departmentList } from '@/api/workRoom'
+import {
+  workRoomGroupList,
+  createGroup,
+  deleteGroup,
+  updateGroup,
+  workRoomList,
+  synList,
+  batchUpdate,
+  workContactRoom,
+  departmentList
+} from '@/api/workRoom'
 import Department from '@/components/department'
 const columns = [
   {
@@ -339,13 +383,16 @@ export default {
         {
           name: '正常',
           value: 0
-        }, {
+        },
+        {
           name: '跟进人离职',
           value: 1
-        }, {
+        },
+        {
           name: '离职继承中',
           value: 2
-        }, {
+        },
+        {
           name: '离职继承完成',
           value: 3
         }
@@ -411,9 +458,7 @@ export default {
       })
     },
     filterOption (input, option) {
-      return (
-        option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
-      )
+      return option.componentOptions.children[0].text.toLowerCase().indexOf(input.toLowerCase()) >= 0
     },
     // 获取分组列表
     async getGroupList () {
@@ -423,20 +468,25 @@ export default {
         perPage: 100
       }
       try {
-        const { data: { list } } = await workRoomGroupList(params)
-        this.group = [{
-          workRoomGroupId: 'all',
-          workRoomGroupName: '全部分组'
-        }, {
-          workRoomGroupId: 0,
-          workRoomGroupName: '未分组'
-        }].concat(list)
+        const {
+          data: { list }
+        } = await workRoomGroupList(params)
+        this.group = [
+          {
+            workRoomGroupId: 'all',
+            workRoomGroupName: '全部分组'
+          },
+          {
+            workRoomGroupId: 0,
+            workRoomGroupName: '未分组'
+          }
+        ].concat(list)
       } catch (e) {
         console.log(e)
       }
     },
     groupChange (value) {
-      const { workRoomGroupName } = this.group.find(item => {
+      const { workRoomGroupName } = this.group.find((item) => {
         return item.workRoomGroupId === value
       })
       this.alterName = workRoomGroupName
@@ -458,7 +508,7 @@ export default {
         title: '提示',
         content: `【${this.alterName}】一旦删除，归属于该分组的群都将被移至【未分组】,确认删除分组吗?`,
         onOk: () => {
-          deleteGroup({ workRoomGroupId: this.active }).then(res => {
+          deleteGroup({ workRoomGroupId: this.active }).then((res) => {
             this.getGroupList()
             this.alterGroupShow = false
             this.active = 0
@@ -473,7 +523,7 @@ export default {
         this.$message.error('请输入分组名称')
         return
       }
-      const flag = this.group.find(item => {
+      const flag = this.group.find((item) => {
         return item.workRoomGroupName == this.addGroupName
       })
       if (flag || this.addGroupName == '未分组') {
@@ -523,9 +573,11 @@ export default {
         perPage: this.pagination.pageSize
       }
       try {
-        const { data: { page: { total }, list } } = await workRoomList(this.handleParam(params))
+        const { total, list } = await workRoomList(this.handleParam(params))
         this.pagination.total = total
         this.tableData = list
+        console.log('Table data loaded:', list)
+        console.log('Total:', total)
       } catch (e) {
         console.log(e)
       }
@@ -580,7 +632,9 @@ export default {
         perPage: 50
       }
       try {
-        const { data: { list } } = await workRoomList(params)
+        const {
+          data: { list }
+        } = await workRoomList(params)
         this.groupName = list
       } catch (e) {
         console.log(e)
@@ -600,7 +654,7 @@ export default {
     },
     // 选择群主 确定
     choosePeopleConfirm () {
-      this.workRoomOwnerId = this.employees.map(item => {
+      this.workRoomOwnerId = this.employees.map((item) => {
         return item.employeeId
       })
       this.choosePeopleShow = false
@@ -622,7 +676,10 @@ export default {
       if (!dateString[0] || !dateString[1]) {
         this.memberSearchTime = null
       } else {
-        this.memberSearchTime = [moment(this.memberSearch.startTime, 'YYYY-MM-DD'), moment(this.memberSearch.endTime, 'YYYY-MM-DD')]
+        this.memberSearchTime = [
+          moment(this.memberSearch.startTime, 'YYYY-MM-DD'),
+          moment(this.memberSearch.endTime, 'YYYY-MM-DD')
+        ]
       }
     },
     // 群成员
@@ -640,7 +697,14 @@ export default {
         perPage: this.memberPagination.pageSize
       }
       try {
-        const { data: { memberNum, outRoomNum, page: { total }, list } } = await workContactRoom(this.handleParam(param))
+        const {
+          data: {
+            memberNum,
+            outRoomNum,
+            page: { total },
+            list
+          }
+        } = await workContactRoom(this.handleParam(param))
         this.memberNum = memberNum || 0
         this.outRoomNum = outRoomNum || 0
         this.memberPagination.total = total || 0
@@ -708,109 +772,109 @@ export default {
 
 <style lang="less" scoped>
 .customer-base {
-    height: 100%;
-    .choose-btn {
-      width: 155px;
-      margin-top: 5px;
-      padding-right: 5px;
-      text-align: right;
-      color: rgba(0, 0, 0, 0.3);
-    }
+  height: 100%;
+  .choose-btn {
+    width: 155px;
+    margin-top: 5px;
+    padding-right: 5px;
+    text-align: right;
+    color: rgba(0, 0, 0, 0.3);
+  }
 
-    .right-wrapper {
-      padding-left: 15px;
-    }
-    .lists{
-      margin-bottom: 20px;
-    }
-    .up-card{
-      margin-bottom: 20px;
-    }
-    .form{
-      margin-bottom: 20px;
-    }
-    .search{
+  .right-wrapper {
+    padding-left: 15px;
+  }
+  .lists {
+    margin-bottom: 20px;
+  }
+  .up-card {
+    margin-bottom: 20px;
+  }
+  .form {
+    margin-bottom: 20px;
+  }
+  .search {
+    margin-right: 20px;
+  }
+
+  .top-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+    .btn {
       margin-right: 20px;
     }
+  }
+}
 
-    .top-btn{
-      display: flex;
-      justify-content: flex-end;
+.member-wrapper {
+  display: flex;
+  margin: 0 20px 20px 0;
+  .member {
+    width: 200px;
+    margin-right: 20px;
+  }
+  .search {
+    width: 300px;
+    margin-right: 20px;
+  }
+  .date {
+    width: 300px;
+    margin-right: 20px;
+  }
+  .find {
+    margin-right: 20px;
+  }
+}
+.name-wrapper {
+  display: flex;
+  flex-direction: row;
+  .img-wrapper {
+    flex: 0 0 50px;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  .icon {
+    font-size: 35px;
+  }
+  .img {
+    width: 50px;
+    height: 50px;
+  }
+  .detail {
+    flex: 1;
+    .name {
+      text-align: left;
       margin-bottom: 10px;
-      .btn{
-        margin-right: 20px;
-      }
+    }
+    .owner {
+      width: 80px;
+      height: 22px;
     }
   }
-
-  .member-wrapper{
+}
+.group-select {
+  width: 200px;
+}
+.group-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  .group-item {
+    flex: 0 0 12%;
     display: flex;
-    margin: 0 20px 20px 0;
-    .member{
-      width: 200px;
-      margin-right:20px
-    }
-    .search{
-      width: 300px;
-      margin-right: 20px
-    }
-    .date{
-      width: 300px;
-      margin-right: 20px
-    }
-    .find{
-      margin-right: 20px
-    }
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    height: 40px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
   }
-  .name-wrapper{
-    display: flex;
-    flex-direction: row;
-    .img-wrapper {
-      flex: 0 0 50px;
-      width: 50px;
-      height: 50px;
-      margin-right: 10px;
-    }
-    .icon {
-      font-size: 35px;
-    }
-    .img{
-      width: 50px;
-      height: 50px;
-    }
-    .detail{
-      flex: 1;
-      .name{
-        text-align: left;
-        margin-bottom: 10px;
-      }
-      .owner{
-        width: 80px;
-        height: 22px
-      }
-    }
+  .group-active {
+    color: #fff;
+    background: #1890ff;
   }
-  .group-select{
-    width:200px
-  }
-  .group-wrapper{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    .group-item{
-      flex: 0 0 12%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border: 1px solid rgba(0, 0, 0, 0.3);
-      height: 40px;
-      margin-right: 15px;
-      margin-bottom: 15px;
-      cursor: pointer;
-    }
-    .group-active{
-      color: #fff;
-      background: #1890ff;
-    }
-  }
+}
 </style>

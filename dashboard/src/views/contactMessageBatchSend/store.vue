@@ -165,7 +165,30 @@
   </div>
 </template>
 <script>
-// eslint-disable-next-line no-unused-vars
+/**
+ * 创建客户群发消息页面
+ * 功能说明：创建新的客户群发消息
+ * 主要功能：
+ * 1. 选择群发账号（选择发送消息的员工）
+ * 2. 选择客户（全部客户或按条件筛选）
+ * 3. 筛选条件：性别、所在群聊、添加时间、标签
+ * 4. 排除特定客户（不想收到消息的客户）
+ * 5. 编辑群发消息内容
+ * 6. 支持消息类型：文本（必选）、图片/链接/小程序（可选）
+ * 7. 设置发送时间（立即发送或定时发送）
+ *
+ * 业务场景：
+ * - 企业创建群发消息，选择发送员工和目标客户
+ * - 可按多种条件筛选目标客户群体
+ * - 支持复杂的客户排除逻辑
+ *
+ * 技术实现：
+ * - 使用 selectMember 组件选择群发账号
+ * - 使用 selectGroup 组件选择群聊
+ * - 使用 addlableIndex 组件选择标签
+ * - 使用 upload 组件上传图片
+ * - 使用 a-range-picker 选择时间范围
+ */
 import { storeApi } from '@/api/contactMessageBatchSend'
 import selectMember from '@/components/Select/member'
 import selectGroup from '@/components/Select/group'

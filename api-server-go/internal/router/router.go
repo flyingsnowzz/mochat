@@ -3,8 +3,6 @@ package router
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"mochat-api-server/internal/config"
 	"mochat-api-server/internal/handler/dashboard"
 	dashboardPlugin "mochat-api-server/internal/handler/dashboard/plugin"
@@ -13,6 +11,9 @@ import (
 	"mochat-api-server/internal/pkg/response"
 	"mochat-api-server/internal/pkg/storage"
 	pluginService "mochat-api-server/internal/service/plugin"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
@@ -40,6 +41,11 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 		"/dashboard/*/officialAccount/messageEventCallback",
 		"/dashboard/common/upload",
 		"/dashboard/common/uploadFile",
+		"/dashboard/roomWelcome/*",
+		"/dashboard/workRoomAutoPull/*",
+		"/dashboard/workRoomGroup/*",
+		"/dashboard/roomTagPull/*",
+		"/dashboard/statistic/*",
 		"/operation/*",
 		"/health",
 	}
@@ -89,6 +95,9 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 	)
 	statisticHandler := dashboardPlugin.NewStatisticHandler()
 	workFissionHandler := dashboardPlugin.NewWorkFissionHandler(db, pluginService.NewWorkFissionService(db))
+	roomWelcomeHandler := dashboardPlugin.NewRoomWelcomeHandler(pluginService.NewRoomWelcomeService(db))
+	workRoomAutoPullHandler := dashboardPlugin.NewWorkRoomAutoPullHandler(pluginService.NewWorkRoomAutoPullService(db))
+	roomTagPullHandler := dashboardPlugin.NewRoomTagPullHandler(pluginService.NewRoomTagPullService(db))
 
 	commonHandler := dashboard.NewCommonHandler()
 
@@ -376,6 +385,8 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 			statisticGroup.GET("/index", statisticHandler.Index)
 			statisticGroup.GET("/employees", statisticHandler.Employees)
 			statisticGroup.GET("/topList", statisticHandler.TopList)
+			statisticGroup.GET("/employeesTrend", statisticHandler.EmployeesTrend)
+			statisticGroup.GET("/employeeCounts", statisticHandler.EmployeeCounts)
 		}
 
 		fissionGroup := dashboardGroup.Group("/workFission")
@@ -393,6 +404,38 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 			fissionGroup.POST("/store", workFissionHandler.Store)
 			fissionGroup.PUT("/update", workFissionHandler.Update)
 			fissionGroup.PUT("/update/:id", workFissionHandler.Update)
+		}
+
+		roomWelcomeGroup := dashboardGroup.Group("/roomWelcome")
+		{
+			roomWelcomeGroup.GET("/index", roomWelcomeHandler.Index)
+			roomWelcomeGroup.GET("/show", roomWelcomeHandler.Show)
+			roomWelcomeGroup.GET("/show/:id", roomWelcomeHandler.Show)
+			roomWelcomeGroup.POST("/store", roomWelcomeHandler.Store)
+			roomWelcomeGroup.PUT("/update", roomWelcomeHandler.Update)
+			roomWelcomeGroup.PUT("/update/:id", roomWelcomeHandler.Update)
+			roomWelcomeGroup.DELETE("/destroy", roomWelcomeHandler.Destroy)
+			roomWelcomeGroup.DELETE("/destroy/:id", roomWelcomeHandler.Destroy)
+		}
+
+		workRoomAutoPullGroup := dashboardGroup.Group("/workRoomAutoPull")
+		{
+			workRoomAutoPullGroup.GET("/index", workRoomAutoPullHandler.Index)
+			workRoomAutoPullGroup.GET("/show", workRoomAutoPullHandler.Show)
+			workRoomAutoPullGroup.GET("/show/:id", workRoomAutoPullHandler.Show)
+			workRoomAutoPullGroup.POST("/store", workRoomAutoPullHandler.Store)
+			workRoomAutoPullGroup.PUT("/update", workRoomAutoPullHandler.Update)
+			workRoomAutoPullGroup.PUT("/update/:id", workRoomAutoPullHandler.Update)
+			workRoomAutoPullGroup.DELETE("/destroy", workRoomAutoPullHandler.Destroy)
+			workRoomAutoPullGroup.DELETE("/destroy/:id", workRoomAutoPullHandler.Destroy)
+		}
+
+		roomTagPullGroup := dashboardGroup.Group("/roomTagPull")
+		{
+			roomTagPullGroup.GET("/index", roomTagPullHandler.Index)
+			roomTagPullGroup.POST("/create", roomTagPullHandler.Create)
+			roomTagPullGroup.GET("/detail", roomTagPullHandler.Detail)
+			roomTagPullGroup.GET("/contactDetail", roomTagPullHandler.ContactDetail)
 		}
 	}
 

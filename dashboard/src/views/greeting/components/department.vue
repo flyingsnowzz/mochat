@@ -33,6 +33,23 @@
   </div>
 </template>
 <script>
+/**
+ * 部门选择组件
+ * 功能说明：在欢迎语管理中选择部门
+ * 主要功能：
+ * 1. 展示部门列表
+ * 2. 选择部门
+ * 3. 支持搜索
+ *
+ * 业务场景：
+ * - 在创建欢迎语时选择目标部门
+ * - 按部门筛选欢迎语
+ *
+ * 技术实现：
+ * - 使用树形结构展示部门
+ * - 使用 a-tree 组件
+ * - 调用 departmentList、workDepartmentList API
+ */
 import { departmentList, workDepartmentList } from '@/api/workRoom'
 import { mapGetters } from 'vuex'
 

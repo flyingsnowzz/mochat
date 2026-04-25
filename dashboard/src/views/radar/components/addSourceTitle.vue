@@ -35,6 +35,26 @@
   </div>
 </template>
 <script>
+/**
+ * 雷达文章编辑组件
+ * 功能说明：编辑雷达文章/素材的详细内容
+ * 主要功能：
+ * 1. 编辑文章标题
+ * 2. 编辑文章作者
+ * 3. 编辑文章描述（摘要）
+ * 4. 上传文章封面图片
+ * 5. 使用富文本编辑器编辑文章内容
+ * 6. 保存文章
+ *
+ * 业务场景：
+ * - 雷达功能用于追踪客户点击/查看文章的行为
+ * - 员工分享文章链接，客户点击后可追踪其行为
+ *
+ * 技术实现：
+ * - 使用 vue-quill-editor 富文本编辑器
+ * - 使用 m-upload 组件上传封面图片
+ * - 通过 v-model 双向绑定表单数据
+ */
 import { quillEditor } from 'vue-quill-editor' // 调用编辑器
 import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'

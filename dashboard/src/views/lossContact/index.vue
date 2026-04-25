@@ -40,6 +40,24 @@
 </template>
 
 <script>
+/**
+ * 流失客户管理页面
+ * 功能说明：查看被客户删除/拉黑的员工列表
+ * 主要功能：
+ * 1. 按归属成员筛选
+ * 2. 查看流失客户列表
+ * 3. 查看客户详情（头像、名称、标签）
+ * 4. 查看删除时间
+ *
+ * 业务场景：
+ * - 追踪哪些客户删除了员工
+ * - 帮助企业分析客户流失情况
+ * - 客户流失后可在备注中记录原因
+ *
+ * 技术实现：
+ * - 使用 a-table 展示流失客户列表
+ * - 使用 selectMember 组件选择归属成员
+ */
 import { getLossContactList } from '@/api/lossContact'
 import selectMember from '@/components/Select/member'
 export default {

@@ -162,6 +162,31 @@
 </template>
 
 <script>
+/**
+ * 关键词打标签规则创建页面
+ * 功能说明：创建关键词打标签规则，根据客户聊天内容中的关键词自动打标签
+ * 主要功能：
+ * 1. 设置规则名称
+ * 2. 选择生效员工（开通了消息存档的员工）
+ * 3. 设置模糊匹配关键词（客户对话内容包含关键词即触发）
+ * 4. 设置精准匹配关键词（客户只提到关键词才触发）
+ * 5. 设置自动打标签规则：
+ *    - 触发周期：天/周/月
+ *    - 触发次数：每周期触发次数达到设定值
+ *    - 执行动作：自动打上指定标签
+ * 6. 支持多条规则同时生效（最多10个规则）
+ *
+ * 业务场景：
+ * - 客户与员工聊天时自动识别关键词并打标签
+ * - 实现客户行为分析和精准营销
+ *
+ * 技术实现：
+ * - 使用 selectMember 组件选择生效员工
+ * - 使用 addlableIndex 组件选择标签
+ * - 使用 a-modal 弹窗编辑关键词
+ * - 使用 a-input-number 设置触发次数
+ * - 调用 storeApi 创建规则
+ */
 // eslint-disable-next-line no-unused-vars
 import { storeApi } from '@/api/autoTag'
 import addlableIndex from '@/components/addlabel/index'

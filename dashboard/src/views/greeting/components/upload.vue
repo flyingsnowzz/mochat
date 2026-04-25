@@ -22,6 +22,16 @@
   </a-upload>
 </template>
 <script>
+/**
+ * 欢迎语图片上传组件
+ * 功能说明：用于欢迎语场景的图片上传
+ * 支持文件类型：图片（jpg、png、jpeg）
+ *
+ * 技术实现：
+ * - 使用 Ant Design Upload 组件
+ * - 文件大小限制：最大2M
+ * - 支持自定义请求头（携带JWT token）
+ */
 import storage from 'store'
 
 export default {

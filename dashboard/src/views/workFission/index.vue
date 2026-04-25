@@ -45,6 +45,29 @@
 </template>
 
 <script>
+/**
+ * 工作裂变活动管理页面
+ * 功能说明：管理企业微信的工作裂变活动
+ * 主要功能：
+ * 1. 查看活动列表（活动名称、使用成员、扫码添加人数、创建时间、活动状态）
+ * 2. 创建新活动
+ * 3. 搜索活动
+ * 4. 邀请客户参与活动
+ * 5. 查看活动详情
+ * 6. 修改活动
+ * 7. 删除活动
+ *
+ * 业务场景：
+ * - 企业创建裂变活动，鼓励员工邀请客户参与
+ * - 追踪活动效果和参与情况
+ * - 管理活动的生命周期
+ *
+ * 技术实现：
+ * - 使用 a-table 展示活动列表
+ * - 使用 a-popover 实现编辑下拉菜单
+ * - 使用 a-confirm 弹窗确认删除操作
+ * - 使用 Details 组件查看活动详情
+ */
 import Details from '@/views/workFission/components/details'
 
 import { getList, del } from '@/api/workFission'

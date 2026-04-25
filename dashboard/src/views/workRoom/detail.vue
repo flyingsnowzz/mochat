@@ -132,6 +132,23 @@
 </template>
 
 <script>
+/**
+ * 群聊详情页面
+ * 功能说明：查看群聊的详细信息和成员列表
+ * 主要功能：
+ * 1. 查看群聊基本信息：群名称、群主、创建时间、群成员数量
+ * 2. 查看群成员列表：成员名称、头像、入群时间
+ * 3. 群聊数据统计
+ *
+ * 业务场景：
+ * - 查看群聊的详细信息
+ * - 管理群成员
+ *
+ * 技术实现：
+ * - 使用 a-table 展示群成员列表
+ * - 使用 a-modal 展示详情
+ * - 调用相关 API 获取数据
+ */
 import moment from 'moment'
 import { Empty } from 'ant-design-vue'
 // eslint-disable-next-line no-unused-vars

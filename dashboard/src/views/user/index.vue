@@ -171,6 +171,31 @@
 </template>
 
 <script>
+/**
+ * 用户管理页面
+ * 功能说明：管理系统用户账号，包括添加、修改、重置密码等操作
+ * 主要功能：
+ * 1. 查看用户列表（姓名、所属部门、职务、手机号、状态、创建时间）
+ * 2. 按手机号和状态筛选用户
+ * 3. 添加新用户（姓名、手机号、密码、性别、状态、角色）
+ * 4. 修改用户信息
+ * 5. 重置用户密码
+ * 6. 批量启用用户账号
+ * 7. 显示用户状态统计（已启用/未启用数量）
+ *
+ * 业务场景：
+ * - 企业管理员管理系统用户账号
+ * - 为员工创建系统登录账号
+ * - 管理用户的角色和权限
+ * - 处理用户账号状态
+ *
+ * 技术实现：
+ * - 使用 a-table 展示用户列表
+ * - 使用 a-modal 弹窗进行添加/编辑/重置密码操作
+ * - 使用 a-form-model 表单组件
+ * - 使用 a-select 选择角色
+ * - 使用权限指令 v-permission 控制按钮权限
+ */
 // eslint-disable-next-line no-unused-vars
 import { subManagementList, addSubManagement, getSubManagement, editSubManagement, changeStatus, selectByPhone, selectRole, passwordResetApi } from '@/api/user'
 export default {

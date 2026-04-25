@@ -251,6 +251,26 @@
 </template>
 
 <script>
+/**
+ * 菜单管理页面
+ * 功能说明：管理后台系统的菜单导航
+ * 主要功能：
+ * 1. 查看菜单列表（树形结构）
+ * 2. 搜索菜单
+ * 3. 添加菜单
+ * 4. 编辑菜单（名称、图标、链接、状态）
+ * 5. 启用/禁用菜单
+ *
+ * 业务场景：
+ * - 配置后台系统的左侧导航菜单
+ * - 支持多级菜单
+ * - 可控制菜单的显示状态
+ *
+ * 技术实现：
+ * - 使用 a-table 的 indentSize 实现树形展示
+ * - 使用 IconSelector 组件选择菜单图标
+ * - 使用 a-modal 弹窗进行添加/编辑操作
+ */
 import IconSelector from '@/components/IconSelector/IconSelector'
 import { menuList, menuSelect, menuDetail, statusUpdate, destroy, menuStore, menuUpdate, iconUsed } from '@/api/menu'
 

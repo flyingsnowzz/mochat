@@ -126,7 +126,26 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
+/**
+ * 群裂变活动详情弹窗组件
+ * 功能说明：查看群裂变活动的详细信息
+ * 主要功能：
+ * 1. 显示活动二维码
+ * 2. 下载二维码
+ * 3. 复制活动链接
+ * 4. 修改活动
+ * 5. 查看活动详情（链接、时间、客服成员、入群条件等）
+ * 6. 查看参与活动的客户列表
+ *
+ * 业务场景：
+ * - 群裂变是一种营销方式，通过奖励鼓励客户邀请好友入群
+ * - 可追踪客户的邀请效果，统计裂变数据
+ *
+ * 技术实现：
+ * - 使用 qrcodejs2 生成二维码
+ * - 使用 a-modal 弹窗展示详情
+ * - 支持复制链接和下载二维码
+ */
 import { infoApi, department } from '@/api/roomFission'
 // eslint-disable-next-line no-unused-vars
 import QRCode from 'qrcodejs2'

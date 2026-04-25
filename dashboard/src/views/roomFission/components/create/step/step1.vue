@@ -140,6 +140,26 @@
 </template>
 
 <script>
+/**
+ * 群裂变创建向导 - 步骤1：基础信息和活动设置
+ * 功能说明：配置群裂变活动的基本信息和活动规则
+ * 主要功能：
+ * 1. 选择公众号（用于客户匹配）
+ * 2. 设置活动名称
+ * 3. 设置活动结束时间
+ * 4. 设置活动目标人数（邀请好友数）
+ * 5. 高级设置（活动须知、领奖方式等）
+ *
+ * 业务场景：
+ * - 群裂变是一种营销活动，客户邀请好友入群达到目标人数后可获得奖励
+ * - 通过公众号授权匹配客户数据
+ *
+ * 技术实现：
+ * - 使用 selectMember 组件选择客服
+ * - 使用 warrantTip 组件提示授权
+ * - 使用 a-date-picker 选择时间
+ * - 使用 a-input-number 设置目标人数
+ */
 import selectMember from '@/components/Select/member'
 import warrantTip from '@/components/warrantTip/warrantTip'
 // eslint-disable-next-line no-unused-vars

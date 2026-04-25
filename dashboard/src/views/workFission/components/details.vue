@@ -104,6 +104,24 @@
 </template>
 
 <script>
+/**
+ * 企微任务宝活动详情组件
+ * 功能说明：展示企微任务宝活动的详细信息
+ * 主要功能：
+ * 1. 查看活动基本信息：活动名称、状态、创建时间
+ * 2. 查看活动设置：目标人数、规则设置
+ * 3. 查看裂变海报二维码
+ * 4. 查看数据统计
+ *
+ * 业务场景：
+ * - 查看任务宝活动的详细信息
+ * - 获取活动的裂变海报二维码
+ *
+ * 技术实现：
+ * - 使用 QRCode 生成二维码
+ * - 使用 a-modal 弹窗展示详情
+ * - 调用 getDetails API
+ */
 import { getDetails } from '@/api/workFission'
 import QRCode from 'qrcodejs2'
 

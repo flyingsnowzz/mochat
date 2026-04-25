@@ -34,6 +34,22 @@
 </template>
 
 <script>
+/**
+ * 群聊选择组件
+ * 功能说明：在群日历中选择群聊
+ * 主要功能：
+ * 1. 展示群聊列表
+ * 2. 搜索群聊
+ * 3. 选择群聊
+ *
+ * 业务场景：
+ * - 在创建群日历事件时选择目标群聊
+ *
+ * 技术实现：
+ * - 使用 a-table 展示群聊列表
+ * - 使用 a-input-search 搜索群聊
+ * - 调用 delRoom API
+ */
 import { delRoom } from '@/api/roomCalendar'
 
 export default {

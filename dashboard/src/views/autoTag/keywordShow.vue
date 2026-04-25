@@ -201,6 +201,28 @@
   </div>
 </template>
 <script>
+/**
+ * 关键词打标签规则详情页面
+ * 功能说明：查看关键词打标签规则的详细信息和数据统计
+ * 主要功能：
+ * 1. 查看规则基本信息：创建人、生效成员、创建时间、自动添加标签
+ * 2. 查看规则设置：规则数量、触发条件
+ * 3. 数据统计：打标签总数、今日打标签数
+ * 4. 查看触发关键词的客户列表：客户名称、所属客服、触发关键词、添加标签时间
+ * 5. 搜索和筛选功能：按客户名称、所属客服、添加好友时间筛选
+ * 6. 查看客户聊天记录
+ *
+ * 业务场景：
+ * - 查看关键词打标签规则的执行效果
+ * - 追踪哪些客户触发了关键词
+ * - 分析规则的生效情况
+ *
+ * 技术实现：
+ * - 使用 a-table 展示客户列表
+ * - 使用 a-modal 弹窗展示聊天记录
+ * - 使用 a-range-picker 选择时间范围
+ * - 调用 showApi、showContactKeyWordApi、messageList API
+ */
 import { showApi, showContactKeyWordApi, messageList } from '@/api/autoTag'
 export default {
   data () {

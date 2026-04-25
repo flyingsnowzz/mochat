@@ -190,6 +190,29 @@
 </template>
 
 <script>
+/**
+ * 客户详情页面
+ * 功能说明：查看和编辑客户的详细信息，包括基本信息、标签、用户画像和互动轨迹
+ * 主要功能：
+ * 1. 查看客户基本信息：头像、姓名、性别、备注、标签、描述、客户编号
+ * 2. 编辑客户信息：修改备注、描述、客户编号
+ * 3. 管理客户标签：为客户添加标签
+ * 4. 查看和编辑用户画像：自定义字段的查看和编辑
+ * 5. 查看互动轨迹：客户与员工的互动记录
+ *
+ * 业务场景：
+ * - 客服查看客户详细信息
+ * - 客服为客户添加标签和修改信息
+ * - 管理员查看客户的完整档案
+ *
+ * 技术实现：
+ * - 使用 a-card 展示客户信息
+ * - 使用 a-modal 弹窗进行编辑操作
+ * - 使用 a-tabs 切换不同信息模块
+ * - 使用 a-timeline 展示互动轨迹
+ * - 使用 upload 组件上传图片
+ * - 使用权限指令 v-permission 控制操作权限
+ */
 import { getWorkContactInfo, getUserPortrait, editWorkContactInfo, editUserPortrait, allTag, track } from '@/api/workContact'
 import { getContactTagGroup } from '@/api/workContactTag'
 import upload from '../mediumGroup/components/upload'

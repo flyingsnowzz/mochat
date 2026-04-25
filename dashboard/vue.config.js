@@ -47,13 +47,13 @@ const assetsCDN = {
 const vueConfig = {
   configureWebpack: config => {
     // webpack plugins
-    config.plugins.concat([
+    config.plugins = config.plugins.concat([
       // Ignore all locale files of moment.js
       new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
       new webpack.DefinePlugin({
-        APP_VERSION: `"${require('./package.json').version}"`,
-        GIT_HASH: JSON.stringify(getGitHash()),
-        BUILD_DATE: buildDate
+        'APP_VERSION': `"${require('./package.json').version}"`,
+        'GIT_HASH': JSON.stringify(getGitHash()),
+        'BUILD_DATE': buildDate
       })
     ])
     if (isProd) {
@@ -134,7 +134,9 @@ const vueConfig = {
   productionSourceMap: false,
   lintOnSave: undefined,
   // babel-loader no-ignore node_modules/*
-  transpileDependencies: []
+  transpileDependencies: [
+    'vue-router'
+  ]
 }
 
 module.exports = vueConfig
