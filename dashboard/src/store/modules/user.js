@@ -1,3 +1,24 @@
+/**
+ * 用户状态模块
+ * 功能说明：管理用户登录状态和用户信息
+ * 主要功能：
+ * 1. 用户登录（Login）
+ * 2. 获取用户信息（GetInfo）
+ * 3. 用户登出（Logout）
+ * 4. 状态管理：token、roles、userInfo、corpId、corpName
+ *
+ * 业务场景：
+ * - 用户登录系统，获取 Token 和用户信息
+ * - 保存用户登录状态到本地存储
+ * - 管理当前登录企业的 ID 和名称
+ * - 存储用户权限角色
+ *
+ * 技术实现：
+ * - 使用 Promise 封装异步操作
+ * - 使用 storage 持久化 Token
+ * - Token 格式：Bearer {token}
+ * - mutations 同步修改状态
+ */
 import storage from 'store'
 import { login, getInfo } from '@/api/login'
 

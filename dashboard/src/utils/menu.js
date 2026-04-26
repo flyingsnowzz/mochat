@@ -1,3 +1,21 @@
+/**
+ * 菜单工具函数
+ * 功能说明：提供菜单和路由相关的操作函数
+ * 主要函数：
+ * 1. exChangeMenu - 切换菜单路由，更新顶部菜单和侧边栏
+ * 2. setBreadcrumb - 设置面包屑导航
+ * 3. resetRoutes - 重置路由配置
+ *
+ * 业务场景：
+ * - 页面跳转时更新菜单选中状态
+ * - 动态更新面包屑导航
+ * - 退出登录时清空动态路由
+ *
+ * 技术实现：
+ * - 操作 Vuex store 管理菜单状态
+ * - 直接操作 VueRouter 实例
+ * - 通过 mutations 修改状态
+ */
 import store from '@/store'
 import router, { newRouter } from '@/router'
 

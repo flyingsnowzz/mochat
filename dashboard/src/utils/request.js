@@ -1,3 +1,25 @@
+/**
+ * Axios 请求封装
+ * 功能说明：配置和管理 HTTP 请求
+ * 主要功能：
+ * 1. 创建 axios 实例（request 和 newRequest）
+ * 2. 配置请求拦截器（添加 Token）
+ * 3. 配置响应拦截器（统一错误处理）
+ * 4. 导出 axios 实例供组件使用
+ *
+ * 请求实例说明：
+ * - request: 基础请求实例，baseURL 为环境变量配置
+ * - newRequest: 固定 baseURL 的请求实例
+ *
+ * 错误处理：
+ * - 401 错误：清除登录状态，跳转到登录页
+ * - 其他错误：显示错误信息
+ *
+ * 技术实现：
+ * - 使用 axios.create 创建实例
+ * - 使用 interceptors 配置拦截器
+ * - Token 存储在 localStorage 中
+ */
 import axios from 'axios'
 import store from '@/store'
 import storage from 'store'

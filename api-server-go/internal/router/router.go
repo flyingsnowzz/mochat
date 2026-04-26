@@ -45,6 +45,7 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 		"/dashboard/workRoomAutoPull/*",
 		"/dashboard/workRoomGroup/*",
 		"/dashboard/roomTagPull/*",
+		"/dashboard/channelCode/*",
 		"/dashboard/statistic/*",
 		"/operation/*",
 		"/health",
@@ -84,17 +85,17 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 	chatToolHandler := dashboard.NewChatToolHandler(db)
 	officialAccountHandler := dashboard.NewOfficialAccountHandler()
 	greetingHandler := dashboard.NewGreetingHandler(db)
-	contactMessageBatchSendHandler := dashboardPlugin.NewContactMessageBatchSendHandler(
-		db,
-		pluginService.NewContactMessageBatchSendService(db),
-	)
+	// contactMessageBatchSendHandler := dashboardPlugin.NewContactMessageBatchSendHandler(
+	// 	db,
+	// 	pluginService.NewContactMessageBatchSendService(db),
+	// )
 	channelCodeHandler := dashboardPlugin.NewChannelCodeHandler(
 		db,
 		pluginService.NewChannelCodeService(db),
 		pluginService.NewChannelCodeGroupService(db),
 	)
 	statisticHandler := dashboardPlugin.NewStatisticHandler()
-	workFissionHandler := dashboardPlugin.NewWorkFissionHandler(db, pluginService.NewWorkFissionService(db))
+	// workFissionHandler := dashboardPlugin.NewWorkFissionHandler(db, pluginService.NewWorkFissionService(db))
 	roomWelcomeHandler := dashboardPlugin.NewRoomWelcomeHandler(pluginService.NewRoomWelcomeService(db))
 	workRoomAutoPullHandler := dashboardPlugin.NewWorkRoomAutoPullHandler(pluginService.NewWorkRoomAutoPullService(db))
 	roomTagPullHandler := dashboardPlugin.NewRoomTagPullHandler(pluginService.NewRoomTagPullService(db))
@@ -345,19 +346,19 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 			greetingGroup.DELETE("/destroy", greetingHandler.Destroy)
 		}
 
-		contactMessageBatchSendGroup := dashboardGroup.Group("/contactMessageBatchSend")
-		{
-			contactMessageBatchSendGroup.GET("/index", contactMessageBatchSendHandler.Index)
-			contactMessageBatchSendGroup.POST("/store", contactMessageBatchSendHandler.Store)
-			contactMessageBatchSendGroup.GET("/show", contactMessageBatchSendHandler.Show)
-			contactMessageBatchSendGroup.GET("/show/:id", contactMessageBatchSendHandler.Show)
-			contactMessageBatchSendGroup.DELETE("/destroy", contactMessageBatchSendHandler.Destroy)
-			contactMessageBatchSendGroup.DELETE("/destroy/:id", contactMessageBatchSendHandler.Destroy)
-			contactMessageBatchSendGroup.GET("/messageShow", contactMessageBatchSendHandler.MessageShow)
-			contactMessageBatchSendGroup.POST("/remind", contactMessageBatchSendHandler.Remind)
-			contactMessageBatchSendGroup.GET("/contactReceiveIndex", contactMessageBatchSendHandler.ContactReceiveIndex)
-			contactMessageBatchSendGroup.GET("/employeeSendIndex", contactMessageBatchSendHandler.EmployeeSendIndex)
-		}
+		// contactMessageBatchSendGroup := dashboardGroup.Group("/contactMessageBatchSend")
+		// {
+		// 	contactMessageBatchSendGroup.GET("/index", contactMessageBatchSendHandler.Index)
+		// 	contactMessageBatchSendGroup.POST("/store", contactMessageBatchSendHandler.Store)
+		// 	contactMessageBatchSendGroup.GET("/show", contactMessageBatchSendHandler.Show)
+		// 	contactMessageBatchSendGroup.GET("/show/:id", contactMessageBatchSendHandler.Show)
+		// 	contactMessageBatchSendGroup.DELETE("/destroy", contactMessageBatchSendHandler.Destroy)
+		// 	contactMessageBatchSendGroup.DELETE("/destroy/:id", contactMessageBatchSendHandler.Destroy)
+		// 	contactMessageBatchSendGroup.GET("/messageShow", contactMessageBatchSendHandler.MessageShow)
+		// 	contactMessageBatchSendGroup.POST("/remind", contactMessageBatchSendHandler.Remind)
+		// 	contactMessageBatchSendGroup.GET("/contactReceiveIndex", contactMessageBatchSendHandler.ContactReceiveIndex)
+		// 	contactMessageBatchSendGroup.GET("/employeeSendIndex", contactMessageBatchSendHandler.EmployeeSendIndex)
+		// }
 
 		channelCodeGroup := dashboardGroup.Group("/channelCode")
 		{
@@ -389,22 +390,22 @@ func SetupRouter(cfg *config.Config, db *gorm.DB) *gin.Engine {
 			statisticGroup.GET("/employeeCounts", statisticHandler.EmployeeCounts)
 		}
 
-		fissionGroup := dashboardGroup.Group("/workFission")
-		{
-			fissionGroup.GET("/index", workFissionHandler.Index)
-			fissionGroup.GET("/statistics", workFissionHandler.Statistics)
-			fissionGroup.GET("/inviteData", workFissionHandler.InviteData)
-			fissionGroup.GET("/inviteDetail", workFissionHandler.InviteDetail)
-			fissionGroup.GET("/chooseContact", workFissionHandler.ChooseContact)
-			fissionGroup.POST("/invite", workFissionHandler.Invite)
-			fissionGroup.GET("/show", workFissionHandler.Show)
-			fissionGroup.GET("/show/:id", workFissionHandler.Show)
-			fissionGroup.GET("/info", workFissionHandler.Info)
-			fissionGroup.GET("/info/:id", workFissionHandler.Info)
-			fissionGroup.POST("/store", workFissionHandler.Store)
-			fissionGroup.PUT("/update", workFissionHandler.Update)
-			fissionGroup.PUT("/update/:id", workFissionHandler.Update)
-		}
+		// fissionGroup := dashboardGroup.Group("/workFission")
+		// {
+		// 	fissionGroup.GET("/index", workFissionHandler.Index)
+		// 	fissionGroup.GET("/statistics", workFissionHandler.Statistics)
+		// 	fissionGroup.GET("/inviteData", workFissionHandler.InviteData)
+		// 	fissionGroup.GET("/inviteDetail", workFissionHandler.InviteDetail)
+		// 	fissionGroup.GET("/chooseContact", workFissionHandler.ChooseContact)
+		// 	fissionGroup.POST("/invite", workFissionHandler.Invite)
+		// 	fissionGroup.GET("/show", workFissionHandler.Show)
+		// 	fissionGroup.GET("/show/:id", workFissionHandler.Show)
+		// 	fissionGroup.GET("/info", workFissionHandler.Info)
+		// 	fissionGroup.GET("/info/:id", workFissionHandler.Info)
+		// 	fissionGroup.POST("/store", workFissionHandler.Store)
+		// 	fissionGroup.PUT("/update", workFissionHandler.Update)
+		// 	fissionGroup.PUT("/update/:id", workFissionHandler.Update)
+		// }
 
 		roomWelcomeGroup := dashboardGroup.Group("/roomWelcome")
 		{

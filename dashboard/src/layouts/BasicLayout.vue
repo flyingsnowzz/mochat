@@ -30,7 +30,29 @@
 </template>
 
 <script>
-
+/**
+ * 基础布局组件
+ * 功能说明：应用的基础布局结构，包含侧边栏、头部、内容区域
+ * 主要功能：
+ * 1. 使用 pro-layout 组件实现高级布局
+ * 2. 侧边栏菜单展示（支持折叠/展开）
+ * 3. 响应式布局（自动适配 PC/移动端）
+ * 4. 面包屑导航展示
+ * 5. 顶部右侧区域（用户信息、通知等）
+ * 6. 页脚展示
+ *
+ * 布局配置：
+ * - layout: sidemenu（侧边菜单模式）
+ * - theme: dark（暗色主题）
+ * - fixSiderbar: true（固定侧边栏）
+ * - fixedHeader: true（固定头部）
+ *
+ * 技术实现：
+ * - 使用 pro-layout 组件库实现高级布局
+ * - 使用 Vuex mapState 获取菜单和折叠状态
+ * - 使用 GlobalHeader 组件渲染顶部区域
+ * - 使用 Logo 组件渲染侧边栏顶部 Logo
+ */
 import { mapState, mapMutations, mapGetters } from 'vuex'
 import GlobalHeader from '@/components/GlobalHeader/index'
 import Logo from '@/components/Logo'

@@ -1,3 +1,15 @@
+/**
+ * LESS 工具 mixins
+ * 功能说明：提供常用的样式 mixins
+ * 主要 mixins：
+ * 1. .textOverflow - 单行文本溢出省略号处理
+ * 2. .textOverflowMulti - 多行文本溢出省略号处理
+ * 3. .clearfix - 清除浮动
+ *
+ * 技术实现：
+ * - 使用 LESS mixins 封装常用样式
+ * - 使用伪元素实现省略号效果
+ */
 .textOverflow() {
   overflow: hidden;
   white-space: nowrap;

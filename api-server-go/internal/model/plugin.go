@@ -69,13 +69,20 @@ func (RoomTagPull) TableName() string {
 
 // ChannelCode 渠道码
 type ChannelCode struct {
-	ID        uint           `gorm:"primaryKey" json:"id"`
-	CorpID    uint           `gorm:"column:corp_id" json:"corpId"`
-	Name      string         `gorm:"column:name" json:"name"`
-	Status    int            `gorm:"column:status" json:"status"`
-	CreatedAt time.Time      `json:"createdAt"`
-	UpdatedAt time.Time      `json:"updatedAt"`
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+	ID              uint           `gorm:"primaryKey" json:"id"`
+	CorpID          uint           `gorm:"column:corp_id" json:"corpId"`
+	GroupID         uint           `gorm:"column:group_id" json:"groupId"`
+	Name            string         `gorm:"column:name" json:"name"`
+	QrcodeURL       string         `gorm:"column:qrcode_url" json:"qrcodeUrl"`
+	WxConfigID      string         `gorm:"column:wx_config_id" json:"wxConfigId"`
+	AutoAddFriend   int            `gorm:"column:auto_add_friend" json:"autoAddFriend"`
+	Tags            string         `gorm:"column:tags" json:"tags"`
+	Type            uint           `gorm:"column:type" json:"type"`
+	DrainageEmployee string `gorm:"column:drainage_employee" json:"drainageEmployee"`
+	WelcomeMessage  string         `gorm:"column:welcome_message" json:"welcomeMessage"`
+	CreatedAt       time.Time      `json:"createdAt"`
+	UpdatedAt       time.Time      `json:"updatedAt"`
+	DeletedAt       gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 // TableName 指定表名
