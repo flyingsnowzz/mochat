@@ -3,12 +3,14 @@
 package dashboard
 
 import (
+	"fmt"
 	"time"
+
+	"mochat-api-server/internal/model"
+	"mochat-api-server/internal/pkg/response"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
-	"mochat-api-server/internal/model"
-	"mochat-api-server/internal/pkg/response"
 )
 
 // DashboardIndexHandler 仪表盘首页处理器
@@ -87,6 +89,13 @@ func (h *DashboardIndexHandler) Index(c *gin.Context) {
 	var totalRoom int64
 	h.db.Model(&model.WorkRoom{}).Where("tenant_id = ?", tenantID).Count(&totalRoom)
 
+	fmt.Println(todayAddContact)
+	fmt.Println(todayAddRoom)
+	fmt.Println(todayAddIntoRoom)
+	fmt.Println(todayLossContact)
+	fmt.Println(todayQuitRoom)
+	fmt.Println(totalContact)
+	fmt.Println(totalRoom)
 	// 返回统计结果
 	response.Success(c, gin.H{
 		"todayAddContact":  todayAddContact,  // 今日新增客户数

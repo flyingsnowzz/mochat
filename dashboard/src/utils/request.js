@@ -34,12 +34,6 @@ const request = axios.create({
   timeout: 15000 // 请求超时时间
 })
 
-const newRequest = axios.create({
-  // API 请求的默认前缀
-  baseURL: '//api.mo.chat',
-  timeout: 15000 // 请求超时时间
-})
-
 // 异常拦截处理器
 const errorHandler = (error) => {
   if (error.response) {
@@ -75,12 +69,6 @@ request.interceptors.request.use(requestInterceptor, errorHandler)
 request.interceptors.response.use((response) => {
   return response.data
 }, errorHandler)
-
-newRequest.interceptors.request.use(requestInterceptor, errorHandler)
-// response interceptor
-newRequest.interceptors.response.use((response) => {
-  return response.data
-}, errorHandler)
 const installer = {
   vm: {},
   install (Vue) {
@@ -92,6 +80,5 @@ export default request
 
 export {
   installer as VueAxios,
-  request as axios,
-  newRequest
+  request as axios
 }

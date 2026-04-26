@@ -1,6 +1,7 @@
 package response
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 
@@ -16,6 +17,8 @@ type Response struct {
 
 // Success 返回成功响应，code=0
 func Success(c *gin.Context, data interface{}) {
+	// 输出控制台
+	fmt.Println("Success:", data)
 	c.JSON(http.StatusOK, Response{
 		Code: 0,
 		Data: data,
