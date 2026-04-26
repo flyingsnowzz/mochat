@@ -8,3 +8,67 @@
 .DS_Store
 admin-src/
 .vscode
+
+# Node.js dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Build outputs
+dist/
+build/
+*.local
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
+# Go build files
+api-server-go/server
+api-server-go/mochat-go
+api-server-go/*.exe
+api-server-go/*.exe~
+api-server-go/*.dll
+api-server-go/*.so
+api-server-go/*.dylib
+
+# PHP dependencies
+api-server/vendor/
+api-server/composer.lock
+
+# Log files
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Test coverage
+coverage/
+*.lcov
