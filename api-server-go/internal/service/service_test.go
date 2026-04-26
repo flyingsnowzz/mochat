@@ -139,7 +139,7 @@ func TestCorpService(t *testing.T) {
 	}
 
 	// Test List
-	corps, total, err := svc.List(1, 1, 10)
+	corps, total, err := svc.List(1, "", 1, 10)
 	if err != nil {
 		t.Fatalf("Failed to list corps: %v", err)
 	}

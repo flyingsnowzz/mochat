@@ -1,8 +1,9 @@
 package plugin
 
 import (
-	"gorm.io/gorm"
 	"mochat-api-server/internal/model"
+
+	"gorm.io/gorm"
 )
 
 // RoomTagPullService 群聊标签拉取服务
@@ -28,18 +29,22 @@ func NewRoomTagPullService(db *gorm.DB) *RoomTagPullService {
 }
 
 // List 获取群聊标签拉取记录列表（分页）
-// 查询指定企业的群聊标签拉取记录列表，支持分页
+// 查询指定企业的群聊标签拉取记录列表，支持分页和名称搜索
 // 参数：
 //
 //	corpID - 企业 ID
+//	name - 名称（模糊搜索），空字符串表示不限制
 //	offset - 偏移量
 //	limit - 限制数量
 //
 // 返回：群聊标签拉取记录列表、总数和错误信息
-func (s *RoomTagPullService) List(corpID uint, offset, limit int) ([]model.RoomTagPull, int64, error) {
+func (s *RoomTagPullService) List(corpID uint, name string, offset, limit int) ([]model.RoomTagPull, int64, error) {
 	var items []model.RoomTagPull
 	var total int64
 	query := s.db.Model(&model.RoomTagPull{}).Where("corp_id = ?", corpID)
+	if name != "" {
+		query = query.Where("name LIKE ?", "%"+name+"%")
+	}
 	query.Count(&total)
 	if err := query.Offset(offset).Limit(limit).Order("id DESC").Find(&items).Error; err != nil {
 		return nil, 0, err
@@ -60,4 +65,15 @@ func (s *RoomTagPullService) GetByID(id uint) (*model.RoomTagPull, error) {
 		return nil, err
 	}
 	return &item, nil
+}
+
+// Create 创建群聊标签拉取记录
+// 将群聊标签拉取记录信息保存到数据库
+// 参数：
+//
+//	item - 群聊标签拉取记录实例
+//
+// 返回：错误信息
+func (s *RoomTagPullService) Create(item *model.RoomTagPull) error {
+	return s.db.Create(item).Error
 }

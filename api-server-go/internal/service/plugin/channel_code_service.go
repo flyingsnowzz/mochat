@@ -100,6 +100,18 @@ func (s *ChannelCodeService) Update(item *model.ChannelCode) error {
 	return s.db.Save(item).Error
 }
 
+// UpdateByID 根据 ID 更新渠道码
+// 使用映射更新渠道码的指定字段
+// 参数：
+//
+//	id - 渠道码 ID
+//	updates - 待更新的字段映射
+//
+// 返回：错误信息
+func (s *ChannelCodeService) UpdateByID(id uint, updates map[string]interface{}) error {
+	return s.db.Model(&model.ChannelCode{}).Where("id = ?", id).Updates(updates).Error
+}
+
 // Delete 删除渠道码
 // 从数据库中删除指定 ID 的渠道码
 // 参数：

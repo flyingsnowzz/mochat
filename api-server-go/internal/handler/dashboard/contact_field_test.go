@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/gin-gonic/gin"
 	"mochat-api-server/internal/model"
 	"mochat-api-server/tests/utils"
 )

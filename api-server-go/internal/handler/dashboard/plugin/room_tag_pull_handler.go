@@ -29,15 +29,24 @@ func (h *RoomTagPullHandler) Index(c *gin.Context) {
 	name := c.Query("name")
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	perPage, _ := strconv.Atoi(c.DefaultQuery("perPage", "10"))
+	offset := (page - 1) * perPage
+
+	// 从上下文获取企业 ID，暂时使用默认值 1
+	corpID := uint(1)
 
 	// 调用服务获取数据
-	result, err := h.service.List(name, page, perPage)
+	items, total, err := h.service.List(corpID, name, offset, perPage)
 	if err != nil {
 		response.Fail(c, http.StatusInternalServerError, "获取标签建群列表失败")
 		return
 	}
 
-	response.Success(c, result)
+	response.Success(c, gin.H{
+		"list":  items,
+		"total": total,
+		"page":  page,
+		"size":  perPage,
+	})
 }
 
 // Create 创建标签建群
@@ -60,15 +69,15 @@ func (h *RoomTagPullHandler) Create(c *gin.Context) {
 	}
 
 	// 从上下文获取corpID，暂时使用默认值1
-	corpID := 1
+	corpID := uint(1)
 	if req.CorpID > 0 {
-		corpID = req.CorpID
+		corpID = uint(req.CorpID)
 	}
 
 	// 将数组转换为JSON字符串
 	employees := ""
 	if len(req.Employees) > 0 {
-		employees = "[" + strings.Join(req.Employees, ",") + ""
+		employees = "[" + strings.Join(req.Employees, ",") + "]"
 	}
 
 	chooseContact, _ := json.Marshal(req.ChooseContact)
@@ -83,7 +92,7 @@ func (h *RoomTagPullHandler) Create(c *gin.Context) {
 		Rooms:         string(rooms),
 		FilterContact: req.FilterContact,
 		WxTid:         "[]", // 给wx_tid字段传一个有效的JSON值
-		CorpID:        corpID,
+		CorpID:        int(corpID),
 	}
 
 	// 调用服务创建数据

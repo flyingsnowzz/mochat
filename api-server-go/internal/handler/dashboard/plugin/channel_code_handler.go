@@ -2,15 +2,16 @@ package plugin
 
 import (
 	"encoding/json"
-	"strings"
 	"strconv"
+	"strings"
 	"time"
 
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"mochat-api-server/internal/model"
 	"mochat-api-server/internal/pkg/response"
 	"mochat-api-server/internal/service/plugin"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 type ChannelCodeHandler struct {
@@ -210,7 +211,7 @@ func (h *ChannelCodeHandler) Update(c *gin.Context) {
 		"drainage_employee": mustJSONString(req.DrainageEmployee, "{}"),
 		"welcome_message":   mustJSONString(req.WelcomeMessage, "{}"),
 	}
-	if err := h.svc.Update(channelCodeID, updates); err != nil {
+	if err := h.svc.UpdateByID(channelCodeID, updates); err != nil {
 		response.Fail(c, response.ErrDB, "修改渠道码失败")
 		return
 	}
@@ -240,10 +241,10 @@ func (h *ChannelCodeHandler) Contact(c *gin.Context) {
 	offset := (page - 1) * pageSize
 
 	type row struct {
-		ContactID   uint   `json:"contactId"`
-		Name        string `json:"name"`
-		Employee    string `json:"employee"`
-		CreateTime  string `json:"createTime"`
+		ContactID  uint   `json:"contactId"`
+		Name       string `json:"name"`
+		Employee   string `json:"employee"`
+		CreateTime string `json:"createTime"`
 	}
 
 	var total int64
@@ -458,7 +459,7 @@ func (h *ChannelCodeHandler) GroupMove(c *gin.Context) {
 		return
 	}
 
-	if err := h.svc.Update(req.ChannelCodeID, map[string]interface{}{"group_id": req.GroupID}); err != nil {
+	if err := h.svc.UpdateByID(req.ChannelCodeID, map[string]interface{}{"group_id": req.GroupID}); err != nil {
 		response.Fail(c, response.ErrDB, "移动分组失败")
 		return
 	}
@@ -636,15 +637,15 @@ func (h *ChannelCodeHandler) normalizeChannelCodeDrainageEmployee(corpID uint, r
 	result := parseChannelCodeJSONObject(raw)
 	if len(result) == 0 {
 		return gin.H{
-			"type": 1,
+			"type":      1,
 			"employees": []gin.H{},
 			"specialPeriod": gin.H{
 				"status": 2,
 				"detail": []gin.H{},
 			},
 			"addMax": gin.H{
-				"status":          2,
-				"employees":       []gin.H{},
+				"status":           2,
+				"employees":        []gin.H{},
 				"spareEmployeeIds": []uint{},
 			},
 		}
@@ -1199,10 +1200,10 @@ func (h *ChannelCodeHandler) channelCodeStatisticRows(corpID uint, typeValue int
 	}
 
 	type rawRow struct {
-		Period       string `json:"period"`
-		AddNum       int    `json:"addNum"`
-		DefriendNum  int    `json:"defriendNum"`
-		DeleteNum    int    `json:"deleteNum"`
+		Period      string `json:"period"`
+		AddNum      int    `json:"addNum"`
+		DefriendNum int    `json:"defriendNum"`
+		DeleteNum   int    `json:"deleteNum"`
 	}
 	var rawRows []rawRow
 	if err := query.Group("period").Order("period ASC").Scan(&rawRows).Error; err != nil {

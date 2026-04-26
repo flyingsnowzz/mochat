@@ -123,12 +123,17 @@ func (ContactMessageBatchSend) TableName() string {
 
 // WorkTransferLog 客户迁移日志
 type WorkTransferLog struct {
-	ID        uint           `gorm:"primaryKey" json:"id"`
-	CorpID    uint           `gorm:"column:corp_id" json:"corpId"`
-	Status    int            `gorm:"column:status" json:"status"`
-	CreatedAt time.Time      `json:"createdAt"`
-	UpdatedAt time.Time      `json:"updatedAt"`
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+	ID               uint           `gorm:"primaryKey" json:"id"`
+	CorpID           uint           `gorm:"column:corp_id" json:"corpId"`
+	Status           int            `gorm:"column:status" json:"status"`
+	Type             int            `gorm:"column:type" json:"type"`
+	Name             string         `gorm:"column:name" json:"name"`
+	ContactID        string         `gorm:"column:contact_id" json:"contactId"`
+	HandoverEmployeeID string        `gorm:"column:handover_employee_id" json:"handoverEmployeeId"`
+	TakeoverEmployeeID string        `gorm:"column:takeover_employee_id" json:"takeoverEmployeeId"`
+	State            int            `gorm:"column:state" json:"state"`
+	CreatedAt        time.Time      `json:"createdAt"`
+	UpdatedAt        time.Time      `json:"updatedAt"`
 }
 
 // TableName 指定表名
@@ -138,12 +143,14 @@ func (WorkTransferLog) TableName() string {
 
 // WorkUnassigned 未分配客户
 type WorkUnassigned struct {
-	ID        uint           `gorm:"primaryKey" json:"id"`
-	CorpID    uint           `gorm:"column:corp_id" json:"corpId"`
-	Status    int            `gorm:"column:status" json:"status"`
-	CreatedAt time.Time      `json:"createdAt"`
-	UpdatedAt time.Time      `json:"updatedAt"`
-	DeletedAt gorm.DeletedAt `gorm:"index" json:"-"`
+	ID            uint           `gorm:"primaryKey" json:"id"`
+	CorpID        uint           `gorm:"column:corp_id" json:"corpId"`
+	HandoverUserID string         `gorm:"column:handover_userid" json:"handoverUserid"`
+	ExternalUserID string         `gorm:"column:external_userid" json:"externalUserid"`
+	DimissionTime  int            `gorm:"column:dimission_time" json:"dimissionTime"`
+	CreatedAt      time.Time      `json:"createdAt"`
+	UpdatedAt      time.Time      `json:"updatedAt"`
+	DeletedAt      gorm.DeletedAt `gorm:"index" json:"-"`
 }
 
 // TableName 指定表名
