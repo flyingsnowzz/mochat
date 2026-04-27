@@ -1,9 +1,13 @@
 package model
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type Corp struct {
 	ID             uint       `gorm:"column:id;primaryKey" json:"id"`
+	CorpId         uint       `gorm:"column:corp_id;default:0" json:"corpId"` // 企业ID（冗余字段，用于前端兼容）
 	Name           string     `gorm:"column:name;size:255;not null" json:"name"`
 	WxCorpid       string     `gorm:"column:wx_corpid;size:50;default:''" json:"wxCorpid"`
 	SocialCode     string     `gorm:"column:social_code;size:50;default:''" json:"socialCode"`
@@ -16,6 +20,20 @@ type Corp struct {
 	CreatedAt      time.Time  `gorm:"column:created_at" json:"createdAt"`
 	UpdatedAt      time.Time  `gorm:"column:updated_at" json:"updatedAt"`
 	DeletedAt      *time.Time `gorm:"column:deleted_at;index" json:"deletedAt"`
+}
+
+// MarshalJSON 自定义 JSON 序列化，添加前端兼容字段
+func (c Corp) MarshalJSON() ([]byte, error) {
+	type Alias Corp
+	return json.Marshal(&struct {
+		Alias
+		CorpName string `json:"corpName"` // 前端使用的字段名
+		WxCorpId string `json:"wxCorpId"` // 前端使用的字段名
+	}{
+		Alias:    Alias(c),
+		CorpName: c.Name,
+		WxCorpId: c.WxCorpid,
+	})
 }
 
 func (Corp) TableName() string { return "mc_corp" }

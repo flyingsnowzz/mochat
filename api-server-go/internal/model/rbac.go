@@ -32,7 +32,7 @@ type RbacRole struct {
 	Status         int        `gorm:"column:status;default:1" json:"status"`
 	OperateID      uint       `gorm:"column:operate_id;default:0" json:"operateId"`
 	OperateName    string     `gorm:"column:operate_name;size:50;default:''" json:"operateName"`
-	DataPermission int        `gorm:"column:data_permission;default:0" json:"dataPermission"`
+	DataPermission string     `gorm:"column:data_permission;type:json" json:"dataPermission"`
 	CreatedAt      time.Time  `gorm:"column:created_at" json:"createdAt"`
 	UpdatedAt      time.Time  `gorm:"column:updated_at" json:"updatedAt"`
 	DeletedAt      *time.Time `gorm:"column:deleted_at;index" json:"deletedAt"`

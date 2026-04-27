@@ -230,6 +230,7 @@ export default {
     },
     // 查看企业微信授权详情
     getWechatDetail (corpId) {
+      console.log('corpId', corpId)
       this.editVisble = true
       this.getDisble = true
       lookEnterpriseWeChat({

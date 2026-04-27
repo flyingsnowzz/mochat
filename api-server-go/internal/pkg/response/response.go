@@ -17,8 +17,9 @@ type Response struct {
 
 // Success 返回成功响应，code=0
 func Success(c *gin.Context, data interface{}) {
-	// 输出控制台
+	// 将data输出到控制台
 	fmt.Println("Success:", data)
+
 	c.JSON(http.StatusOK, Response{
 		Code: 0,
 		Data: data,
@@ -37,6 +38,8 @@ func SuccessMsg(c *gin.Context, msg string) {
 
 // Fail 返回失败响应，HTTP 状态码 200，业务错误码由 code 指定
 func Fail(c *gin.Context, code int, msg string) {
+	fmt.Println("Fail:", code, msg, c.Errors)
+
 	c.JSON(http.StatusOK, Response{
 		Code: code,
 		Data: nil,
