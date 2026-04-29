@@ -119,3 +119,8 @@ func (s *CorpService) Update(id uint, updates map[string]interface{}) error {
 func (s *CorpService) Delete(id uint) error {
 	return s.db.Delete(&model.Corp{}, id).Error
 }
+
+// DB 获取数据库连接
+func (s *CorpService) DB() *gorm.DB {
+	return s.db
+}

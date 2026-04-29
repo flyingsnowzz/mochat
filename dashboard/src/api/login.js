@@ -29,7 +29,7 @@ export function corpSelect (params) {
 // 登录用户绑定企业
 export function corpBind (params) {
   return request({
-    url: '/corp/bind',
+    url: '/user/corp/bind',
     method: 'post',
     data: params
   })

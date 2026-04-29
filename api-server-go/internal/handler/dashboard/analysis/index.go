@@ -36,7 +36,7 @@ func NewDashboardIndexHandler(db *gorm.DB) *DashboardIndexHandler {
 // Index 获取仪表盘首页统计数据
 // 获取仪表盘首页的各种统计数据，包括今日新增、流失等指标
 // 处理流程：
-// 1. 获取租户 ID
+// 1. 获取企业 ID
 // 2. 计算今日开始和结束时间
 // 3. 统计今日新增客户
 // 4. 统计今日新增群聊
@@ -49,10 +49,10 @@ func NewDashboardIndexHandler(db *gorm.DB) *DashboardIndexHandler {
 //
 // 返回：包含各种统计数据的响应
 func (h *DashboardIndexHandler) Index(c *gin.Context) {
-	// 获取租户 ID
-	tenantID, exists := c.Get("tenantId")
+	// 获取企业 ID
+	corpID, exists := c.Get("corpId")
 	if !exists {
-		response.Fail(c, response.ErrAuth, "未获取到租户信息")
+		response.Fail(c, response.ErrAuth, "未获取到企业信息")
 		return
 	}
 
@@ -63,11 +63,11 @@ func (h *DashboardIndexHandler) Index(c *gin.Context) {
 
 	// 统计今日新增客户
 	var todayAddContact int64
-	h.db.Model(&model.WorkContact{}).Where("tenant_id = ? AND created_at >= ? AND created_at < ?", tenantID, todayStart, todayEnd).Count(&todayAddContact)
+	h.db.Model(&model.WorkContact{}).Where("corp_id = ? AND created_at >= ? AND created_at < ?", corpID, todayStart, todayEnd).Count(&todayAddContact)
 
 	// 统计今日新增群聊
 	var todayAddRoom int64
-	h.db.Model(&model.WorkRoom{}).Where("tenant_id = ? AND created_at >= ? AND created_at < ?", tenantID, todayStart, todayEnd).Count(&todayAddRoom)
+	h.db.Model(&model.WorkRoom{}).Where("corp_id = ? AND created_at >= ? AND created_at < ?", corpID, todayStart, todayEnd).Count(&todayAddRoom)
 
 	// 统计今日加入群聊人数
 	var todayAddIntoRoom int64
@@ -75,7 +75,7 @@ func (h *DashboardIndexHandler) Index(c *gin.Context) {
 
 	// 统计今日流失客户
 	var todayLossContact int64
-	h.db.Model(&model.WorkContact{}).Where("tenant_id = ? AND deleted_at >= ? AND deleted_at < ?", tenantID, todayStart, todayEnd).Count(&todayLossContact)
+	h.db.Model(&model.WorkContact{}).Where("corp_id = ? AND deleted_at >= ? AND deleted_at < ?", corpID, todayStart, todayEnd).Count(&todayLossContact)
 
 	// 统计今日退出群聊人数
 	var todayQuitRoom int64
@@ -83,11 +83,11 @@ func (h *DashboardIndexHandler) Index(c *gin.Context) {
 
 	// 统计总客户数
 	var totalContact int64
-	h.db.Model(&model.WorkContact{}).Where("tenant_id = ?", tenantID).Count(&totalContact)
+	h.db.Model(&model.WorkContact{}).Where("corp_id = ?", corpID).Count(&totalContact)
 
 	// 统计总群聊数
 	var totalRoom int64
-	h.db.Model(&model.WorkRoom{}).Where("tenant_id = ?", tenantID).Count(&totalRoom)
+	h.db.Model(&model.WorkRoom{}).Where("corp_id = ?", corpID).Count(&totalRoom)
 
 	fmt.Println(todayAddContact)
 	fmt.Println(todayAddRoom)
@@ -111,7 +111,7 @@ func (h *DashboardIndexHandler) Index(c *gin.Context) {
 // LineChat 获取客户增长趋势图表数据
 // 获取最近7天的客户新增和流失数据，用于生成趋势图表
 // 处理流程：
-// 1. 获取租户 ID
+// 1. 获取企业 ID
 // 2. 初始化日期、新增客户数据和流失客户数据数组
 // 3. 循环计算最近7天的日期和对应的数据
 // 4. 统计每天的新增客户数
@@ -120,10 +120,10 @@ func (h *DashboardIndexHandler) Index(c *gin.Context) {
 //
 // 返回：包含最近7天日期、新增客户数据和流失客户数据的响应
 func (h *DashboardIndexHandler) LineChat(c *gin.Context) {
-	// 获取租户 ID
-	tenantID, exists := c.Get("tenantId")
+	// 获取企业 ID
+	corpID, exists := c.Get("corpId")
 	if !exists {
-		response.Fail(c, response.ErrAuth, "未获取到租户信息")
+		response.Fail(c, response.ErrAuth, "未获取到企业信息")
 		return
 	}
 
@@ -143,12 +143,12 @@ func (h *DashboardIndexHandler) LineChat(c *gin.Context) {
 
 		// 统计当天新增客户
 		var count int64
-		h.db.Model(&model.WorkContact{}).Where("tenant_id = ? AND created_at >= ? AND created_at < ?", tenantID, dayStart, dayEnd).Count(&count)
+		h.db.Model(&model.WorkContact{}).Where("corp_id = ? AND created_at >= ? AND created_at < ?", corpID, dayStart, dayEnd).Count(&count)
 		data[6-i] = int(count)
 
 		// 统计当天流失客户
 		var lossCount int64
-		h.db.Model(&model.WorkContact{}).Where("tenant_id = ? AND deleted_at >= ? AND deleted_at < ?", tenantID, dayStart, dayEnd).Count(&lossCount)
+		h.db.Model(&model.WorkContact{}).Where("corp_id = ? AND deleted_at >= ? AND deleted_at < ?", corpID, dayStart, dayEnd).Count(&lossCount)
 		lossData[6-i] = int(lossCount)
 	}
 

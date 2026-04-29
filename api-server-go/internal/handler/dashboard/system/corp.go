@@ -78,6 +78,12 @@ func (h *CorpHandler) Select(c *gin.Context) {
 		response.Fail(c, response.ErrDB, "获取企业列表失败")
 		return
 	}
+
+	// 将id在存储一份corpId
+	for i := range corps {
+		corps[i].CorpId = corps[i].ID
+	}
+
 	response.Success(c, corps)
 }
 

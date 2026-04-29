@@ -63,6 +63,10 @@ func (r *Router) initHandlers() {
 	r.roomWelcomeHandler = dashboardMarketing.NewRoomWelcomeHandler(pluginService.NewRoomWelcomeService(r.db))
 	r.workRoomAutoPullHandler = dashboardMarketing.NewWorkRoomAutoPullHandler(pluginService.NewWorkRoomAutoPullService(r.db))
 	r.roomTagPullHandler = dashboardMarketing.NewRoomTagPullHandler(pluginService.NewRoomTagPullService(r.db))
+	r.contactMessageBatchSendHandler = dashboardMarketing.NewContactMessageBatchSendHandler(pluginService.NewContactMessageBatchSendService(r.db))
+	r.contactTransferHandler = dashboardMarketing.NewContactTransferHandler(pluginService.NewWorkTransferService(r.db))
+	r.roomMessageBatchSendHandler = dashboardMarketing.NewRoomMessageBatchSendHandler(pluginService.NewRoomMessageBatchSendService(r.db))
+	r.workFissionHandler = dashboardMarketing.NewWorkFissionHandler(pluginService.NewWorkFissionService(r.db))
 
 	// ============ Analysis 模块 (数据分析) ============
 	r.indexHandler = dashboardAnalysis.NewDashboardIndexHandler(r.db)
@@ -82,5 +86,6 @@ func (r *Router) initHandlers() {
 	r.sidebarAgentHandler = clientPlatform.NewWorkAgentHandler()
 	r.sidebarMediumHandler = clientContent.NewMediumHandler()
 	r.sidebarMediumGroupHandler = clientContent.NewMediumGroupHandler()
+	r.sidebarProcessStatusHandler = clientContact.NewProcessStatusHandler()
 	r.sidebarCommonHandler = clientCommon.NewCommonHandler(storage.DefaultStorage)
 }

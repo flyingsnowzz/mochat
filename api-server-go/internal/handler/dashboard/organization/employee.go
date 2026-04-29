@@ -7,11 +7,12 @@ package organization
 import (
 	"strconv"
 
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"mochat-api-server/internal/model"
 	"mochat-api-server/internal/pkg/response"
 	"mochat-api-server/internal/service"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // EmployeeHandler 员工管理处理器
@@ -26,8 +27,8 @@ import (
 // - WorkAddressSyncService: 通讯录同步服务
 
 type EmployeeHandler struct {
-	svc     *service.WorkEmployeeService         // 员工服务
-	syncSvc *service.WorkAddressSyncService     // 通讯录同步服务
+	svc     *service.WorkEmployeeService    // 员工服务
+	syncSvc *service.WorkAddressSyncService // 通讯录同步服务
 }
 
 // NewEmployeeHandler 创建员工管理处理器实例
@@ -59,11 +60,12 @@ func NewEmployeeHandler(db *gorm.DB) *EmployeeHandler {
 // 返回：包含员工列表、总数、分页信息的响应
 func (h *EmployeeHandler) Index(c *gin.Context) {
 	// 获取企业 ID
-	corpID, _ := c.Get("corpId")
-	if corpID == nil {
-		corpID = uint(0)
+	corpID, exists := c.Get("corpId")
+	if !exists {
+		response.Fail(c, response.ErrAuth, "未获取到企业信息")
+		return
 	}
-	
+
 	// 获取分页参数和筛选条件
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("perPage", c.DefaultQuery("pageSize", "10")))
@@ -79,29 +81,29 @@ func (h *EmployeeHandler) Index(c *gin.Context) {
 		response.Fail(c, response.ErrDB, "获取员工列表失败")
 		return
 	}
-	
+
 	// 构建返回数据
 	items := make([]gin.H, 0, len(employees))
 	for _, employee := range employees {
 		items = append(items, gin.H{
-			"id":                employee.ID,                // 员工 ID
-			"name":              employee.Name,              // 员工姓名
-			"thumbAvatar":       employee.ThumbAvatar,       // 员工头像
-			"status":            employee.Status,            // 员工状态
-			"statusName":        workEmployeeStatusName(employee.Status), // 员工状态名称
-			"gender":            workEmployeeGenderName(employee.Gender), // 员工性别
-			"contactAuth":       employee.ContactAuth,       // 客户联系权限
+			"id":                employee.ID,                                       // 员工 ID
+			"name":              employee.Name,                                     // 员工姓名
+			"thumbAvatar":       employee.ThumbAvatar,                              // 员工头像
+			"status":            employee.Status,                                   // 员工状态
+			"statusName":        workEmployeeStatusName(employee.Status),           // 员工状态名称
+			"gender":            workEmployeeGenderName(employee.Gender),           // 员工性别
+			"contactAuth":       employee.ContactAuth,                              // 客户联系权限
 			"contactAuthName":   workEmployeeContactAuthName(employee.ContactAuth), // 客户联系权限名称
-			"applyNums":         0, // 申请数量（暂未实现）
-			"addNums":           0, // 添加数量（暂未实现）
-			"messageNums":       0, // 消息数量（暂未实现）
-			"sendMessageNums":   0, // 发送消息数量（暂未实现）
-			"replyMessageRatio": 0, // 消息回复率（暂未实现）
-			"averageReply":      0, // 平均回复时间（暂未实现）
-			"invalidContact":    0, // 无效客户数量（暂未实现）
+			"applyNums":         0,                                                 // 申请数量（暂未实现）
+			"addNums":           0,                                                 // 添加数量（暂未实现）
+			"messageNums":       0,                                                 // 消息数量（暂未实现）
+			"sendMessageNums":   0,                                                 // 发送消息数量（暂未实现）
+			"replyMessageRatio": 0,                                                 // 消息回复率（暂未实现）
+			"averageReply":      0,                                                 // 平均回复时间（暂未实现）
+			"invalidContact":    0,                                                 // 无效客户数量（暂未实现）
 		})
 	}
-	
+
 	// 返回分页结果
 	response.PageResult(c, items, total, page, pageSize)
 }
@@ -167,7 +169,7 @@ func (h *EmployeeHandler) SyncEmployee(c *gin.Context) {
 		response.Fail(c, response.ErrServer, err.Error())
 		return
 	}
-	
+
 	// 返回同步结果
 	response.SuccessMsg(c, "同步成功")
 }
@@ -293,7 +295,7 @@ func (h *DepartmentHandler) Index(c *gin.Context) {
 	if corpID == nil {
 		corpID = uint(0)
 	}
-	
+
 	// 调用服务层获取部门列表
 	departments, err := h.svc.List(corpID.(uint))
 	if err != nil {
@@ -322,13 +324,13 @@ func (h *DepartmentHandler) Index(c *gin.Context) {
 	departmentMap := make(map[uint]*gin.H, len(departments))
 	for _, department := range departments {
 		node := gin.H{
-			"id":           department.ID,                // 部门 ID
-			"departmentId": department.ID,                // 部门 ID（兼容字段）
-			"name":         department.Name,              // 部门名称
-			"parentId":     department.ParentID,          // 父部门 ID
-			"wxDepartmentId": department.WxDepartmentID,  // 企业微信部门 ID
-			"level":        department.Level,             // 部门级别
-			"son":          []gin.H{},                    // 子部门列表
+			"id":             department.ID,             // 部门 ID
+			"departmentId":   department.ID,             // 部门 ID（兼容字段）
+			"name":           department.Name,           // 部门名称
+			"parentId":       department.ParentID,       // 父部门 ID
+			"wxDepartmentId": department.WxDepartmentID, // 企业微信部门 ID
+			"level":          department.Level,          // 部门级别
+			"son":            []gin.H{},                 // 子部门列表
 		}
 		departmentNodes = append(departmentNodes, node)
 		departmentMap[department.ID] = &departmentNodes[len(departmentNodes)-1]
@@ -395,7 +397,7 @@ func (h *DepartmentHandler) PageIndex(c *gin.Context) {
 	if corpID == nil {
 		corpID = uint(0)
 	}
-	
+
 	// 获取分页参数
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("pageSize", "20"))
@@ -406,7 +408,7 @@ func (h *DepartmentHandler) PageIndex(c *gin.Context) {
 		response.Fail(c, response.ErrDB, "获取部门列表失败")
 		return
 	}
-	
+
 	// 返回分页结果
 	response.PageResult(c, departments, total, page, pageSize)
 }
@@ -440,7 +442,7 @@ func (h *DepartmentHandler) SelectByPhone(c *gin.Context) {
 func (h *DepartmentHandler) ShowEmployee(c *gin.Context) {
 	// 获取部门 ID
 	departmentID, _ := strconv.Atoi(c.DefaultQuery("departmentId", c.Param("id")))
-	
+
 	// 获取分页参数
 	page, _ := strconv.Atoi(c.DefaultQuery("page", "1"))
 	pageSize, _ := strconv.Atoi(c.DefaultQuery("perPage", c.DefaultQuery("pageSize", "10")))

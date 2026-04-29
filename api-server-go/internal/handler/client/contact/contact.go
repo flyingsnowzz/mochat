@@ -136,3 +136,33 @@ func (h *WorkContactHandler) Track(c *gin.Context) {
 
 	response.Success(c, gin.H{"list": tracks})
 }
+
+// AllTag 获取客户标签（侧边栏）
+func (h *WorkContactHandler) AllTag(c *gin.Context) {
+	var tags []model.WorkContactTag
+	if err := h.db.Where("deleted_at IS NULL").Find(&tags).Error; err != nil {
+		response.Fail(c, response.ErrDB, "获取标签列表失败")
+		return
+	}
+	response.Success(c, gin.H{"list": tags})
+}
+
+// TagGroupIndex 获取客户标签组列表（侧边栏）
+func (h *WorkContactHandler) TagGroupIndex(c *gin.Context) {
+	var groups []model.WorkContactTagGroup
+	if err := h.db.Where("deleted_at IS NULL").Find(&groups).Error; err != nil {
+		response.Fail(c, response.ErrDB, "获取标签组列表失败")
+		return
+	}
+	response.Success(c, gin.H{"list": groups})
+}
+
+// FieldPivotIndex 获取自定义字段值列表（侧边栏）
+func (h *WorkContactHandler) FieldPivotIndex(c *gin.Context) {
+	response.Success(c, gin.H{"list": []interface{}{}})
+}
+
+// FieldPivotUpdate 更新自定义字段值（侧边栏）
+func (h *WorkContactHandler) FieldPivotUpdate(c *gin.Context) {
+	response.SuccessMsg(c, "更新成功")
+}

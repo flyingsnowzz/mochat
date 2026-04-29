@@ -1,97 +1,103 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"mochat-api-server/internal/config"
-	dashboardSystem "mochat-api-server/internal/handler/dashboard/system"
+	clientCommon "mochat-api-server/internal/handler/client/common"
+	clientContact "mochat-api-server/internal/handler/client/contact"
+	clientContent "mochat-api-server/internal/handler/client/content"
+	clientOrg "mochat-api-server/internal/handler/client/organization"
+	clientPlatform "mochat-api-server/internal/handler/client/platform"
+	dashboardAnalysis "mochat-api-server/internal/handler/dashboard/analysis"
+	dashboardCommon "mochat-api-server/internal/handler/dashboard/common"
 	dashboardContact "mochat-api-server/internal/handler/dashboard/contact"
-	dashboardOrg "mochat-api-server/internal/handler/dashboard/organization"
 	dashboardContent "mochat-api-server/internal/handler/dashboard/content"
 	dashboardMarketing "mochat-api-server/internal/handler/dashboard/marketing"
-	dashboardAnalysis "mochat-api-server/internal/handler/dashboard/analysis"
+	dashboardOrg "mochat-api-server/internal/handler/dashboard/organization"
 	dashboardPlatform "mochat-api-server/internal/handler/dashboard/platform"
-	dashboardCommon "mochat-api-server/internal/handler/dashboard/common"
-	clientContact "mochat-api-server/internal/handler/client/contact"
-	clientOrg "mochat-api-server/internal/handler/client/organization"
-	clientContent "mochat-api-server/internal/handler/client/content"
-	clientPlatform "mochat-api-server/internal/handler/client/platform"
-	clientCommon "mochat-api-server/internal/handler/client/common"
+	dashboardSystem "mochat-api-server/internal/handler/dashboard/system"
 	"mochat-api-server/internal/middleware"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // Router 路由器结构体，持有所有依赖和路由配置
 type Router struct {
-	engine          *gin.Engine
-	config          *config.Config
-	db              *gorm.DB
-	dashboardAuth   gin.HandlerFunc
-	sidebarAuth     gin.HandlerFunc
-	permission      gin.HandlerFunc
+	engine        *gin.Engine
+	config        *config.Config
+	db            *gorm.DB
+	dashboardAuth gin.HandlerFunc
+	sidebarAuth   gin.HandlerFunc
+	permission    gin.HandlerFunc
 
 	// Dashboard System Handlers (系统管理)
-	corpHandler             *dashboardSystem.CorpHandler
-	userHandler             *dashboardSystem.UserHandler
-	menuHandler             *dashboardSystem.MenuHandler
-	roleHandler             *dashboardSystem.RoleHandler
+	corpHandler *dashboardSystem.CorpHandler
+	userHandler *dashboardSystem.UserHandler
+	menuHandler *dashboardSystem.MenuHandler
+	roleHandler *dashboardSystem.RoleHandler
 
 	// Dashboard Contact Handlers (客户管理)
-	contactHandler          *dashboardContact.ContactHandler
-	tagHandler              *dashboardContact.ContactTagHandler
-	contactFieldHandler     *dashboardContact.ContactFieldHandler
+	contactHandler           *dashboardContact.ContactHandler
+	tagHandler               *dashboardContact.ContactTagHandler
+	contactFieldHandler      *dashboardContact.ContactFieldHandler
 	contactFieldPivotHandler *dashboardContact.ContactFieldPivotHandler
-	contactTagGroupHandler  *dashboardContact.WorkContactTagGroupHandler
-	contactRoomHandler      *dashboardContact.WorkContactRoomHandler
+	contactTagGroupHandler   *dashboardContact.WorkContactTagGroupHandler
+	contactRoomHandler       *dashboardContact.WorkContactRoomHandler
 
 	// Dashboard Organization Handlers (组织架构)
-	deptHandler             *dashboardOrg.DepartmentHandler
-	employeeHandler         *dashboardOrg.EmployeeHandler
-	roomHandler             *dashboardOrg.RoomHandler
-	roomGroupHandler        *dashboardOrg.RoomGroupHandler
+	deptHandler      *dashboardOrg.DepartmentHandler
+	employeeHandler  *dashboardOrg.EmployeeHandler
+	roomHandler      *dashboardOrg.RoomHandler
+	roomGroupHandler *dashboardOrg.RoomGroupHandler
 
 	// Dashboard Content Handlers (内容管理)
-	mediumHandler           *dashboardContent.MediumHandler
-	mediumGroupHandler      *dashboardContent.MediumGroupHandler
-	greetingHandler         *dashboardContent.GreetingHandler
+	mediumHandler      *dashboardContent.MediumHandler
+	mediumGroupHandler *dashboardContent.MediumGroupHandler
+	greetingHandler    *dashboardContent.GreetingHandler
 
 	// Dashboard Analysis Handlers (数据分析)
-	indexHandler            *dashboardAnalysis.DashboardIndexHandler
+	indexHandler *dashboardAnalysis.DashboardIndexHandler
 
 	// Dashboard Platform Handlers (平台配置)
-	agentHandler            *dashboardPlatform.AgentHandler
-	officialAccountHandler  *dashboardPlatform.OfficialAccountHandler
+	agentHandler           *dashboardPlatform.AgentHandler
+	officialAccountHandler *dashboardPlatform.OfficialAccountHandler
 
 	// Dashboard Common Handlers
-	commonHandler    *dashboardCommon.CommonHandler
-	chatToolHandler  *dashboardCommon.ChatToolHandler
+	commonHandler   *dashboardCommon.CommonHandler
+	chatToolHandler *dashboardCommon.ChatToolHandler
 
 	// Marketing Handlers
-	channelCodeHandler      *dashboardMarketing.ChannelCodeHandler
-	statisticHandler        *dashboardAnalysis.StatisticHandler
-	roomWelcomeHandler      *dashboardMarketing.RoomWelcomeHandler
-	workRoomAutoPullHandler *dashboardMarketing.WorkRoomAutoPullHandler
-	roomTagPullHandler      *dashboardMarketing.RoomTagPullHandler
+	channelCodeHandler             *dashboardMarketing.ChannelCodeHandler
+	statisticHandler               *dashboardAnalysis.StatisticHandler
+	roomWelcomeHandler             *dashboardMarketing.RoomWelcomeHandler
+	workRoomAutoPullHandler        *dashboardMarketing.WorkRoomAutoPullHandler
+	roomTagPullHandler             *dashboardMarketing.RoomTagPullHandler
+	contactMessageBatchSendHandler *dashboardMarketing.ContactMessageBatchSendHandler
+	contactTransferHandler         *dashboardMarketing.ContactTransferHandler
+	roomMessageBatchSendHandler    *dashboardMarketing.RoomMessageBatchSendHandler
+	workFissionHandler             *dashboardMarketing.WorkFissionHandler
 
 	// Client Handlers
-	sidebarContactHandler    *clientContact.WorkContactHandler
-	sidebarRoomHandler       *clientOrg.WorkRoomHandler
-	sidebarAgentHandler      *clientPlatform.WorkAgentHandler
-	sidebarMediumHandler     *clientContent.MediumHandler
-	sidebarMediumGroupHandler *clientContent.MediumGroupHandler
-	sidebarCommonHandler     *clientCommon.CommonHandler
+	sidebarContactHandler       *clientContact.WorkContactHandler
+	sidebarRoomHandler          *clientOrg.WorkRoomHandler
+	sidebarAgentHandler         *clientPlatform.WorkAgentHandler
+	sidebarMediumHandler        *clientContent.MediumHandler
+	sidebarMediumGroupHandler   *clientContent.MediumGroupHandler
+	sidebarProcessStatusHandler *clientContact.ProcessStatusHandler
+	sidebarCommonHandler        *clientCommon.CommonHandler
 
-	storage                any // 存储接口，具体类型根据实际使用确定
+	storage any // 存储接口，具体类型根据实际使用确定
 }
 
 // NewRouter 创建新的路由器实例
 func NewRouter(cfg *config.Config, db *gorm.DB) *Router {
 	return &Router{
-		engine:          gin.New(),
-		config:          cfg,
-		db:              db,
-		dashboardAuth:   middleware.DashboardAuthMiddleware(cfg.JWT, getDashboardWhiteRoutes()),
-		sidebarAuth:     middleware.SidebarAuthMiddleware(cfg.JWT, getSidebarWhiteRoutes()),
-		permission:      middleware.PermissionMiddleware(db),
+		engine:        gin.New(),
+		config:        cfg,
+		db:            db,
+		dashboardAuth: middleware.DashboardAuthMiddleware(cfg.JWT, getDashboardWhiteRoutes(), db),
+		sidebarAuth:   middleware.SidebarAuthMiddleware(cfg.JWT, getSidebarWhiteRoutes()),
+		permission:    middleware.PermissionMiddleware(db),
 	}
 }
 

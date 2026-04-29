@@ -39,7 +39,7 @@ export function editStatus (params) {
 // 获取子账户详情
 export function getSubManagement (params) {
   return request({
-    url: '/user/show',
+    url: '/user/show/' + params.id,
     method: 'get',
     params: params
   })

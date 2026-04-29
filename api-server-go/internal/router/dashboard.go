@@ -95,4 +95,16 @@ func (r *Router) RegisterDashboardRoutes(group *gin.RouterGroup) {
 
 	// 群标签拉取路由
 	r.registerRoomTagPullRoutes(group.Group("/roomTagPull"))
+
+	// 客户群发路由
+	r.registerContactMessageBatchSendRoutes(group.Group("/contactMessageBatchSend"))
+
+	// 客户继承路由
+	r.registerContactTransferRoutes(group.Group("/contactTransfer"))
+
+	// 群群发路由
+	r.registerRoomMessageBatchSendRoutes(group.Group("/roomMessageBatchSend"))
+
+	// 任务宝路由
+	r.registerWorkFissionRoutes(group.Group("/workFission"))
 }

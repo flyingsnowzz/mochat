@@ -112,7 +112,7 @@ func (h *WorkRoomAutoPullHandler) Show(c *gin.Context) {
 	// 构建响应数据
 	responseData := ShowResponse{
 		QrcodeName:   item.QrcodeName,
-		IsVerified:   item.IsVerified,
+		IsVerified:   int(item.IsVerified),
 		LeadingWords: item.LeadingWords,
 		Employees:    employees,
 		Tags:         tags,
@@ -152,7 +152,7 @@ func (h *WorkRoomAutoPullHandler) Store(c *gin.Context) {
 	item := &model.WorkRoomAutoPull{
 		CorpID:       corpID,
 		QrcodeName:   req.QrcodeName,
-		IsVerified:   req.IsVerified,
+		IsVerified:   uint(req.IsVerified),
 		LeadingWords: req.LeadingWords,
 		Employees:    req.Employees,
 		Tags:         req.Tags,

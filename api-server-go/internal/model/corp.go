@@ -7,7 +7,7 @@ import (
 
 type Corp struct {
 	ID             uint       `gorm:"column:id;primaryKey" json:"id"`
-	CorpId         uint       `gorm:"column:corp_id;default:0" json:"corpId"` // 企业ID（冗余字段，用于前端兼容）
+	CorpId         uint       `gorm:"-" json:"corpId"` // 企业ID（冗余字段，用于前端兼容，不映射到数据库）
 	Name           string     `gorm:"column:name;size:255;not null" json:"name"`
 	WxCorpid       string     `gorm:"column:wx_corpid;size:50;default:''" json:"wxCorpid"`
 	SocialCode     string     `gorm:"column:social_code;size:50;default:''" json:"socialCode"`

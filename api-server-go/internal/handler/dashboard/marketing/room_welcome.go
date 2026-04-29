@@ -4,6 +4,7 @@ package marketing
 
 import (
 	"encoding/json"
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -103,10 +104,10 @@ func (h *RoomWelcomeHandler) Store(c *gin.Context) {
 	
 	// 创建模型
 	item := &model.RoomWelcomeTemplate{
-		CorpID:      corpID,
+		CorpID:      fmt.Sprintf("%d", corpID),
 		MsgText:     req.MsgText,
 		MsgComplex:  msgComplexStr,
-		ComplexType: req.ComplexType,
+		ComplexType: fmt.Sprintf("%d", req.ComplexType),
 	}
 	
 	// 调用服务保存数据

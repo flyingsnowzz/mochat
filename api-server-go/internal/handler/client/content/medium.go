@@ -62,3 +62,8 @@ func NewMediumGroupHandler() *MediumGroupHandler {
 func (h *MediumGroupHandler) Index(c *gin.Context) {
 	response.Success(c, gin.H{"list": []interface{}{}})
 }
+
+// GroupIndex 获取媒体分组列表（侧边栏素材分组接口）
+func (h *MediumGroupHandler) GroupIndex(c *gin.Context) {
+	response.Success(c, gin.H{"list": []interface{}{}})
+}

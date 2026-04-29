@@ -6,11 +6,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"mochat-api-server/internal/model"
 	"mochat-api-server/internal/pkg/response"
 	"mochat-api-server/internal/service"
+
+	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 )
 
 // GreetingHandler 欢迎语管理处理器
@@ -40,6 +41,7 @@ func NewGreetingHandler(db *gorm.DB) *GreetingHandler {
 //   - 分页信息
 //
 // 参数：
+//
 //	page - 页码，默认为 1
 //	perPage/pageSize - 每页数量，默认为 10
 //
@@ -124,6 +126,7 @@ func (h *GreetingHandler) Show(c *gin.Context) {
 // Store 创建新欢迎语
 // 创建新的客户欢迎语配置
 // 参数（JSON Body）：
+//
 //	rangeType - 范围类型（1-全部，2-指定）
 //	employees - 员工 ID 列表
 //	type - 欢迎语类型
@@ -209,6 +212,7 @@ func (h *GreetingHandler) Store(c *gin.Context) {
 // Update 更新欢迎语
 // 更新指定欢迎语的配置信息
 // 参数（JSON Body）：
+//
 //	greetingId - 欢迎语 ID
 //	rangeType - 范围类型
 //	employees - 员工 ID 列表
@@ -493,19 +497,29 @@ func greetingEmployeeIDs(raw string) []uint {
 }
 
 // greetingTypeText 转换欢迎语类型为文本
-// 参数：greetingType - 欢迎语类型字符串（格式如 "-1-" 或 "-1-2-"）
-// 返回：类型名称文本
+// 参数：greetingType - 欢迎语类型字符串（格式如 "-1-6-" 或 "1,6"）
+// 返回：类型名称文本，如 "文本+小程序"
 func greetingTypeText(greetingType string) string {
 	greetingType = strings.TrimSpace(greetingType)
-	greetingType = strings.Trim(greetingType, "-")
 	if greetingType == "" {
 		return ""
+	}
+
+	// 优先按连字符分割，兼容 PHP 的 -1-6- 格式
+	if strings.Contains(greetingType, "-") {
+		greetingType = strings.Trim(greetingType, "-")
+	} else {
+		// 按逗号分割，兼容 1,6 格式
+		greetingType = strings.ReplaceAll(greetingType, ",", "-")
 	}
 
 	parts := strings.Split(greetingType, "-")
 	names := make([]string, 0, len(parts))
 	for _, part := range parts {
 		part = strings.TrimSpace(part)
+		if part == "" {
+			continue
+		}
 		switch part {
 		case "1":
 			names = append(names, "文本")
@@ -513,8 +527,14 @@ func greetingTypeText(greetingType string) string {
 			names = append(names, "图片")
 		case "3":
 			names = append(names, "图文")
+		case "4":
+			names = append(names, "音频")
+		case "5":
+			names = append(names, "视频")
 		case "6":
 			names = append(names, "小程序")
+		case "7":
+			names = append(names, "文件")
 		}
 	}
 	return strings.Join(names, "+")
@@ -532,8 +552,10 @@ func greetingRangeTypeText(rangeType int) string {
 
 // calcTotalPage 计算总页数
 // 参数：
+//
 //	total - 总记录数
 //	pageSize - 每页数量
+//
 // 返回：总页数
 func calcTotalPage(total int64, pageSize int) int {
 	if pageSize <= 0 {
@@ -548,8 +570,10 @@ func calcTotalPage(total int64, pageSize int) int {
 // getGreetingUintID 获取欢迎语 ID
 // 从路径参数或查询参数中获取 ID，支持多个参数名
 // 参数：
+//
 //	c - Gin 上下文
 //	keys - 可能的参数名列表
+//
 // 返回：ID 值
 func getGreetingUintID(c *gin.Context, keys ...string) uint64 {
 	for _, key := range keys {

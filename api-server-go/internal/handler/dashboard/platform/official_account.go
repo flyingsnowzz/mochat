@@ -30,3 +30,7 @@ func (h *OfficialAccountHandler) MessageEventCallback(c *gin.Context) {
 func (h *OfficialAccountHandler) Set(c *gin.Context) {
 	response.SuccessMsg(c, "设置成功")
 }
+
+func (h *OfficialAccountHandler) AuthRedirect(c *gin.Context) {
+	c.Redirect(302, "/")
+}

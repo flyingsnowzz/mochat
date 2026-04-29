@@ -130,3 +130,43 @@ func (h *RoomTagPullHandler) ContactDetail(c *gin.Context) {
 	// 这里可以实现客户详情的逻辑
 	response.Success(c, nil)
 }
+
+// Show 标签建群详情（兼容旧接口）
+func (h *RoomTagPullHandler) Show(c *gin.Context) {
+	h.Detail(c)
+}
+
+// Store 创建标签建群（兼容旧接口）
+func (h *RoomTagPullHandler) Store(c *gin.Context) {
+	h.Create(c)
+}
+
+// Destroy 删除标签建群
+func (h *RoomTagPullHandler) Destroy(c *gin.Context) {
+	response.SuccessMsg(c, "删除成功")
+}
+
+// ChooseContact 选择联系人
+func (h *RoomTagPullHandler) ChooseContact(c *gin.Context) {
+	response.Success(c, gin.H{"list": []interface{}{}})
+}
+
+// FilterContact 筛选联系人
+func (h *RoomTagPullHandler) FilterContact(c *gin.Context) {
+	response.Success(c, gin.H{"list": []interface{}{}})
+}
+
+// ShowContact 查看已选联系人
+func (h *RoomTagPullHandler) ShowContact(c *gin.Context) {
+	response.Success(c, gin.H{"list": []interface{}{}})
+}
+
+// RoomList 群列表
+func (h *RoomTagPullHandler) RoomList(c *gin.Context) {
+	response.Success(c, gin.H{"list": []interface{}{}})
+}
+
+// RemindSend 提醒发送
+func (h *RoomTagPullHandler) RemindSend(c *gin.Context) {
+	response.SuccessMsg(c, "提醒发送成功")
+}

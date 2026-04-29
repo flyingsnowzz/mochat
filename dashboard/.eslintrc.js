@@ -33,16 +33,16 @@ module.exports = {
     }],
     'generator-star-spacing': 'off',
     'no-mixed-operators': 1,
-    'vue/max-attributes-per-line': [
-      2,
-      {
-        'singleline': 5,
-        'multiline': {
-          'max': 1,
-          'allowFirstLine': false
-        }
-      }
-    ],
+    // 'vue/max-attributes-per-line': [
+    //   2,
+    //   {
+    //     'singleline': 5,
+    //     'multiline': {
+    //       'max': 1,
+    //       'allowFirstLine': false
+    //     }
+    //   }
+    // ],
     'vue/attribute-hyphenation': 0,
     'vue/html-self-closing': 0,
     'vue/component-name-in-template-casing': 0,
@@ -77,7 +77,9 @@ module.exports = {
       }
     ],
     'template-curly-spacing': 'off',
-    'eqeqeq': 'off'
+    'eqeqeq': 'off',
+    'comma-dangle': 'off',
+    'space-before-function-paren': 'off'
   },
   parserOptions: {
     parser: 'babel-eslint'

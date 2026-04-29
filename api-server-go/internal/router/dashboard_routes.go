@@ -10,8 +10,7 @@ func (r *Router) registerCorpRoutes(group *gin.RouterGroup) {
 	group.POST("/store", r.corpHandler.Store)
 	group.PUT("/update", r.corpHandler.Update)
 	group.PUT("/update/:id", r.corpHandler.Update)
-	group.POST("/bind", r.corpHandler.Bind)
-	group.POST("/bind/:id", r.corpHandler.Bind)
+	group.POST("/bind/:id", r.corpHandler.Bind) // 绑定企业微信配置
 	group.GET("/weWorkCallback", r.corpHandler.WeWorkCallback)
 	group.POST("/weWorkCallback", r.corpHandler.WeWorkCallback)
 }
@@ -21,6 +20,7 @@ func (r *Router) registerUserRoutes(group *gin.RouterGroup) {
 	group.POST("/auth", r.userHandler.Auth)
 	group.GET("/loginShow", r.userHandler.LoginShow)
 	group.POST("/logout", r.userHandler.Logout)
+	group.POST("/corp/bind", r.userHandler.CorpBind) // 选择（绑定）企业
 
 	// 需要权限的路由
 	permGroup := group.Group("")
@@ -28,6 +28,7 @@ func (r *Router) registerUserRoutes(group *gin.RouterGroup) {
 	{
 		permGroup.GET("/index", r.userHandler.Index)
 		permGroup.GET("/show/:id", r.userHandler.Show)
+		permGroup.GET("/show", r.userHandler.Show)
 		permGroup.POST("/store", r.userHandler.Store)
 		permGroup.PUT("/update/:id", r.userHandler.Update)
 		permGroup.PUT("/passwordUpdate/:id", r.userHandler.PasswordUpdate)
@@ -220,6 +221,9 @@ func (r *Router) registerOfficialAccountRoutes(group *gin.RouterGroup) {
 	group.GET("/getPreAuthUrl", r.officialAccountHandler.GetPreAuthUrl)
 	group.GET("/authEventCallback", r.officialAccountHandler.AuthEventCallback)
 	group.POST("/authEventCallback", r.officialAccountHandler.AuthEventCallback)
+	group.GET("/messageEventCallback", r.officialAccountHandler.MessageEventCallback)
+	group.POST("/messageEventCallback", r.officialAccountHandler.MessageEventCallback)
+	group.GET("/authRedirect", r.officialAccountHandler.AuthRedirect)
 	group.POST("/set", r.officialAccountHandler.Set)
 }
 
@@ -301,4 +305,63 @@ func (r *Router) registerRoomTagPullRoutes(group *gin.RouterGroup) {
 	group.POST("/create", r.roomTagPullHandler.Create)
 	group.GET("/detail", r.roomTagPullHandler.Detail)
 	group.GET("/contactDetail", r.roomTagPullHandler.ContactDetail)
+
+	// 与 PHP 兼容的路由
+	group.GET("/show", r.roomTagPullHandler.Show)
+	group.POST("/store", r.roomTagPullHandler.Store)
+	group.DELETE("/destroy", r.roomTagPullHandler.Destroy)
+	group.POST("/chooseContact", r.roomTagPullHandler.ChooseContact)
+	group.POST("/filterContact", r.roomTagPullHandler.FilterContact)
+	group.GET("/showContact", r.roomTagPullHandler.ShowContact)
+	group.GET("/roomList", r.roomTagPullHandler.RoomList)
+	group.POST("/remindSend", r.roomTagPullHandler.RemindSend)
+}
+
+// registerContactMessageBatchSendRoutes 注册客户群发路由
+func (r *Router) registerContactMessageBatchSendRoutes(group *gin.RouterGroup) {
+	group.GET("/index", r.contactMessageBatchSendHandler.Index)
+	group.POST("/store", r.contactMessageBatchSendHandler.Store)
+	group.GET("/show", r.contactMessageBatchSendHandler.Show)
+	group.DELETE("/destroy", r.contactMessageBatchSendHandler.Destroy)
+	group.POST("/remind", r.contactMessageBatchSendHandler.Remind)
+	group.GET("/showRoom", r.contactMessageBatchSendHandler.ShowRoom)
+	group.GET("/employeeSendIndex", r.contactMessageBatchSendHandler.EmployeeSendIndex)
+	group.GET("/contactReceiveIndex", r.contactMessageBatchSendHandler.ContactReceiveIndex)
+}
+
+// registerContactTransferRoutes 注册客户继承路由
+func (r *Router) registerContactTransferRoutes(group *gin.RouterGroup) {
+	group.GET("/index", r.contactTransferHandler.Index)
+	group.GET("/info", r.contactTransferHandler.Info)
+	group.GET("/log", r.contactTransferHandler.Log)
+	group.GET("/room", r.contactTransferHandler.Room)
+	group.GET("/unassignedList", r.contactTransferHandler.UnassignedList)
+	group.POST("/saveUnassignedList", r.contactTransferHandler.SaveUnassignedList)
+	group.POST("/transferRoom", r.contactTransferHandler.TransferRoom)
+}
+
+// registerRoomMessageBatchSendRoutes 注册群群发路由
+func (r *Router) registerRoomMessageBatchSendRoutes(group *gin.RouterGroup) {
+	group.GET("/index", r.roomMessageBatchSendHandler.Index)
+	group.POST("/store", r.roomMessageBatchSendHandler.Store)
+	group.GET("/show", r.roomMessageBatchSendHandler.Show)
+	group.DELETE("/destroy", r.roomMessageBatchSendHandler.Destroy)
+	group.POST("/remind", r.roomMessageBatchSendHandler.Remind)
+	group.GET("/roomOwnerSendIndex", r.roomMessageBatchSendHandler.RoomOwnerSendIndex)
+	group.GET("/roomReceiveIndex", r.roomMessageBatchSendHandler.RoomReceiveIndex)
+}
+
+// registerWorkFissionRoutes 注册任务宝路由
+func (r *Router) registerWorkFissionRoutes(group *gin.RouterGroup) {
+	group.GET("/index", r.workFissionHandler.Index)
+	group.GET("/show", r.workFissionHandler.Show)
+	group.POST("/store", r.workFissionHandler.Store)
+	group.PUT("/update", r.workFissionHandler.Update)
+	group.DELETE("/destroy", r.workFissionHandler.Destroy)
+	group.GET("/statistics", r.workFissionHandler.Statistics)
+	group.GET("/info", r.workFissionHandler.Info)
+	group.GET("/invite", r.workFissionHandler.Invite)
+	group.GET("/inviteData", r.workFissionHandler.InviteData)
+	group.GET("/inviteDetail", r.workFissionHandler.InviteDetail)
+	group.POST("/chooseContact", r.workFissionHandler.ChooseContact)
 }

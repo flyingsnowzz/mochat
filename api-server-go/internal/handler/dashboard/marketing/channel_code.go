@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"mochat-api-server/internal/model"
+	"mochat-api-server/internal/pkg/logger"
 	"mochat-api-server/internal/pkg/response"
 	"mochat-api-server/internal/service/plugin"
 
@@ -469,6 +470,7 @@ func (h *ChannelCodeHandler) GroupMove(c *gin.Context) {
 
 func getCorpID(c *gin.Context) (uint, bool) {
 	corpID, exists := c.Get("corpId")
+	logger.Sugar.Infof("getCorpID corpId=%v, exists=%v", corpID, exists)
 	if !exists {
 		return 0, false
 	}
